@@ -77,6 +77,10 @@ load("statistics.js")
 // TEST
 //////////////////////////////////////////////////
 
+RegEx.Generator.make(2).foreach(function(i,result) {
+		__sysout(result.toString());
+});
+
 // load assert
 //load("__lib/__lib_apache_assert.js");
 

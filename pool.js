@@ -7,6 +7,7 @@
 
 				// cache array
 				var cache = new StringMap();
+				// TODO chache for NotIn
 
 				var counterIn = 0;
 				var counteNotIn = 0;
@@ -19,7 +20,7 @@
 						counterIn++;
 						key = stringIn+counterIn;
 
-						var literal = new NameLiteral(key);
+						var literal = new RegEx.Expressions.NameLiteral(key);
 						cache.set(key, literal);
 						return literal;
 				};
@@ -28,7 +29,7 @@
 						counterNotIn++;
 						key = stringNotIn+counterNotIn;
 
-						return new NameLiteral(key);
+						return new RegEx.Expressions.NameLiteral(key);
 				};
 
 				this.contains = function(literal) {
