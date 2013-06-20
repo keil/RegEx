@@ -42,23 +42,34 @@ load("apc.js");
 load("config.js");
 
 // load trace path
-load("path.js");
-load("pathtrie.js");
+// load("path.js");
+//load("pathtrie.js");
 
 // load contract
 load("contract.js");
 
 // load violation
-load("violation.js")
+// load("violation.js")
 
 // load parser
-load("parser.js");
+// load("parser.js");
 
 // load proxy
-load("proxy.js");
+// load("proxy.js");
 
 // load permit
-load("permit.js")
+// load("permit.js")
+
+//////////////////////////////////////////////////
+// RegEx
+//////////////////////////////////////////////////
+
+load("regex.js");
+load("pool.js");
+
+load("generator.js");
+
+load("statistics.js")
 
 
 
@@ -67,13 +78,8 @@ load("permit.js")
 //////////////////////////////////////////////////
 
 // load assert
-load("__lib/__lib_apache_assert.js");
+//load("__lib/__lib_apache_assert.js");
 
 // load testcase
-//load("__test/__test_.js");
-//
-///* Containment Calculus */
-load("__test/__test_contract_subset.js");
-load("__test/__test_contract_subset2.js");
 
 quit();
