@@ -13,13 +13,13 @@
 				var counteNotIn = 0;
 
 				// TODO CHANGE to RegEx Notation
-				var stringIn = "l";
-				var stringNotIn = "k";
+				var stringIn = 'l';
+				var stringNotIn = 'k';
 
 				this.newLiteral = function() {
 						counterIn++;
 						key = stringIn+counterIn;
-
+__sysout(key);
 						var literal = new RegEx.Expressions.NameLiteral(key);
 						cache.set(key, literal);
 						return literal;

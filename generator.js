@@ -79,24 +79,24 @@
 
 				// {} 
 				// OPTINAL: represents real/used regex
-				results.push(new RegEx.Expressions.EmptySetLiteral());
+//				results.push(new RegEx.Expressions.EmptySetLiteral());
 
 				// ^
 				// OPTINAL: represents real/used regex
-				results.push(new RegEx.Expressions.EmptyLiteral());
+//				results.push(new RegEx.Expressions.EmptyLiteral());
 
 				// @
 				// OPTINAL: represents a SET
-				results.push(new RegEx.Expressions.AtLiteral());
+//				results.push(new RegEx.Expressions.AtLiteral());
 
 				// ?
 				// OPTINAL: represents a SET
-				results.push(new RegEx.Expressions.QMarkLiteral());
+//				results.push(new RegEx.Expressions.QMarkLiteral());
 
 				// 
 				// TODO change "name" to the correspondig english word used in RegEx 
 				literal = pool.newLiteral();
-				results.push(new RegEx.Expressions.NameLiteral(literal));
+				results.push(literal);
 
 return results;
 
