@@ -19,7 +19,7 @@
 				this.newLiteral = function() {
 						counterIn++;
 						key = stringIn+counterIn;
-__sysout(key);
+						
 						var literal = new RegEx.Expressions.NameLiteral(key);
 						cache.set(key, literal);
 						return literal;

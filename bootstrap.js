@@ -77,8 +77,8 @@ load("statistics.js")
 // TEST
 //////////////////////////////////////////////////
 
-RegEx.Generator.make(2).foreach(function(i,result) {
-		__sysout(result.toString());
+RegEx.Generator.make(3).foreach(function(i,result) {
+		__sysout("@" + result.toString());
 });
 
 // load assert
