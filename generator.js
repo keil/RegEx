@@ -4,7 +4,11 @@
 		RegEx.Generator = SELF;
 
 
-		function Result(regex, pool) {
+		function Result(regex, pool, depth) {
+
+				this.getDepth = function() {
+						return depth;
+				};
 
 				this.getRegEx = function() {
 						return regex;
@@ -15,7 +19,7 @@
 				};
 
 				this.toString = function() {
-						return regex
+						return regex.toString();
 						//return "[" + regex.toString() + "] - {" + pool.toString() + "}";
 				}
 		}
@@ -41,41 +45,53 @@
 
 				if(depth==0) return results;
 
+
 				// r?
 				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new RegEx.Expressions.QMarkRegEx(r));
+						results.push(new Result(new RegEx.Expressions.QMarkRegEx(r.getRegEx()), pool, depth));
+						//results.push(new RegEx.Expressions.QMarkRegEx(r));
 				});
-
 				// r*
 				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new RegEx.Expressions.StarRegEx(r));
+						results.push(new Result(new RegEx.Expressions.StarRegEx(r.getRegEx()), r.getPool(), depth));
+					//	var result = new Result(new RegEx.Expressions.StarRegEx(r), pool, depth);
+					//	results.add(result);
+//						results.push(new RegEx.Expressions.StarRegEx(r));
 				});
 
 				// r+s
 				generate((depth-1), pool).foreach(function(i, r) {
-						generate((depth-1), pool).foreach(function(j, s) {
-								results.push(new RegEx.Expressions.OrRegEx(r,s));
+						generate((depth-1), r.getPool()).foreach(function(j, s) {
+								results.push(new Result(new RegEx.Expressions.OrRegEx(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
 						});
 				});
 
 				// r&s
 				generate((depth-1), pool).foreach(function(i, r) {
-						generate((depth-1), pool).foreach(function(j, s) {
-								results.push(new RegEx.Expressions.AndRegEx(r,s));
+						generate((depth-1), r.getPool()).foreach(function(j, s) {
+								results.push(new Result(new RegEx.Expressions.AndRegEx(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
 						});
 				});
 
 				// !r
 				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new RegEx.Expressions.NegRegEx(r,r));
+						results.push(new Result(new RegEx.Expressions.NegRegEx(r.getRegEx()), r.getPool(), depth));
 				});
 
 				// r.s
-				generate((depth-1), pool).foreach(function(i, s) {
-						generate(1, pool).foreach(function(j, r) {
-								results.push(new RegEx.Expressions.ConcatRegEx(r,s));
+				generate((depth-1), pool).foreach(function(i, r) {
+						generate(1, r.getPool()).foreach(function(j, s) {
+						results.push(new Result(new RegEx.Expressions.ConcatRegEx(r.getRegEx(),s.getRegEx()), r.getPool(), depth));
+							//		results.push(new RegEx.Expressions.ConcatRegEx(r,s));
 						});
 				});
+
+//					generate((depth-1), pool).foreach(function(i, s) {
+//						generate(1, pool).foreach(function(j, r) {
+//								results.push(new RegEx.Expressions.ConcatRegEx(r,s));
+//						});
+//				});
+
 
 				// {} 
 				// OPTINAL: represents real/used regex
@@ -95,8 +111,9 @@
 
 				// 
 				// TODO change "name" to the correspondig english word used in RegEx 
-				literal = pool.newLiteral();
-				results.push(literal);
+				pool
+				l = pool.newLiteral();
+				results.push(new Result(l.literal, l.pool));
 
 return results;
 
