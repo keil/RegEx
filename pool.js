@@ -9,7 +9,7 @@
 				// cache array
 				var cache = new StringMap();
 				// TODO chache for NotIn
-__sysout(counterIn);
+
 				var counterIn = (counterIn==undefined) ? 0 : counterIn;
 				var counteNotIn = (counteNotIn==undefined) ? 0 : counteNotIn;
 

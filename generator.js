@@ -47,17 +47,14 @@
 
 
 				// r?
-				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new Result(new RegEx.Expressions.QMarkRegEx(r.getRegEx()), pool, depth));
-						//results.push(new RegEx.Expressions.QMarkRegEx(r));
-				});
-				// r*
-				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new Result(new RegEx.Expressions.StarRegEx(r.getRegEx()), r.getPool(), depth));
-					//	var result = new Result(new RegEx.Expressions.StarRegEx(r), pool, depth);
-					//	results.add(result);
-//						results.push(new RegEx.Expressions.StarRegEx(r));
-				});
+//				generate((depth-1), pool).foreach(function(i, r) {
+//						results.push(new Result(new RegEx.Expressions.QMarkRegEx(r.getRegEx()), pool, depth));
+//				});
+
+// r*
+//				generate((depth-1), pool).foreach(function(i, r) {
+//						results.push(new Result(new RegEx.Expressions.StarRegEx(r.getRegEx()), r.getPool(), depth));
+//				});
 
 				// r+s
 				generate((depth-1), pool).foreach(function(i, r) {
@@ -67,21 +64,21 @@
 				});
 
 				// r&s
-				generate((depth-1), pool).foreach(function(i, r) {
-						generate((depth-1), r.getPool()).foreach(function(j, s) {
-								results.push(new Result(new RegEx.Expressions.AndRegEx(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
-						});
-				});
+//				generate((depth-1), pool).foreach(function(i, r) {
+//						generate((depth-1), r.getPool()).foreach(function(j, s) {
+//								results.push(new Result(new RegEx.Expressions.AndRegEx(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
+//						});
+//				});
 
 				// !r
-				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new Result(new RegEx.Expressions.NegRegEx(r.getRegEx()), r.getPool(), depth));
-				});
+//				generate((depth-1), pool).foreach(function(i, r) {
+//						results.push(new Result(new RegEx.Expressions.NegRegEx(r.getRegEx()), r.getPool(), depth));
+//				});
 
 				// r.s
 				generate((depth-1), pool).foreach(function(i, r) {
 						generate(1, r.getPool()).foreach(function(j, s) {
-						results.push(new Result(new RegEx.Expressions.ConcatRegEx(r.getRegEx(),s.getRegEx()), r.getPool(), depth));
+						results.push(new Result(new RegEx.Expressions.ConcatRegEx(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
 							//		results.push(new RegEx.Expressions.ConcatRegEx(r,s));
 						});
 				});
