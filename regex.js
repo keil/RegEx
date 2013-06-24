@@ -13,7 +13,7 @@ var __RegEx = (function(APC) {
 		SELF.NameLiteral		= APC.Contract.NameLiteral;
 		SELF.RegExLiteral		= APC.Contract.RegExLiteral;
 
-		SELF.QMarkRegEx			= APC.Contract.QMarkContract;
+		SELF.OptionalRegEx		= APC.Contract.QMarkContract;
 		SELF.StarRegEx			= APC.Contract.StarContract;
 		SELF.OrRegEx			= APC.Contract.OrContract;
 		SELF.AndRegEx			= APC.Contract.AndContract;

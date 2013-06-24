@@ -67,7 +67,13 @@ load("contract.js");
 load("regex.js");
 load("pool.js");
 
+load("dummy.js");
+load("replaceable.js");
+
 load("generator.js");
+
+
+
 
 load("statistics.js")
 
@@ -77,9 +83,19 @@ load("statistics.js")
 // TEST
 //////////////////////////////////////////////////
 
-RegEx.Generator.make(2).foreach(function(i,result) {
-		__sysout("@" + result.toString());
+RegEx.Generator.make(3).foreach(function(i,result) {
+		
+		__sysout("@" + i + " " + result.toString());
+		__sysout(result.getRegEx().dump()); //.dump();
 });
+
+//	function f(d) {return (d==1) ? 1 : (2*f(d-1)*f(d-1) + 3*f(d-1) + f(d-1)*6)}
+
+//	__sysout(f(1));
+//	__sysout(f(2));
+//	__sysout(f(3));
+//	__sysout(f(4));
+
 
 // load assert
 //load("__lib/__lib_apache_assert.js");

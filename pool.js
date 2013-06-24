@@ -37,14 +37,14 @@
 						counterIn++;
 						key = stringIn+counterIn;
 
-						return cache.has(key)? this.newLiteral(): new RegEx.Expressions.NameLiteral(key);				
+						return cache.has(key)? this.newLiteral(): new RegEx.Dummy.NameDummy(key);				
 				};
 
 				this.getLiteralNotIn = function() {
 						counterNotIn++;
 						key = stringNotIn+counterNotIn;
 
-						return new RegEx.Expressions.NameLiteral(key);
+						return new RegEx.Dummy.NameDummy(key);
 				};
 
 				this.set = function() {
