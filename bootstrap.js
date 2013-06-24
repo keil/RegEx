@@ -89,6 +89,16 @@ RegEx.Generator.make(3).foreach(function(i,result) {
 		__sysout(result.getRegEx().dump()); //.dump();
 });
 
+var a = new RegEx.Dummy.NameDummy("chacha");
+var b = new RegEx.Dummy.NameDummy("martha");
+
+
+//var test = new RegEx.Replaceable.Replaceable(a);
+//__sysout("### " + test.dump());
+//test.replaceBy(b);
+//__sysout("### " + test.dump());
+
+
 //	function f(d) {return (d==1) ? 1 : (2*f(d-1)*f(d-1) + 3*f(d-1) + f(d-1)*6)}
 
 //	__sysout(f(1));

@@ -3,24 +3,11 @@
 		SELF = {};
 		RegEx.Replaceable = SELF;
 
-
-		function Replaceable(regex) {
-
-				this.replace = function(newregex) {
-						regex = newregex;
-				};
-
-				this.getRegEx = function() {
-						return regex;
-				}
+		function Replaceable(dumpable) {
+				this.replaceBy = function(newdumpable) { dumpable = newdumpable; };
+				this.dump = function() { return dumpable.dump(); };
+				this.toString = function () { return "replaceableof " + dumpable.dump() };
 		}
 		SELF.Replaceable = Replaceable;
-
-
-	
-
-
-
-
 
 })(__RegEx);

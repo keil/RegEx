@@ -4,11 +4,9 @@
 		RegEx.Generator = SELF;
 
 
-		function Result(regex, pool, depth) {
+		function Result(regex, pool, depth, replaceable) {
 
-				this.getDepth = function() {
-						return depth;
-				};
+				
 
 				this.getRegEx = function() {
 						return regex;
@@ -16,6 +14,14 @@
 
 				this.getPool = function() {
 						return pool;
+				};
+
+				this.getDepth = function() {
+						return depth;
+				};
+
+				this.getReplaceable = function() {
+						return replaceable;
 				};
 
 				this.toString = function() {
@@ -70,60 +76,61 @@
 
 
 		function make(depth) {
-		//		var results = new Array();
 				var pool = new RegEx.Pool.Pool();
+				var replaceable = new Array();
 
-				//generate(depth, pool).foreach(function(i, r) {
-			//			results.push(new Result(r,pool));
-		//		});
-
-		//		return results;
-		return generate(depth, pool);
+				return generate(depth, pool, replaceable);
 		}
 		SELF.make = make;
 
 
 
 
-		function generate(depth, pool) {
+		function generate(depth, pool, replaceable) {
 
 				var results = new Array();
 
 				if(depth==0) return results;
 
 				// r?
-				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new Result(new RegEx.Dummy.OptionalDummy(r.getRegEx()), pool, depth));
+				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+						results.push(new Result(new RegEx.Dummy.OptionalDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
 				});
 
 				// r*
-				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new Result(new RegEx.Dummy.StarDummy(r.getRegEx()), r.getPool(), depth));
+				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+						results.push(new Result(new RegEx.Dummy.StarDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
 				});
 
 				// r+s
-				generate((depth-1), pool).foreach(function(i, r) {
-						generate((depth-1), r.getPool()).foreach(function(j, s) {
-								results.push(new Result(new RegEx.Dummy.OrDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
+				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+						generate((depth-1), r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+								results.push(new Result(new RegEx.Dummy.OrDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
 						});
 				});
 
 				// r&s
-				generate((depth-1), pool).foreach(function(i, r) {
-						generate((depth-1), r.getPool()).foreach(function(j, s) {
-								results.push(new Result(new RegEx.Dummy.AndDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
+				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+						generate((depth-1), r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+								results.push(new Result(new RegEx.Dummy.AndDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
 						});
 				});
 
 				// !r
-				generate((depth-1), pool).foreach(function(i, r) {
-						results.push(new Result(new RegEx.Dummy.NegDummy(r.getRegEx()), r.getPool(), depth));
+				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+						results.push(new Result(new RegEx.Dummy.NegDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
 				});
 
 				// r.s
-				generate((depth-1), pool).foreach(function(i, r) {
-						generate(1, r.getPool()).foreach(function(j, s) {
-								results.push(new Result(new RegEx.Dummy.ConcatDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth));
+				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+						generate(1, r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+
+								replaceables = s.getReplaceable();
+
+
+								var test = new RegEx.Replaceable.Replaceable(null);
+
+								results.push(new Result(new RegEx.Dummy.ConcatDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
 								//		results.push(new RegEx.Dummy.ConcatDummy(r,s));
 						});
 				});
