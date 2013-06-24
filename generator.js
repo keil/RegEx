@@ -6,7 +6,7 @@
 
 		function Result(regex, pool, depth, replaceable) {
 
-				
+				__sysout("@ " + regex + " / " + pool + " / " + depth + " / " + replaceable);	
 
 				this.getRegEx = function() {
 						return regex;
@@ -21,6 +21,7 @@
 				};
 
 				this.getReplaceable = function() {
+						__sysout("!!" + replaceable);
 						return replaceable;
 				};
 
@@ -35,10 +36,10 @@
 
 
 
-		function Replaceable(regex) {
+/*		function Replaceable(regex) {
 
 				// CONTRACT INTERFACE
-			/*	this.isEmpty = function() { return regex.isEmpty(); };
+				this.isEmpty = function() { return regex.isEmpty(); };
 				this.isBlank = function() { return regex.isBlank(); };
 				this.isNullable = function() { return regex.isNullable(); };
 				this.isIndifferent = function() { return regex.isIndifferent(); };
@@ -55,7 +56,7 @@
 				this.dump = function() { return regex.dump(); };
 				this.toString = function() { return regex.toString(); };
 
-*/
+
 
 
 
@@ -69,7 +70,7 @@
 		}
 		SELF.Replaceable = Replaceable;
 
-
+*/
 
 
 
@@ -86,51 +87,91 @@
 
 
 
-		function generate(depth, pool, replaceable) {
+		function generate(depth, pool, replaceables) {
 
 				var results = new Array();
 
 				if(depth==0) return results;
 
 				// r?
-				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+				generate((depth-1), pool, replaceables).foreach(function(i, r) {
+
+							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+
+								replaceables = r.getReplaceable();
+								replaceables.push(rr);
+
+
 						results.push(new Result(new RegEx.Dummy.OptionalDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
 				});
 
 				// r*
-				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+				generate((depth-1), pool, replaceables).foreach(function(i, r) {
+
+							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+
+								replaceables = r.getReplaceable();
+								replaceables.push(rr);
+
+
 						results.push(new Result(new RegEx.Dummy.StarDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
 				});
 
 				// r+s
-				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+				generate((depth-1), pool, replaceables).foreach(function(i, r) {
 						generate((depth-1), r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+
+								rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
+
+								replaceables = r.getReplaceable();
+								replaceables.push(rr);
+								replaceables.push(sr);
+
 								results.push(new Result(new RegEx.Dummy.OrDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
 						});
 				});
 
 				// r&s
-				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+				generate((depth-1), pool, replaceables).foreach(function(i, r) {
 						generate((depth-1), r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+
+								rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
+
+								replaceables = s.getReplaceable();
+								replaceables.push(rr);
+								replaceables.push(sr);
+
 								results.push(new Result(new RegEx.Dummy.AndDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
 						});
 				});
 
 				// !r
-				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+				generate((depth-1), pool, replaceables).foreach(function(i, r) {
+
+						rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+
+								replaceables = r.getReplaceable();
+								replaceables.push(rr);
+
 						results.push(new Result(new RegEx.Dummy.NegDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
 				});
 
 				// r.s
-				generate((depth-1), pool, replaceable).foreach(function(i, r) {
+				generate((depth-1), pool, replaceables).foreach(function(i, r) {
 						generate(1, r.getPool(), r.getReplaceable()).foreach(function(j, s) {
 
+								rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
+
 								replaceables = s.getReplaceable();
+								replaceables.push(rr);
+								replaceables.push(sr);
 
+								results.push(new Result(new RegEx.Dummy.ConcatDummy(rr, sr), s.getPool(), depth, replaceables));
 
-								var test = new RegEx.Replaceable.Replaceable(null);
-
-								results.push(new Result(new RegEx.Dummy.ConcatDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
+								//results.push(new Result(new RegEx.Dummy.ConcatDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
 								//		results.push(new RegEx.Dummy.ConcatDummy(r,s));
 						});
 				});
@@ -158,14 +199,13 @@
 				//pool
 				
 				
-				l = pool.newLiteral();
-				rep = new Replaceable(l)
-				
-				results.push(new Result(l.literal, l.pool));
+				var l = pool.newLiteral();
+				var lr = new RegEx.Replaceable.Replaceable(l.literal);
+
+				replaceables.push(lr);
+				results.push(new Result(l.literal, l.pool, 1, replaceables));
 
 				return results;
-
-
 		}
 
 
