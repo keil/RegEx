@@ -17,184 +17,188 @@
 		SELF = {};
 		RegEx.Generator = SELF;
 
+		//////////////////////////////////////////////////
+		// Result
+		//////////////////////////////////////////////////
 
-		function Result(regex, pool, depth, cache) {
+		/** Generator Result 
+		 * @param dummy	RegEx Dummy 
+		 * @param depth RegEx depth
+		 * @param pool	Literal pool
+		 * @param cache	Replaceable Cache
+		 * \\ TODO change order
+		 */
+		function Result(dummy, depth, pool, cache) {
 
-				__sysout("@ " + regex + " / " + pool + " / " + depth + " / " + cache.getLength());	
+				// TODO
+				//	__sysout("@ " + regex + " / " + pool + " / " + depth + " / " + cache.getLength());
 
-				this.getRegEx = function() {
-						return regex;
-				};
 
-				this.getPool = function() {
-						return pool;
-				};
+				/** Get Dummy */
+				this.getDummy = function() { return dummy; };
 
-				this.getDepth = function() {
-						return depth;
-				};
+				/** Get Depth */
+				this.getDepth = function() { return depth; };
 
-				this.getReplaceable = function() {
-						__sysout("!!" + cache);
-						return cache;
-				};
+				/** Get Pool */
+				this.getPool = function() { return pool; };
 
-				this.toString = function() {
-						//__sysout("toString on Result: " + regex);
-						//__sysout(regex instanceof RegEx.Dummy.OptionalDummy);
-						return "#" + regex.toString();
-						//return "[" + regex.toString() + "] - {" + pool.toString() + "}";
-				}
+				/** Get Replaceables */
+				this.getReplaceables = function() { return cache; };
+
+				/** To String */
+				this.toString = function() { return '{' + dummy.toString()+ ' / ' + depth + ' / ' + pool.toString() + ' / ' +  cache.toString(); };
 		}
 		SELF.Result = Result;
 
+		//////////////////////////////////////////////////
+		// Generator
+		//////////////////////////////////////////////////
 
-
-/*		function Replaceable(regex) {
-
-				// CONTRACT INTERFACE
-				this.isEmpty = function() { return regex.isEmpty(); };
-				this.isBlank = function() { return regex.isBlank(); };
-				this.isNullable = function() { return regex.isNullable(); };
-				this.isIndifferent = function() { return regex.isIndifferent(); };
-				this.isUniversal = function() { return regex.isUniversal(); };
-				this.isReadable = function(name) { return regex.isReadable(); };
-				this.isWriteable = function(name) { return regex.isWriteable(); };
-				this.first = function() { return regex.first(); };
-				this.derive = function(name) { return regex.derive(); };
-				this.lderive = function(larg) { return regex.lderive(); };
-				this.uderive = function(larg) { return regex.uderive(); };
-				this.isSuperSetOf = function(arg, ctx) { return regex.isSuperSetOf(arg, ctx); };
-				this.isSubSetOf = function(arg, ctx) { return regex.isSubSetOf(arg, ctx); };
-				this.reduce = function() { return regex.reduce(); };
-				this.dump = function() { return regex.dump(); };
-				this.toString = function() { return regex.toString(); };
-
-
-
-
-
-				this.replace = function(newregex) {
-						regex = newregex;
-				};
-
-				this.getRegEx = function() {
-					return regex;
-				}
-		}
-		SELF.Replaceable = Replaceable;
-
-*/
-
-
-
-
-
+		/** Make Function
+		 * @param depth	Depth of Regular Expressions (nesting index)
+		 * @return Array of RegEx.Generator.Result
+		 */
 		function make(depth) {
-				var pool = new RegEx.Pool.Pool();
-				//var replaceable = new Array();
-				var cache = new RegEx.Replaceable.Cache();	
+				var pool = new RegEx.Pool.Pool(undefined, undefined);
+				var reps = new RegEx.Replaceable.Cache();	
 
-				return generate(depth, pool, cache);
+				return generate(depth, pool, reps);
 		}
 		SELF.make = make;
 
 
-
-
-		function generate(depth, pool, replaceables) {
+		/** Generate Function
+		 * @param depth	Nesting Index
+		 * @param pool	Literal Pool
+		 * @param reps	Replaceables Cache
+		 * @return Array of RegEx.Generator.Result
+		 */
+		function generate(depth, pool, reps) {
 
 				var results = new Array();
 
+				// Termination Condition
 				if(depth==0) return results;
 
 				// r?
-				generate((depth-1), pool, replaceables).foreach(function(i, r) {
+				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 
-							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+						// Dummy
+						var rDummy = rRes.getDummy();
 
-						
-								replaceables = r.getReplaceable();
-								replaceables = replaceables.add(rr);
+						// Pool
+						var pool = rRes.getPool();
 
-								__sysout("\n\n\n$$$$$$$$$$" + r.getReplaceable().getLength() + "/" + replaceables.getLength() + "$$$$$$$$$$\n\n\n");
+						// Replaceable
+						var rRep = new RegEx.Replaceable.Replaceable(rDummy);
+						var reps = rRes.getReplaceables();
+						var reps = reps.push(rRep);
 
-
-						results.push(new Result(new RegEx.Dummy.OptionalDummy(r.getRegEx()), r.getPool(), depth, replaceables));
+						results.push(new Result(new RegEx.Dummy.OptionalDummy(rDummy), depth, pool, reps));
 				});
 
 				// r*
-				generate((depth-1), pool, replaceables).foreach(function(i, r) {
+				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 
-							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+						// Dummy
+						var rDummy = rRes.getDummy();
 
-								replaceables = r.getReplaceable();
-								replaceables = replaceables.add(rr);
+						// Pool
+						var pool = rRes.getPool();
 
+						// Replaceable
+						var rRep = new RegEx.Replaceable.Replaceable(rDummy);
+						var reps = rRes.getReplaceables();
+						var reps = reps.push(rRep);
 
-						results.push(new Result(new RegEx.Dummy.StarDummy(r.getRegEx()), r.getPool(), depth, replaceables));
+						results.push(new Result(new RegEx.Dummy.StarDummy(rDummy), depth, pool, reps));
 				});
 
 				// r+s
-				generate((depth-1), pool, replaceables).foreach(function(i, r) {
-						generate((depth-1), r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+				generate((depth-1), pool, reps).foreach(function(i, rRes) {
+						generate((depth-1), rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
 
-								rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
-								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
+								// Dummy
+								var rDummy = rRes.getDummy();
+								var sDummy = sRes.getDummy();
 
-								replaceables = r.getReplaceable();
-								replaceables = replaceables.add(rr);
-								replaceables = replaceables.add(sr);
+								// Pool
+								var pool = sRes.getPool();
 
-								results.push(new Result(new RegEx.Dummy.OrDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, replaceables));
+								// Replaceable
+								var rRep = new RegEx.Replaceable.Replaceable(rDummy);
+								var sRep = new RegEx.Replaceable.Replaceable(sDummy);
+								var reps = rRes.getReplaceables();
+								var reps = reps.push(rRep);
+								var reps = reps.push(sRep);
+
+								results.push(new Result(new RegEx.Dummy.OrDummy(rDummy, sDummy), depth, pool, reps));
 						});
 				});
 
 				// r&s
-				generate((depth-1), pool, replaceables).foreach(function(i, r) {
-						generate((depth-1), r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+				generate((depth-1), pool, reps).foreach(function(i, rRes) {
+						generate((depth-1), rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
 
-								rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
-								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
+								// Dummy
+								var rDummy = rRes.getDummy();
+								var sDummy = sRes.getDummy();
 
-								replaceables = s.getReplaceable();
-								replaceables = replaceables.add(rr);
-								replaceables = replaceables.add(sr);
+								// Pool
+								var pool = sRes.getPool();
 
-								results.push(new Result(new RegEx.Dummy.AndDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, replaceables));
+								// Replaceable
+								var rRep = new RegEx.Replaceable.Replaceable(rDummy);
+								var sRep = new RegEx.Replaceable.Replaceable(sDummy);
+								var reps = rRes.getReplaceables();
+								var reps = reps.push(rRep);
+								var reps = reps.push(sRep);
+
+								results.push(new Result(new RegEx.Dummy.AndDummy(rDummy, sDummy), depth, pool, reps));
 						});
 				});
 
 				// !r
-				generate((depth-1), pool, replaceables).foreach(function(i, r) {
+				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 
-						rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
+						// Dummy
+						var rDummy = rRes.getDummy();
 
-								replaceables = r.getReplaceable();
-								replaceables = replaceables.add(rr);
+						// Pool
+						var pool = rRes.getPool();
 
-						results.push(new Result(new RegEx.Dummy.NegDummy(r.getRegEx()), r.getPool(), depth, replaceables));
+						// Replaceable
+						var rRep = new RegEx.Replaceable.Replaceable(rDummy);
+						var reps = rRes.getReplaceables();
+						var reps = reps.push(rRep);
+
+						results.push(new Result(new RegEx.Dummy.NegDummy(rDummy), depth, pool, reps));
 				});
 
 				// r.s
-				generate((depth-1), pool, replaceables).foreach(function(i, r) {
-						generate(1, r.getPool(), r.getReplaceable()).foreach(function(j, s) {
+				generate((depth-1), pool, reps).foreach(function(i, rRes) {
+						generate(1, rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
 
-								rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
-								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
+								// Dummy
+								var rDummy = rRes.getDummy();
+								var sDummy = sRes.getDummy();
 
-								replaceables = s.getReplaceable();
-								replaceables = replaceables.add(rr);
-								replaceables = replaceables.add(sr);
+								// Pool
+								var pool = sRes.getPool();
 
-								results.push(new Result(new RegEx.Dummy.ConcatDummy(rr, sr), s.getPool(), depth, replaceables));
+								// Replaceable
+								var rRep = new RegEx.Replaceable.Replaceable(rDummy);
+								var sRep = new RegEx.Replaceable.Replaceable(sDummy);
+								var reps = rRes.getReplaceables();
+								var reps = reps.push(rRep);
+								var reps = reps.push(sRep);
 
-								//results.push(new Result(new RegEx.Dummy.ConcatDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
-								//		results.push(new RegEx.Dummy.ConcatDummy(r,s));
+								results.push(new Result(new RegEx.Dummy.ConcatDummy(rDummy, sDummy), depth, pool, reps));
 						});
 				});
 
-
+				// TODO einstellige und zweistellige in eine function zudsammenfassen
 
 				// {} 
 				// OPTINAL: represents real/used regex
@@ -215,18 +219,19 @@
 				// 
 				// TODO change "name" to the correspondig english word used in RegEx 
 				//pool
-				
-				
-				var l = pool.newLiteral();
-				var lr = new RegEx.Replaceable.Replaceable(l.literal);
 
-				replaceables = replaceables.add(lr);
-				results.push(new Result(l.literal, l.pool, 1, replaceables));
+
+				// Dummy
+				var lDummy = pool.getInLiteral();
+				// Pool
+				var lPool = pool.newPool(lDummy);
+				// Replaceable
+				var lRep = new RegEx.Replaceable.Replaceable(lDummy);
+				var reps = reps.push(lRep);
+
+				results.push(new Result(lDummy, 1, lPool, reps));
 
 				return results;
 		}
-
-
-
 
 })(__RegEx);

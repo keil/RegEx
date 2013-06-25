@@ -25,7 +25,7 @@
 		 * @param pool			Pre-pool
 		 * @param literal		Regular Expression Literal
 		 */
-		function Pool(pool) {
+		function Pool(pool, literal) {
 
 				/** Clone 
 				 * @param cache	Pool-cache
@@ -47,7 +47,7 @@
 				var notInCache = (pool==undefined) ? new StringMap() : clone(pool.getNotInCache());
 
 				var inCounter = (pool==undefined) ? 0 : pool.getInCounter();
-				var notIncounter = (pool==undefined) ? 0 :  pool.getNotInCounter();
+				var notInCounter = (pool==undefined) ? 0 :  pool.getNotInCounter();
 
 				var inLast = null;
 				var notInLast = null;

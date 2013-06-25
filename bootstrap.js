@@ -83,10 +83,9 @@ load("statistics.js")
 // TEST
 //////////////////////////////////////////////////
 
-RegEx.Generator.make(3).foreach(function(i,result) {
-		
-		__sysout("@" + i + " " + result.toString());
-		__sysout(result.getRegEx().dump()); //.dump();
+RegEx.Generator.make(3).foreach(function(i, result) {
+		__sysout("RESULT (" + i + "): " + result.toString());
+		__sysout(result.getDummy().dump());
 });
 
 var a = new RegEx.Dummy.NameDummy("chacha");
