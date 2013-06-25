@@ -25,6 +25,13 @@ Array.prototype.foreach = function( callback ) {
 		}
 }
 
+Array.prototype.append = function( array ) {
+		var global = this;
+		array.foreach(function(i, v) {
+				global.push(v);
+		});
+}
+
 // Array Remove - By John Resig (MIT Licensed)
 Array.prototype.remove = function(from, to) {
 		var rest = this.slice((to || from) + 1 || this.length);

@@ -38,7 +38,7 @@
 				}
 
 				var inString = 'a';
-				var notInstring = 'b';
+				var notInString = 'b';
 
 				var inCache = (pool==undefined) ? new StringMap() : clone(pool.getInCache());
 				var notInCache = (pool==undefined) ? new StringMap() : clone(pool.getNotInCache());

@@ -21,7 +21,10 @@
 		 * @param dummy	Dummy Object
 		 */
 		function Replaceable(dummy) {
+				var origin = dummy;
 				this.replaceBy = function(newdummy) { dummy = newdummy; };
+				this.restore = function() { dummy = origin; };
+				this.getOrigin = function() { return origin; };
 				this.dump = function() { return dummy.dump(); };
 				this.toString = function () { return "[" + dummy + "]" };
 		}
@@ -63,6 +66,8 @@
 				this.toString = function () { return cache.toString(); };
 				/** Get Length */
 				this.getLength = function() { return cache.length; }
+				/** For Each*/
+				this.foreach = function(callback) { cache.foreach(callback); };
 		}
 		SELF.Cache = Cache;
 

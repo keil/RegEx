@@ -84,7 +84,7 @@
 						var reps = rRes.getReplaceables();
 						var reps = reps.push(rRep);
 
-						results.push(new Result(new RegEx.Dummy.OptionalDummy(rDummy), depth, pool, reps));
+						results.push(new Result(new RegEx.Dummy.OptionalDummy(rRep), depth, pool, reps));
 				});
 
 				// r*
@@ -101,7 +101,7 @@
 						var reps = rRes.getReplaceables();
 						var reps = reps.push(rRep);
 
-						results.push(new Result(new RegEx.Dummy.StarDummy(rDummy), depth, pool, reps));
+						results.push(new Result(new RegEx.Dummy.StarDummy(rRep), depth, pool, reps));
 				});
 
 				// r+s
@@ -122,7 +122,7 @@
 								var reps = reps.push(rRep);
 								var reps = reps.push(sRep);
 
-								results.push(new Result(new RegEx.Dummy.OrDummy(rDummy, sDummy), depth, pool, reps));
+								results.push(new Result(new RegEx.Dummy.OrDummy(rRep, sRep), depth, pool, reps));
 						});
 				});
 
@@ -144,7 +144,7 @@
 								var reps = reps.push(rRep);
 								var reps = reps.push(sRep);
 
-								results.push(new Result(new RegEx.Dummy.AndDummy(rDummy, sDummy), depth, pool, reps));
+								results.push(new Result(new RegEx.Dummy.AndDummy(rRep, sRep), depth, pool, reps));
 						});
 				});
 
@@ -162,7 +162,7 @@
 						var reps = rRes.getReplaceables();
 						var reps = reps.push(rRep);
 
-						results.push(new Result(new RegEx.Dummy.NegDummy(rDummy), depth, pool, reps));
+						results.push(new Result(new RegEx.Dummy.NegDummy(rRep), depth, pool, reps));
 				});
 
 				// r.s
@@ -183,7 +183,7 @@
 								var reps = reps.push(rRep);
 								var reps = reps.push(sRep);
 
-								results.push(new Result(new RegEx.Dummy.ConcatDummy(rDummy, sDummy), depth, pool, reps));
+								results.push(new Result(new RegEx.Dummy.ConcatDummy(rRep, sRep), depth, pool, reps));
 						});
 				});
 
