@@ -36,7 +36,7 @@
 						cache.foreach(function(key, literal) {
 								newCache.set(key, literal);
 						});
-						if(literal!=undefined) newCache.set(literal.toString(), literal);
+						if(literal!=undefined) newCache.set(literal.dump().toString(), literal);
 						return newCache;
 				}
 
@@ -57,7 +57,7 @@
 				this.getInLiteral = function() {
 						inCounter++;
 						var key = inString+inCounter;
-						return inCache.has(key)? getInLiteral(): new RegEx.Dummy.NameDummy(key);
+						return inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? getInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
 				/* @return new NotIn-literal
@@ -65,7 +65,7 @@
 				this.getNotInLiteral = function() {
 						notInCounter++;
 						var key = notInString+notInCounter;
-						return notInCache.has(key)? getNotInLiteral(): new RegEx.Dummy.NameDummy(key);
+						return notInCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? getNotInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
 				/** New Literal

@@ -1,6 +1,6 @@
 /*
- * JavaScript Reflection API
- *  for Access Permission Contracts
+ * Efficient Solving of Regular Expression Inequalities 
+ *  Regular Expression Generator
  *
  * Copyright (c) 2013, Proglang, University of Freiburg.
  *  http://proglang.informatik.uni-freiburg.de/
@@ -9,8 +9,8 @@
  * Author Matthias Keil
  *  http://www.informatik.uni-freiburg.de/~keilr/
  *
- * $Date: 2013-04-30 13:00:09 +0200 (Tue, 30 Apr 2013) $
- * $Rev: 23215 $
+ * $Date: 2013-05-14 08:21:34 +0200 (Tue, 14 May 2013) $
+ * $Rev: 23219 $
  */
 
 // load hash set
@@ -84,12 +84,12 @@ load("statistics.js")
 //////////////////////////////////////////////////
 
 RegEx.Generator.make(3).foreach(function(i, result) {
-		__sysout("RESULT (" + i + "): " + result.toString());
+		__sysout("RESULT (" + i + "): \n " + result.toString() + "\n");
 		__sysout(result.getDummy().dump());
 });
 
-var a = new RegEx.Dummy.NameDummy("chacha");
-var b = new RegEx.Dummy.NameDummy("martha");
+//var a = new RegEx.Dummy.NameDummy("chacha");
+//var b = new RegEx.Dummy.NameDummy("martha");
 
 
 //var test = new RegEx.Replaceable.Replaceable(a);
