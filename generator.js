@@ -224,10 +224,20 @@
 				// TODO einkapseln
 
 
+
+				var lPool =  new RegEx.Pool.Pool(pool);
+				var lDummy = lPool.getInLiteral();
+
+
+
 				// Dummy
-				var lDummy = pool.getInLiteral();
+			//	var lDummy = pool.getInLiteral();
 				// Pool
-				var lPool = pool.newPool(lDummy);
+				//var lPool = pool.newPool(lDummy);
+				
+
+			//	lPool = new RegEx.Pool.Pool(new RegEx.Pool.Pool(), lDummy);
+//
 //				// Replaceable
 //				var lRep = new RegEx.Replaceable.Replaceable(lDummy);
 //				var reps = reps.push(lRep);

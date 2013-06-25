@@ -57,7 +57,16 @@
 				this.getInLiteral = function() {
 						inCounter++;
 						var key = inString+inCounter;
-						return inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? getInLiteral(): new RegEx.Dummy.NameDummy(key);
+
+						if(inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())) {
+							return this.getInLiteral();
+						} else {
+							var literal = new RegEx.Dummy.NameDummy(key);
+							inCache.set(literal.dump().toString(), literal);
+							return literal;
+						}
+// TODO
+					//	return inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? this.getInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
 				/* @return new NotIn-literal
@@ -65,7 +74,7 @@
 				this.getNotInLiteral = function() {
 						notInCounter++;
 						var key = notInString+notInCounter;
-						return notInCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? getNotInLiteral(): new RegEx.Dummy.NameDummy(key);
+						return notInCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? this.getNotInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
 				/** New Literal
