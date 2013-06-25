@@ -99,11 +99,12 @@
 
 							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
 
+							__sysout("!@$%@#$%@#%$^" + rr);
+
 								replaceables = r.getReplaceable();
-
-								__sysout("$$$" + replaceables.cache);
-
 								replaceables = replaceables.add(rr);
+
+								__sysout("\n\n\n$$$$$$$$$$" + r.getReplaceable().getLength() + "/" + replaceables.getLength() + "$$$$$$$$$$\n\n\n");
 
 
 						results.push(new Result(new RegEx.Dummy.OptionalDummy(r.getRegEx()), r.getPool(), depth, replaceables));
