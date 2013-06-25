@@ -53,7 +53,7 @@
 				var notInLast = null;
 
 				/* @return new In-literal
-				 */
+				*/
 				this.getInLiteral = function() {
 						inCounter++;
 						key = inString+inCounter;
@@ -61,7 +61,7 @@
 				};
 
 				/* @return new NotIn-literal
-				 */
+				*/
 				this.getNotInLiteral = function() {
 						notInCounter++;
 						key = notInString+notInCounter;

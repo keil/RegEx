@@ -66,8 +66,8 @@ load("contract.js");
 
 load("regex.js");
 
-load("pool.js");
 load("dummy.js");
+load("pool.js");
 load("replaceable.js");
 
 load("generator.js");
