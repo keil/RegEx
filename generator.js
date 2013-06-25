@@ -4,9 +4,9 @@
 		RegEx.Generator = SELF;
 
 
-		function Result(regex, pool, depth, replaceable) {
+		function Result(regex, pool, depth, cache) {
 
-				__sysout("@ " + regex + " / " + pool + " / " + depth + " / " + replaceable);	
+				__sysout("@ " + regex + " / " + pool + " / " + depth + " / " + cache.getLength());	
 
 				this.getRegEx = function() {
 						return regex;
@@ -21,8 +21,8 @@
 				};
 
 				this.getReplaceable = function() {
-						__sysout("!!" + replaceable);
-						return replaceable;
+						__sysout("!!" + cache);
+						return cache;
 				};
 
 				this.toString = function() {
@@ -78,9 +78,10 @@
 
 		function make(depth) {
 				var pool = new RegEx.Pool.Pool();
-				var replaceable = new Array();
+				//var replaceable = new Array();
+				var cache = new RegEx.Replaceable.Cache();	
 
-				return generate(depth, pool, replaceable);
+				return generate(depth, pool, cache);
 		}
 		SELF.make = make;
 
@@ -99,10 +100,13 @@
 							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
 
 								replaceables = r.getReplaceable();
-								replaceables.push(rr);
+
+								__sysout("$$$" + replaceables.cache);
+
+								replaceables = replaceables.add(rr);
 
 
-						results.push(new Result(new RegEx.Dummy.OptionalDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
+						results.push(new Result(new RegEx.Dummy.OptionalDummy(r.getRegEx()), r.getPool(), depth, replaceables));
 				});
 
 				// r*
@@ -111,10 +115,10 @@
 							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
 
 								replaceables = r.getReplaceable();
-								replaceables.push(rr);
+								replaceables = replaceables.add(rr);
 
 
-						results.push(new Result(new RegEx.Dummy.StarDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
+						results.push(new Result(new RegEx.Dummy.StarDummy(r.getRegEx()), r.getPool(), depth, replaceables));
 				});
 
 				// r+s
@@ -125,10 +129,10 @@
 								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
 
 								replaceables = r.getReplaceable();
-								replaceables.push(rr);
-								replaceables.push(sr);
+								replaceables = replaceables.add(rr);
+								replaceables = replaceables.add(sr);
 
-								results.push(new Result(new RegEx.Dummy.OrDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
+								results.push(new Result(new RegEx.Dummy.OrDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, replaceables));
 						});
 				});
 
@@ -140,10 +144,10 @@
 								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
 
 								replaceables = s.getReplaceable();
-								replaceables.push(rr);
-								replaceables.push(sr);
+								replaceables = replaceables.add(rr);
+								replaceables = replaceables.add(sr);
 
-								results.push(new Result(new RegEx.Dummy.AndDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, s.getReplaceable()));
+								results.push(new Result(new RegEx.Dummy.AndDummy(r.getRegEx(),s.getRegEx()), s.getPool(), depth, replaceables));
 						});
 				});
 
@@ -153,9 +157,9 @@
 						rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
 
 								replaceables = r.getReplaceable();
-								replaceables.push(rr);
+								replaceables = replaceables.add(rr);
 
-						results.push(new Result(new RegEx.Dummy.NegDummy(r.getRegEx()), r.getPool(), depth, r.getReplaceable()));
+						results.push(new Result(new RegEx.Dummy.NegDummy(r.getRegEx()), r.getPool(), depth, replaceables));
 				});
 
 				// r.s
@@ -166,8 +170,8 @@
 								sr = new RegEx.Replaceable.Replaceable(s.getRegEx());
 
 								replaceables = s.getReplaceable();
-								replaceables.push(rr);
-								replaceables.push(sr);
+								replaceables = replaceables.add(rr);
+								replaceables = replaceables.add(sr);
 
 								results.push(new Result(new RegEx.Dummy.ConcatDummy(rr, sr), s.getPool(), depth, replaceables));
 
@@ -202,7 +206,7 @@
 				var l = pool.newLiteral();
 				var lr = new RegEx.Replaceable.Replaceable(l.literal);
 
-				replaceables.push(lr);
+				replaceables = replaceables.add(lr);
 				results.push(new Result(l.literal, l.pool, 1, replaceables));
 
 				return results;

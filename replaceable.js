@@ -21,13 +21,21 @@
 						});
 				}
 
-				this.add = function(newReplaceable) {
+				this.add = function(replaceable) {
 						var newCache = new Array();
 						cache.foreach(function(key, replaceable) {
 								newCache.push(replaceable);
 						});
-						newCache.push(replaceable)
+						newCache.push(replaceable);
+
+						return new Cache(newCache);
 				};
+
+				this.toString = function () { return cache.toString(); };
+
+				this.getLength = function() { return cache.length; }
 		}
+		SELF.Cache = Cache;
+
 
 })(__RegEx);
