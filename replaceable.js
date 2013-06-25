@@ -17,39 +17,49 @@
 		SELF = {};
 		RegEx.Replaceable = SELF;
 
-		function Replaceable(dumpable) {
-				this.replaceBy = function(newdumpable) { dumpable = newdumpable; };
-				this.dump = function() { return dumpable.dump(); };
-				this.toString = function () { return "[" + dumpable + "]" };
+		/** Replaceable 
+		 * @param dummy	Dummy Object
+		 */
+		function Replaceable(dummy) {
+				this.replaceBy = function(newdummy) { dummy = newdummy; };
+				this.dump = function() { return dummy.dump(); };
+				this.toString = function () { return "[" + dummy + "]" };
 		}
 		SELF.Replaceable = Replaceable;
 
+		/** Replaceable Cache
+		 * @param arg	Replaceable Cache
+		 */
+		function Cache(arg, replaceable) {
 
-		function Cache(arg) {
-
-				var cache = new Array();
-
-				if(arg!=undefined) {
-						arg.foreach(function(key, replaceable) {
-							cache.push(replaceable);
+				/** Clone 
+				 * @param cache	Replaceable-cache
+				 * @return Cloned Replaceable-cache
+				 */
+				function clone(oldCache, replaceable) {
+						var newCache = new Array();
+						oldCache.foreach(function(key, replaceable) {
+							newCache.push(replaceable);
 						});
+						if(replaceable!=null) newCache.push(replaceable);
+						return newCache;
 				}
 
-				this.add = function(replaceable) {
-						var newCache = new Array();
-						cache.foreach(function(key, replaceable) {
-								newCache.push(replaceable);
-						});
-						newCache.push(replaceable);
+				var cache = (arg==undefined) ? new Array() : clone(arg, replaceable);
 
-						return new Cache(newCache);
+				/** Push
+				 * @param replaceable	Replaceable
+				 * @return Replaceable Cache
+				 */
+				this.push = function(replaceable) {
+						return new Cache(cache, replaceable);
 				};
 
+				/** To String */
 				this.toString = function () { return cache.toString(); };
-
+				/** Get Length */
 				this.getLength = function() { return cache.length; }
 		}
 		SELF.Cache = Cache;
-
 
 })(__RegEx);

@@ -27,11 +27,11 @@
 		 */
 		function Pool(pool) {
 
-				/** Merge 
+				/** Clone 
 				 * @param cache	Pool-cache
 				 * @return Cloned Pool-cache
 				 */
-				function merge(cache, literal) {
+				function clone(cache, literal) {
 						var newCache = new StringMap();
 						cache.foreach(function(key, literal) {
 								newCache.set(key, literal);
@@ -43,8 +43,8 @@
 				var inString = 'a';
 				var notInstring = 'b';
 
-				var inCache = (pool==undefined) ? new StringMap() : merge(pool.getInCache(), literal);
-				var notInCache = (pool==undefined) ? new StringMap() : merge(pool.getNotInCache());
+				var inCache = (pool==undefined) ? new StringMap() : clone(pool.getInCache(), literal);
+				var notInCache = (pool==undefined) ? new StringMap() : clone(pool.getNotInCache());
 
 				var inCounter = (pool==undefined) ? 0 : pool.getInCounter();
 				var notIncounter = (pool==undefined) ? 0 :  pool.getNotInCounter();
@@ -56,7 +56,7 @@
 				*/
 				this.getInLiteral = function() {
 						inCounter++;
-						key = inString+inCounter;
+						var key = inString+inCounter;
 						return inCache.has(key)? getInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
@@ -64,7 +64,7 @@
 				*/
 				this.getNotInLiteral = function() {
 						notInCounter++;
-						key = notInString+notInCounter;
+						var key = notInString+notInCounter;
 						return notInCache.has(key)? getNotInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
