@@ -22,28 +22,25 @@
 		//////////////////////////////////////////////////
 
 		/** Literal Pool
-		 * @param pool			Pre-pool
-		 * @param literal		Regular Expression Literal
+		 * @param pool	Pre-pool
 		 */
-		function Pool(pool, literal) {
+		function Pool(pool) {
 
 				/** Clone 
 				 * @param cache	Pool-cache
-				 * @return Cloned Pool-cache
 				 */
-				function clone(cache, literal) {
+				function clone(cache) {
 						var newCache = new StringMap();
 						cache.foreach(function(key, literal) {
 								newCache.set(key, literal);
 						});
-						if(literal!=undefined) newCache.set(literal.dump().toString(), literal);
 						return newCache;
 				}
 
 				var inString = 'a';
 				var notInstring = 'b';
 
-				var inCache = (pool==undefined) ? new StringMap() : clone(pool.getInCache(), literal);
+				var inCache = (pool==undefined) ? new StringMap() : clone(pool.getInCache());
 				var notInCache = (pool==undefined) ? new StringMap() : clone(pool.getNotInCache());
 
 				var inCounter = (pool==undefined) ? 0 : pool.getInCounter();
@@ -59,14 +56,12 @@
 						var key = inString+inCounter;
 
 						if(inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())) {
-							return this.getInLiteral();
+								return this.getInLiteral();
 						} else {
-							var literal = new RegEx.Dummy.NameDummy(key);
-							inCache.set(literal.dump().toString(), literal);
-							return literal;
+								var literal = new RegEx.Dummy.NameDummy(key);
+								inCache.set(literal.dump().toString(), literal);
+								return literal;
 						}
-// TODO
-					//	return inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? this.getInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
 				/* @return new NotIn-literal
@@ -74,15 +69,14 @@
 				this.getNotInLiteral = function() {
 						notInCounter++;
 						var key = notInString+notInCounter;
-						return notInCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())? this.getNotInLiteral(): new RegEx.Dummy.NameDummy(key);
-				};
 
-				/** New Literal
-				 * @param literal	Regular Expression Literal
-				 * @retrun Pool 
-				 */
-				this.newPool = function(literal) {
-						return new Pool(this, literal);
+						if(notInCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())) {
+								return this.getInLiteral();
+						} else {
+								var literal = new RegEx.Dummy.NameDummy(key);
+								notInCache.set(literal.dump().toString(), literal);
+								return literal;
+						}
 				};
 
 				/** To String
