@@ -26,26 +26,16 @@
 		 * @param depth RegEx depth
 		 * @param pool	Literal pool
 		 * @param cache	Replaceable Cache
-		 * \\ TODO change order
 		 */
 		function Result(dummy, depth, pool, cache) {
-
-				// TODO
-				//	__sysout("@ " + regex + " / " + pool + " / " + depth + " / " + cache.getLength());
-
-
 				/** Get Dummy */
 				this.getDummy = function() { return dummy; };
-
 				/** Get Depth */
 				this.getDepth = function() { return depth; };
-
 				/** Get Pool */
 				this.getPool = function() { return pool; };
-
 				/** Get Replaceables */
 				this.getReplaceables = function() { return cache; };
-
 				/** To String */
 				this.toString = function() { return '{' + dummy.toString()+ ' / ' + depth + ' / ' + pool.toString() + ' / ' +  cache.toString(); };
 		}
@@ -66,7 +56,6 @@
 				return generate(depth, pool, reps);
 		}
 		SELF.make = make;
-
 
 		/** Generate Function
 		 * @param depth	Nesting Index
@@ -198,49 +187,25 @@
 						});
 				});
 
-				// TODO einstellige und zweistellige in eine function zudsammenfassen
-
 				// {} 
 				// OPTINAL: represents real/used regex
-				//				results.push(new RegEx.Dummy.EmptySetLiteral());
+				// results.push(new RegEx.Dummy.EmptySetLiteral());
 
 				// ^
 				// OPTINAL: represents real/used regex
-				//				results.push(new RegEx.Dummy.EmptyLiteral());
+				// results.push(new RegEx.Dummy.EmptyLiteral());
 
 				// @
 				// OPTINAL: represents a SET
-				//				results.push(new RegEx.Dummy.AtLiteral());
+				// results.push(new RegEx.Dummy.AtLiteral());
 
 				// ?
 				// OPTINAL: represents a SET
-				//				results.push(new RegEx.Dummy.QMarkLiteral());
+				// results.push(new RegEx.Dummy.QMarkLiteral());
 
-				// 
-				// TODO change "name" to the correspondig english word used in RegEx 
-				//pool
-
-
-				// TODO einkapseln
-
-
-
+				// x 
 				var lPool =  new RegEx.Pool.Pool(pool);
 				var lDummy = lPool.getInLiteral();
-
-
-
-				// Dummy
-			//	var lDummy = pool.getInLiteral();
-				// Pool
-				//var lPool = pool.newPool(lDummy);
-				
-
-			//	lPool = new RegEx.Pool.Pool(new RegEx.Pool.Pool(), lDummy);
-//
-//				// Replaceable
-//				var lRep = new RegEx.Replaceable.Replaceable(lDummy);
-//				var reps = reps.push(lRep);
 				results.push(new Result(lDummy, 1, lPool, reps));
 
 				return results;
