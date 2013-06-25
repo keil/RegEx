@@ -221,14 +221,16 @@
 				//pool
 
 
+				// TODO einkapseln
+
+
 				// Dummy
 				var lDummy = pool.getInLiteral();
 				// Pool
 				var lPool = pool.newPool(lDummy);
-				// Replaceable
-				var lRep = new RegEx.Replaceable.Replaceable(lDummy);
-				var reps = reps.push(lRep);
-
+//				// Replaceable
+//				var lRep = new RegEx.Replaceable.Replaceable(lDummy);
+//				var reps = reps.push(lRep);
 				results.push(new Result(lDummy, 1, lPool, reps));
 
 				return results;
