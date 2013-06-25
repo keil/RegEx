@@ -99,8 +99,7 @@
 
 							rr = new RegEx.Replaceable.Replaceable(r.getRegEx());
 
-							__sysout("!@$%@#$%@#%$^" + rr);
-
+						
 								replaceables = r.getReplaceable();
 								replaceables = replaceables.add(rr);
 

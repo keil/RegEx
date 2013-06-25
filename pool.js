@@ -1,78 +1,105 @@
+/*
+ * Efficient Solving of Regular Expression Inequalities 
+ *  Regular Expression Generator
+ *
+ * Copyright (c) 2013, Proglang, University of Freiburg.
+ *  http://proglang.informatik.uni-freiburg.de/
+ * All rights reserved.
+ *
+ * Author Matthias Keil
+ *  http://www.informatik.uni-freiburg.de/~keilr/
+ *
+ * $Date: 2013-05-14 08:21:34 +0200 (Tue, 14 May 2013) $
+ * $Rev: 23219 $
+ */
 (function(RegEx) {
 
 		SELF = {};
 		RegEx.Pool = SELF;
 
-		function Pool(pool, counterIn, counteNotIn) {
+		//////////////////////////////////////////////////
+		// Interface to Access Permission Contracts
+		//////////////////////////////////////////////////
 
-				
-				// cache array
-				var cache = new StringMap();
-				// TODO chache for NotIn
+		/** Literal Pool
+		 * @param pool			Pre-pool
+		 * @param literal		Regular Expression Literal
+		 */
+		function Pool(pool) {
 
-				var counterIn = (counterIn==undefined) ? 0 : counterIn;
-				var counteNotIn = (counteNotIn==undefined) ? 0 : counteNotIn;
-
-				if(pool!=undefined) {
-						pool.foreach(function(key, literal) {
-							cache.set(key, literal);
+				/** Merge 
+				 * @param cache	Pool-cache
+				 * @return Cloned Pool-cache
+				 */
+				function merge(cache, literal) {
+						var newCache = new StringMap();
+						cache.foreach(function(key, literal) {
+								newCache.set(key, literal);
 						});
+						if(literal!=undefined) newCache.set(literal.toString(), literal);
+						return newCache;
 				}
 
+				var inString = 'a';
+				var notInstring = 'b';
 
-				// TODO CHANGE to RegEx Notation
-				var stringIn = 'l';
-				var stringNotIn = 'k';
+				var inCache = (pool==undefined) ? new StringMap() : merge(pool.getInCache(), literal);
+				var notInCache = (pool==undefined) ? new StringMap() : merge(pool.getNotInCache());
 
-				this.newLiteral = function() {
+				var inCounter = (pool==undefined) ? 0 : pool.getInCounter();
+				var notIncounter = (pool==undefined) ? 0 :  pool.getNotInCounter();
 
-						pool = new Pool(this, counterIn, counteNotIn);
-						literal = pool.getLiteralIn();
-						pool.set(literal)
-												
-						return {literal:literal, pool:pool};
+				var inLast = null;
+				var notInLast = null;
+
+				/* @return new In-literal
+				 */
+				this.getInLiteral = function() {
+						inCounter++;
+						key = inString+inCounter;
+						return inCache.has(key)? getInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
-				this.getLiteralIn = function() {
-						counterIn++;
-						key = stringIn+counterIn;
-
-						return cache.has(key)? this.newLiteral(): new RegEx.Dummy.NameDummy(key);				
+				/* @return new NotIn-literal
+				 */
+				this.getNotInLiteral = function() {
+						notInCounter++;
+						key = notInString+notInCounter;
+						return notInCache.has(key)? getNotInLiteral(): new RegEx.Dummy.NameDummy(key);
 				};
 
-				this.getLiteralNotIn = function() {
-						counterNotIn++;
-						key = stringNotIn+counterNotIn;
-
-						return new RegEx.Dummy.NameDummy(key);
+				/** New Literal
+				 * @param literal	Regular Expression Literal
+				 * @retrun Pool 
+				 */
+				this.newPool = function(literal) {
+						return new Pool(this, literal);
 				};
 
-				this.set = function() {
-						cache.set(key, literal);
-				};
-
-				this.contains = function(literal) {
-						return cache.has(key);
-				};
-
+				/** To String
+				 * @return String
+				 */
 				this.toString = function() {
-						// TODO
-						return "";
+						var string = "";
+						inCache.foreach(function(key, literal) {string += key + ';';});
+						notInCache.foreach(function(key, literal) {string += key + ';';});
+						return '{' + string + '}';
 				};
 
+				/** Get In-Cache */
+				this.getInCache = function() { return inCache; };
+				/** Get NotIn-Cache */
+				this.getNotInCache = function() { return notInCache; };
+				/** Get In-Counter */
+				this.getInCounter = function() { return inCounter; };
+				/** Get NotIn-Cache */
+				this.getNotInCounter = function() { return notInCounter; };
+
+				/** For Each */
 				this.foreach = function(callback) {
 						cache.foreach(callback);
 				};
 		}
 		SELF.Pool = Pool;
 
-
-
-
-
 })(__RegEx);
-
-// RegExSubSet
-
-
-

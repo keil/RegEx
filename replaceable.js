@@ -6,7 +6,7 @@
 		function Replaceable(dumpable) {
 				this.replaceBy = function(newdumpable) { dumpable = newdumpable; };
 				this.dump = function() { return dumpable.dump(); };
-				this.toString = function () { return "[" + dumpable.dump() + "]" };
+				this.toString = function () { return "[" + dumpable + "]" };
 		}
 		SELF.Replaceable = Replaceable;
 
