@@ -56,8 +56,17 @@
 						// Or Transformation
 						results.append(mkOrTransformation(result));
 
-						// Literandl Transformation
+						// And Transformation
 						results.append(mkAndTransformation(result));
+
+						// Opt Transformation
+						results.append(mkOptTransformation(result));
+
+						// Star Transformation
+						results.append(mkStarTransformation(result));
+
+						// Not Transformation
+						results.append(mkNotTransformation(result));
 
 				});
 
@@ -78,7 +87,11 @@
 		// Transformation Rules
 		//////////////////////////////////////////////////
 
-		/** Replace: ..r.. -> ..s..
+		/**
+		 * Replace: ..r.. -> ..s..
+		 * Replace: ..r.. -> ..r*..
+		 * Replace: ..r.. -> ..r?..
+		 * Replace: ..r.. -> ..!(s)..
 		 * @param result	Generator Result
 		 */
 		function mkLiteralTransformation(result) {
@@ -98,8 +111,29 @@
 
 						var modification = dummy.dump();
 
+						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));
+						// s != r
 						results.push(new Result(modification, origin, result.getDepth(), false));
+
+
+
+						// r <= r*
+						// TODO
+						// r* != r
+						// TODO
+						
+						
+						// r? <= r
+						// TODO
+						// r != r?
+						// TODO
+
+						// r <= !(s)
+						// TODO
+						// !(s) != r
+
+
 
 						replaceable.restore();
 				});
@@ -166,24 +200,57 @@
 		}
 
 
+		// TODO
+		/** Replace: ..r?.. -> ..r..
+		 * @param result	Generator Result
+		 */
+		function mkOptTransformation(result) {
+				var results = new Array();
+
+				//var dummy = result.getDummy();
+				//var pool = result.getPool();
+
+				// Origin
+				//var origin = dummy.dump();
+
+				// Modification
+				//result.getReplaceables().foreach(function(i, replaceable) {
+
+						//var newLiteral = new RegEx.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
+						//replaceable.replaceBy(newLiteral);
+
+						//var modification = dummy.dump();
+
+						//results.push(new Result(origin, modification, result.getDepth(), false));
+						//results.push(new Result(modification, origin, result.getDepth(), true));
+
+						//replaceable.restore();
+				//});
+
+				return results;
+		}
 
 
+		// TODO
+		/** Replace: ..r*.. -> ..r..
+		 * @param result	Generator Result
+		 */
+		function mkStarTransformation(result) {
+				var results = new Array();
 
-		// ..r.. -> ..r*..
+				return results;
+				// copy from mkOptTransformation
+		}
 
-		// ..!(r).. --> ..s..
+		// TODO
+		/** Replace: ..!(r).. -> ..r..
+		 * @param result	Generator Result
+		 */
+		function mkNotTransformation(result) {
+				var results = new Array();
 
-		// ..r*.. -> ..r..
-		//
-		// ..r.. -> ..r?..
-		//
-
-		// ..r?.. -> ..r..
-
-
-
-		// 
-
-
+				return results;
+				// copy from mkOptTransformation
+		}
 
 })(__RegEx);
