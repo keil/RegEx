@@ -106,10 +106,25 @@
 				// Modification
 				result.getReplaceables().foreach(function(i, replaceable) {
 
+						__sysout("ORIGIN: " + origin);
+
 						var newLiteral = pool.getNotInLiteral();
+
+						__sysout("REPLACEABLE: " + replaceable);
+						__sysout("NEW LITERAL: " + newLiteral);
+
+
 						replaceable.replaceBy(newLiteral);
 
+						__sysout("REPLACEABLE: " + replaceable);
+
+
 						var modification = dummy.dump();
+
+							__sysout("MIDIFICATION: " + modification);
+
+							__sysout("\n\n\n");
+
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));

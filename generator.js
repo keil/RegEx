@@ -164,14 +164,14 @@
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var dummy = new RegEx.Dummy.NegDummy(rRes.getDummy())
+						var dummy = new RegEx.Dummy.NegDummy(rRes.getDummy());
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
-				// Replaceables
-				var reps = rRes.getReplaceables();
-				var reps = reps.push(rep);
+						// Replaceables
+						var reps = rRes.getReplaceables();
+						var reps = reps.push(rep);
 
-				results.push(new Result(rep, depth, pool, reps));
+						results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r.s
@@ -228,7 +228,7 @@
 				var dummy = pool.getInLiteral();
 				var rep = new RegEx.Replaceable.Replaceable(dummy);
 				var reps = reps.push(rep);
-				results.push(new Result(dummy, 1, pool, reps));
+				results.push(new Result(rep, 1, pool, reps));
 
 				return results;
 		}
