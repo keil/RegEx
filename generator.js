@@ -73,56 +73,62 @@
 				// r?
 				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 
-						// Dummy
-						var rDummy = rRes.getDummy();
+						// Depth
+						var depth = rRes.getDepth()+1;
 
 						// Pool
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var rRep = new RegEx.Replaceable.Replaceable(rDummy);
-						var reps = rRes.getReplaceables();
-						var reps = reps.push(rRep);
+						var dummy = new RegEx.Dummy.OptionalDummy(rRes.getDummy());
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
-						results.push(new Result(new RegEx.Dummy.OptionalDummy(rRep), depth, pool, reps));
+						// Replaceables
+						var reps = rRes.getReplaceables();
+						var reps = reps.push(rep);
+
+						results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r*
 				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 
-						// Dummy
-						var rDummy = rRes.getDummy();
+						// Depth
+						var depth = rRes.getDepth()+1;
 
 						// Pool
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var rRep = new RegEx.Replaceable.Replaceable(rDummy);
-						var reps = rRes.getReplaceables();
-						var reps = reps.push(rRep);
+						var dummy = new RegEx.Dummy.StarDummy(rRes.getDummy());
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
-						results.push(new Result(new RegEx.Dummy.StarDummy(rRep), depth, pool, reps));
+						// Replaceables
+						var reps = rRes.getReplaceables();
+						var reps = reps.push(rep);
+
+						results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r+s
 				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 						generate((depth-1), rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
 
-								// Dummy
-								var rDummy = rRes.getDummy();
-								var sDummy = sRes.getDummy();
+								// Depth
+								var depth = Math.max(rRes.getDepth(), sRes.getDepth())+1;
 
 								// Pool
 								var pool = sRes.getPool();
 
 								// Replaceable
-								var rRep = new RegEx.Replaceable.Replaceable(rDummy);
-								var sRep = new RegEx.Replaceable.Replaceable(sDummy);
-								var reps = rRes.getReplaceables();
-								var reps = reps.push(rRep);
-								var reps = reps.push(sRep);
+								var dummy = new RegEx.Dummy.OrDummy(rRes.getDummy(), sRes.getDummy());
+								var rep = new RegEx.Replaceable.Replaceable(dummy);
 
-								results.push(new Result(new RegEx.Dummy.OrDummy(rRep, sRep), depth, pool, reps));
+								// Replaceables
+								var reps = sRes.getReplaceables();
+								var reps = reps.push(rep);
+
+								results.push(new Result(rep, depth, pool, reps));
 						});
 				});
 
@@ -130,83 +136,99 @@
 				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 						generate((depth-1), rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
 
-								// Dummy
-								var rDummy = rRes.getDummy();
-								var sDummy = sRes.getDummy();
+								// Depth
+								var depth = Math.max(rRes.getDepth(), sRes.getDepth())+1;
 
 								// Pool
 								var pool = sRes.getPool();
 
 								// Replaceable
-								var rRep = new RegEx.Replaceable.Replaceable(rDummy);
-								var sRep = new RegEx.Replaceable.Replaceable(sDummy);
-								var reps = rRes.getReplaceables();
-								var reps = reps.push(rRep);
-								var reps = reps.push(sRep);
+								var dummy = new RegEx.Dummy.AndDummy(rRes.getDummy(), sRes.getDummy());
+								var rep = new RegEx.Replaceable.Replaceable(dummy);
 
-								results.push(new Result(new RegEx.Dummy.AndDummy(rRep, sRep), depth, pool, reps));
+								// Replaceables
+								var reps = sRes.getReplaceables();
+								var reps = reps.push(rep);
+
+								results.push(new Result(rep, depth, pool, reps));
 						});
 				});
 
 				// !r
 				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 
-						// Dummy
-						var rDummy = rRes.getDummy();
+						// Depth
+						var depth = rRes.getDepth()+1;
 
 						// Pool
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var rRep = new RegEx.Replaceable.Replaceable(rDummy);
-						var reps = rRes.getReplaceables();
-						var reps = reps.push(rRep);
+						var dummy = new RegEx.Dummy.NegDummy(rRes.getDummy())
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
-						results.push(new Result(new RegEx.Dummy.NegDummy(rRep), depth, pool, reps));
+				// Replaceables
+				var reps = rRes.getReplaceables();
+				var reps = reps.push(rep);
+
+				results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r.s
 				generate((depth-1), pool, reps).foreach(function(i, rRes) {
 						generate(1, rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
 
-								// Dummy
-								var rDummy = rRes.getDummy();
-								var sDummy = sRes.getDummy();
+								// Depth
+								var depth = Math.max(rRes.getDepth(), sRes.getDepth())+1;
 
 								// Pool
 								var pool = sRes.getPool();
 
 								// Replaceable
-								var rRep = new RegEx.Replaceable.Replaceable(rDummy);
-								var sRep = new RegEx.Replaceable.Replaceable(sDummy);
-								var reps = rRes.getReplaceables();
-								var reps = reps.push(rRep);
-								var reps = reps.push(sRep);
+								var dummy = new RegEx.Dummy.ConcatDummy(rRes.getDummy(), sRes.getDummy());
+								var rep = new RegEx.Replaceable.Replaceable(dummy);
 
-								results.push(new Result(new RegEx.Dummy.ConcatDummy(rRep, sRep), depth, pool, reps));
+								// Replaceables
+								var reps = sRes.getReplaceables();
+								var reps = reps.push(rep);
+
+								results.push(new Result(rep, depth, pool, reps));
 						});
 				});
 
-				// {} 
 				// OPTINAL: represents real/used regex
-				// results.push(new RegEx.Dummy.EmptySetLiteral());
+				if(RegEx.config.full) {
+						// {} 
+						var dummy = new RegEx.Dummy.EmptySetDummy();
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var reps = reps.push(rep);
+						results.push(new Result(dummy, 1, pool, reps));
 
-				// ^
-				// OPTINAL: represents real/used regex
-				// results.push(new RegEx.Dummy.EmptyLiteral());
+						// ^
+						var dummy = new RegEx.Dummy.EmptyDummy();
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var reps = reps.push(rep);
+						results.push(new Result(dummy, 1, pool, reps));
 
-				// @
-				// OPTINAL: represents a SET
-				// results.push(new RegEx.Dummy.AtLiteral());
+						// @
+						var dummy = new RegEx.Dummy.AtDummy();
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var reps = reps.push(rep);
+						results.push(new Result(dummy, 1, pool, reps));
 
-				// ?
-				// OPTINAL: represents a SET
-				// results.push(new RegEx.Dummy.QMarkLiteral());
+						// ?
+						var dummy = new RegEx.Dummy.QMarkDummy();
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var reps = reps.push(rep);
+						results.push(new Result(dummy, 1, pool, reps));
+				}
 
 				// x 
-				var lPool =  new RegEx.Pool.Pool(pool);
-				var lDummy = lPool.getInLiteral();
-				results.push(new Result(lDummy, 1, lPool, reps));
+				var pool =  new RegEx.Pool.Pool(pool);
+				var dummy = pool.getInLiteral();
+				var rep = new RegEx.Replaceable.Replaceable(dummy);
+				var reps = reps.push(rep);
+				results.push(new Result(dummy, 1, pool, reps));
 
 				return results;
 		}

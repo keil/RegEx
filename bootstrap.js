@@ -38,9 +38,6 @@ load("system.js");
 // load apc
 load("apc.js");
 
-// load configuration
-load("config.js");
-
 // load trace path
 // load("path.js");
 //load("pathtrie.js");
@@ -65,6 +62,7 @@ load("contract.js");
 //////////////////////////////////////////////////
 
 load("regex.js");
+load("config.js");
 
 load("dummy.js");
 load("pool.js");
@@ -87,14 +85,14 @@ var results = RegEx.Generator.make(3);
 
 results.foreach(function(i, result) {
 		__sysout("RESULT (" + i + "): \n " + result.toString() + "\n");
-		__sysout(result.getDummy().dump());
-});
-
-var results = RegEx.Transformation.make(results);
-results.foreach(function(i, result) {
-		__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
 		//__sysout(result.getDummy().dump());
 });
+
+//var results = RegEx.Transformation.make(results);
+//results.foreach(function(i, result) {
+//		__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
+		//__sysout(result.getDummy().dump());
+//});
 
 /*
 var a = new RegEx.Dummy.NameDummy("chacha");
