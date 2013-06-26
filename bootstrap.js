@@ -75,6 +75,7 @@ load("transformation.js");
 
 load("statistics.js")
 
+load("run.js");
 
 
 //////////////////////////////////////////////////
@@ -87,6 +88,8 @@ results.foreach(function(i, result) {
 		__sysout("RESULT (" + i + "): \n " + result.toString() + "\n");
 		//__sysout(result.getDummy().dump());
 });
+
+RegEx.run.run();
 
 //var results = RegEx.Transformation.make(results);
 //results.foreach(function(i, result) {
