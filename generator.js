@@ -51,7 +51,17 @@
 		 */
 		function make(depth) {
 				var pool = new RegEx.Pool.Pool(undefined, undefined);
-				var reps = new RegEx.Replaceable.Cache();	
+				
+				var reps = new RegEx.Replaceable.Store(
+								new RegEx.Replaceable.Cache(), // Literal
+								new RegEx.Replaceable.Cache(), // Opt
+								new RegEx.Replaceable.Cache(), // Star
+								new RegEx.Replaceable.Cache(), // Or
+								new RegEx.Replaceable.Cache(), // And
+								new RegEx.Replaceable.Cache(), // Neg
+								new RegEx.Replaceable.Cache()  // Concat
+								);
+				//var reps = new RegEx.Replaceable.Cache();	
 
 				return generate(depth, pool, reps);
 		}
@@ -85,7 +95,7 @@
 
 						// Replaceables
 						var reps = rRes.getReplaceables();
-						var reps = reps.push(rep);
+						var reps = reps.pushOptional(rep);
 
 						results.push(new Result(rep, depth, pool, reps));
 				});
@@ -105,7 +115,7 @@
 
 						// Replaceables
 						var reps = rRes.getReplaceables();
-						var reps = reps.push(rep);
+						var reps = reps.pushStar(rep);
 
 						results.push(new Result(rep, depth, pool, reps));
 				});
@@ -126,7 +136,7 @@
 
 								// Replaceables
 								var reps = sRes.getReplaceables();
-								var reps = reps.push(rep);
+								var reps = reps.pushOr(rep);
 
 								results.push(new Result(rep, depth, pool, reps));
 						});
@@ -148,7 +158,7 @@
 
 								// Replaceables
 								var reps = sRes.getReplaceables();
-								var reps = reps.push(rep);
+								var reps = reps.pushAnd(rep);
 
 								results.push(new Result(rep, depth, pool, reps));
 						});
@@ -169,7 +179,7 @@
 
 						// Replaceables
 						var reps = rRes.getReplaceables();
-						var reps = reps.push(rep);
+						var reps = reps.pushNegation(rep);
 
 						results.push(new Result(rep, depth, pool, reps));
 				});
@@ -190,7 +200,7 @@
 
 								// Replaceables
 								var reps = sRes.getReplaceables();
-								var reps = reps.push(rep);
+								var reps = reps.pushConcat(rep);
 
 								results.push(new Result(rep, depth, pool, reps));
 						});
@@ -201,25 +211,25 @@
 						// {} 
 						var dummy = new RegEx.Dummy.EmptySetDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.push(rep);
+						var reps = reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 
 						// ^
 						var dummy = new RegEx.Dummy.EmptyDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.push(rep);
+						var reps = reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 
 						// @
 						var dummy = new RegEx.Dummy.AtDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.push(rep);
+						var reps = reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 
 						// ?
 						var dummy = new RegEx.Dummy.QMarkDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.push(rep);
+						var reps = reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 				}
 
@@ -227,7 +237,7 @@
 				var pool =  new RegEx.Pool.Pool(pool);
 				var dummy = pool.getInLiteral();
 				var rep = new RegEx.Replaceable.Replaceable(dummy);
-				var reps = reps.push(rep);
+				var reps = reps.pushLiteral(rep);
 				results.push(new Result(rep, 1, pool, reps));
 
 				return results;

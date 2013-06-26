@@ -88,11 +88,11 @@ results.foreach(function(i, result) {
 		//__sysout(result.getDummy().dump());
 });
 
-var results = RegEx.Transformation.make(results);
-results.foreach(function(i, result) {
-		__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
+//var results = RegEx.Transformation.make(results);
+//results.foreach(function(i, result) {
+//		__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
 		//__sysout(result.getDummy().dump());
-});
+//});
 
 /*
 var a = new RegEx.Dummy.NameDummy("chacha");
