@@ -174,7 +174,7 @@
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var dummy = new RegEx.Dummy.NegDummy(rRes.getDummy());
+						var dummy = new RegEx.Dummy.NegationDummy(rRes.getDummy());
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
 						// Replaceables

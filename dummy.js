@@ -88,11 +88,11 @@
 		SELF.AndDummy = AndDummy;
 
 		/** Dummy of !r */
-		function NegDummy(dumpable) {
+		function NegationDummy(dumpable) {
 				this.dump = function() { return new RegEx.Expressions.NegRegEx(dumpable.dump()); };
 				this.toString = function () { return "dummyof " + (new RegEx.Expressions.NegRegEx(dumpable.dump())) };
 		}
-		SELF.NegDummy = NegDummy;
+		SELF.NegationDummy = NegationDummy;
 
 		/** Dummy of r,s */
 		function ConcatDummy(dumpable0, dumpable1) {

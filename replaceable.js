@@ -142,7 +142,7 @@
 				/** Get Literal Cache */
 				this.getLiteralCache = function() { return literalCache; };
 				/** Get Opt Cache */
-				this.getOptCache = function() { return optCache; };
+				this.getOptionalCache = function() { return optCache; };
 				/** Get Star Cache */
 				this.getStarCache = function() { return starCache; };
 				/** Get Or Cache */
@@ -150,9 +150,34 @@
 				/** Get And Cache */
 				this.getAndCache = function() { return andCache; };
 				/** Get Neg Cache */
-				this.getNegCache = function() { return negCache; };
+				this.getNegationCache = function() { return negCache; };
 				/** Get Concat Cache */
 				this.getConcatCache = function() { return concatCache; };
+
+				/** Get All */
+				this.getAllCaches = function() {
+						var set = new Array();
+						set.append(literalCache);
+						set.append(optCache);
+						set.append(starCache);
+						set.append(orCache);
+						set.append(andCache);
+						set.append(negCache);
+						set.append(concatCache);
+						return set;
+				}
+
+				/** Get All without Negation */
+				this.getAllCachesWithoutNegation = function() {
+						var set = new Array();
+						set.append(literalCache);
+						set.append(optCache);
+						set.append(starCache);
+						set.append(orCache);
+						set.append(andCache);
+						set.append(concatCache);
+						return set;
+				}
 
 
 				/** To String */

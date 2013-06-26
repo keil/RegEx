@@ -57,28 +57,28 @@
 						
 
 						// Or Transformation
-						//results.append(mkOrTransformation(result));
+						results.append(mkOrTransformation(result));
 						// TODO für alle
 
 
 						// And Transformation
-						//results.append(mkAndTransformation(result));
+						results.append(mkAndTransformation(result));
 						// TODO give a notice
 						// TODO für alle
 
 
 						// Opt Transformation
-						//results.append(mkOptTransformation(result));
+						results.append(mkOptTransformation(result));
 						// TODO alles ohne Opt
 						
 
 						// Star Transformation
-						//results.append(mkStarTransformation(result));
+						results.append(mkStarTransformation(result));
 						// TODO alles Ohne Star
 						
 
-						// Not Transformation
-						//results.append(mkNotTransformation(result));
+						// Neg Transformation
+						results.append(mkNegTransformation(result));
 						// ToDo Alles`:w
 						
 
@@ -117,8 +117,17 @@
 				// Origin
 				var origin = dummy.dump();
 
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getLiteralCache());
+				set.append(result.getReplaceables().getOptionalCache());	
+				set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getOrCache());
+				set.append(result.getReplaceables().getAndCache());
+				set.append(result.getReplaceables().getConcatCache());
+
 				// Modification
-				result.getReplaceables().getLiteralCache().foreach(function(i, replaceable) {
+				set.foreach(function(i, replaceable) {
 
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
@@ -129,6 +138,32 @@
 						results.push(new Result(origin, modification, result.getDepth(), false));
 						// s != r
 						results.push(new Result(modification, origin, result.getDepth(), false));
+
+						replaceable.restore();
+				});
+
+
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getNegationCache());
+
+				// Modification
+				set.foreach(function(i, replaceable) {
+
+						var newLiteral = pool.getNotInLiteral();
+						replaceable.replaceBy(newLiteral);
+
+						var modification = dummy.dump();
+
+						// r != s
+						results.push(new Result(origin, modification, result.getDepth(), false));
+						// s != r
+						results.push(new Result(modification, origin, result.getDepth(), true));
+
+						replaceable.restore();
+				});
+
+
 
 
 
@@ -148,10 +183,6 @@
 						// !(s) != r
 
 
-
-						replaceable.restore();
-				});
-
 				return results;
 		}
 
@@ -168,15 +199,15 @@
 				var origin = dummy.dump();
 
 				// Modification
-				result.getReplaceables().foreach(function(i, replaceable) {
+				result.getReplaceables().getAllCachesWithoutNegation().foreach(function(i, replaceable) {
 
 						var newLiteral = new RegEx.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
 						replaceable.replaceBy(newLiteral);
 
 						var modification = dummy.dump();
 
-						results.push(new Result(origin, modification, result.getDepth(), true));
-						results.push(new Result(modification, origin, result.getDepth(), false));
+						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
+						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
 
 						replaceable.restore();
 				});
@@ -197,15 +228,15 @@
 				var origin = dummy.dump();
 
 				// Modification
-				result.getReplaceables().foreach(function(i, replaceable) {
+				result.getReplaceables().getAllCachesWithoutNegation().foreach(function(i, replaceable) {
 
 						var newLiteral = new RegEx.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
 						replaceable.replaceBy(newLiteral);
 
 						var modification = dummy.dump();
 
-						results.push(new Result(origin, modification, result.getDepth(), false));
-						results.push(new Result(modification, origin, result.getDepth(), true));
+						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? false : true));
+						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? true : false));
 
 						replaceable.restore();
 				});
@@ -215,56 +246,173 @@
 
 
 		// TODO
-		/** Replace: ..r?.. -> ..r..
+		/** Replace: ..r.. -> ..r?..
 		 * @param result	Generator Result
 		 */
 		function mkOptTransformation(result) {
 				var results = new Array();
 
-				//var dummy = result.getDummy();
-				//var pool = result.getPool();
+				var dummy = result.getDummy();
 
 				// Origin
-				//var origin = dummy.dump();
+				var origin = dummy.dump();
+				
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getLiteralCache());
+				set.append(result.getReplaceables().getOrCache());
+				set.append(result.getReplaceables().getAndCache());
+				set.append(result.getReplaceables().getConcatCache());
 
 				// Modification
-				//result.getReplaceables().foreach(function(i, replaceable) {
+				set.foreach(function(i, replaceable) {
 
-						//var newLiteral = new RegEx.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
-						//replaceable.replaceBy(newLiteral);
+						var newLiteral = new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
+						replaceable.replaceBy(newLiteral);
 
-						//var modification = dummy.dump();
+						var modification = dummy.dump();
 
-						//results.push(new Result(origin, modification, result.getDepth(), false));
-						//results.push(new Result(modification, origin, result.getDepth(), true));
+						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
+						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
 
-						//replaceable.restore();
-				//});
+						replaceable.restore();
+				});
+
+				// Set
+				var set = new Array();
+				set.append(result.getReplaceables().getOptionalCache());	
+				set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getNegationCache());
+
+				// Modification
+				set.foreach(function(i, replaceable) {
+
+						var newLiteral = new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
+						replaceable.replaceBy(newLiteral);
+
+						var modification = dummy.dump();
+
+						results.push(new Result(origin, modification, result.getDepth(), true));
+						results.push(new Result(modification, origin, result.getDepth(), true));
+
+						replaceable.restore();
+				});
 
 				return results;
 		}
 
 
-		// TODO
-		/** Replace: ..r*.. -> ..r..
+		/** Replace: ..r.. -> ..r*..
 		 * @param result	Generator Result
 		 */
 		function mkStarTransformation(result) {
 				var results = new Array();
 
+				var dummy = result.getDummy();
+
+				// Origin
+				var origin = dummy.dump();
+				
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getLiteralCache());
+				set.append(result.getReplaceables().getOptionalCache());
+				set.append(result.getReplaceables().getOrCache());
+				set.append(result.getReplaceables().getAndCache());
+				set.append(result.getReplaceables().getConcatCache());
+
+				// Modification
+				set.foreach(function(i, replaceable) {
+
+						var newLiteral = new RegEx.Dummy.StarDummy(replaceable.getOrigin());
+						replaceable.replaceBy(newLiteral);
+
+						var modification = dummy.dump();
+
+						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
+						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
+
+						replaceable.restore();
+				});
+
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getNegationCache());
+
+				// Modification
+				set.foreach(function(i, replaceable) {
+
+						var newLiteral = new RegEx.Dummy.StarDummy(replaceable.getOrigin());
+						replaceable.replaceBy(newLiteral);
+
+						var modification = dummy.dump();
+
+						results.push(new Result(origin, modification, result.getDepth(), true));
+						results.push(new Result(modification, origin, result.getDepth(), true));
+
+						replaceable.restore();
+				});
+
 				return results;
-				// copy from mkOptTransformation
 		}
 
 		// TODO
 		/** Replace: ..!(r).. -> ..r..
 		 * @param result	Generator Result
 		 */
-		function mkNotTransformation(result) {
+		function mkNegTransformation(result) {
 				var results = new Array();
 
+				var dummy = result.getDummy();
+				var pool = result.getPool();
+
+				// Origin
+				var origin = dummy.dump();
+				
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getLiteralCache());
+				set.append(result.getReplaceables().getOptionalCache());
+				set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getOrCache());
+				set.append(result.getReplaceables().getAndCache());
+				set.append(result.getReplaceables().getConcatCache());
+				set.append(result.getReplaceables().getNegationCache());
+
+				// Modification
+				set.foreach(function(i, replaceable) {
+
+						var newLiteral = new RegEx.Dummy.NegationDummy(replaceable.getOrigin());
+						replaceable.replaceBy(newLiteral);
+
+						var modification = dummy.dump();
+
+						results.push(new Result(origin, modification, result.getDepth(), false));
+						results.push(new Result(modification, origin, result.getDepth(), false));
+
+						replaceable.restore();
+				});
+
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getNegationCache());
+
+				// Modification
+				set.foreach(function(i, replaceable) {
+
+						var newLiteral = pool.getNotInLiteral();
+						replaceable.replaceBy(newLiteral);
+
+						var modification = dummy.dump();
+
+						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? false : true));
+						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? true : false));
+
+						replaceable.restore();
+				});
+
 				return results;
-				// copy from mkOptTransformation
 		}
 
 })(__RegEx);
