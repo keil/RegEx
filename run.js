@@ -36,17 +36,19 @@
 				print("");
 
 				print(" *** Start of Regular Expression Generator *** \n");
-				var time = new Date().getTime();
+				var total = new Date().getTime();
 
 				//////////////////////////////////////////////////
 				// Generate Results 
 				//////////////////////////////////////////////////
 
 				/** Out */ out("Generate Regular Expressionsss (" + RegEx.config.depth + ")");
+				/** Time */ var time = new Date().getTime();
 				var genRes = RegEx.Generator.make(RegEx.config.depth);
 				/** Out */ if(genRes!=undefined) ok(); else fail();
 				/** Notice */ if(genRes!=undefined) notice("Results: " + genRes.length );
 				/** Notice */ if(genRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
+				/** Notice */ if(genRes!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 
 				/** Debug */
 				if(RegEx.config.debug) {
@@ -60,10 +62,12 @@
 				//////////////////////////////////////////////////
 
 				/** Out */ out("Call Transformation");
+				/** Time */ var time = new Date().getTime();
 				var transRes = RegEx.Transformation.make(genRes);
 				/** Out */ if(transRes!=undefined) ok(); else fail();
 				/** Notice */ if(transRes!=undefined) notice("Results: " + transRes.length);
 				/** Notice */ if(transRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
+				/** Notice */ if(genRes!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 
 				/** Debug */
 				if(RegEx.config.debug) {
@@ -76,11 +80,27 @@
 				//  Solve Regular Expression Inequalities
 				//////////////////////////////////////////////////
 
+				/** Out */ out("Make Container");
+				/** Time */ var time = new Date().getTime();
+				var container = RegEx.Statistics.convert(transRes);
+				/** Out */ if(container!=undefined) ok(); else fail();
+				/** Notice */ if(container!=undefined) notice("Results: " + container.length);
+				/** Notice */ if(container!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
+				/** Notice */ if(container!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
+
+
 				/** Out */ out("Solve Regular Expression Inequalities");
-				var statistics = undefined;
+				/** Time */ var time = new Date().getTime();
+				var statistics = RegEx.Statistics.make(container);
 				/** Out */ if(statistics!=undefined) ok(); else fail();
+				/** Notice */ if(statistics!=undefined) notice("Results: " + statistics.length);
+				/** Notice */ if(statistics!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
+				/** Notice */ if(statistics!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
+
+
 
 				/** Out */ out("Use Antimirovs Approach");
+				/** Time */ var time = new Date().getTime();
 				var statistics = undefined;
 				/** Out */ if(statistics!=undefined) ok(); else fail();
 
@@ -89,6 +109,7 @@
 				//////////////////////////////////////////////////
 
 				/** Out */ out("Evaluate Statistics");
+				/** Time */ var time = new Date().getTime();
 				var statRes = undefined;
 				/** Out */ if(statRes!=undefined) ok(); else fail();
 

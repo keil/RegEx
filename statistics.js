@@ -15,63 +15,58 @@
 (function(RegEx) {
 
 		SELF = {};
-		RegEx.Statistic = SELF;
-
-		function __Container(RegExContainer) {
+		RegEx.Statistics = SELF;
 
 
-// TODO, vergl;eichoperation mit Antimirov ableitung
-// in respect to all literals in POOL (inCache/ notInCache)
-
-				var depth = undefined;
-
-				var counter = 0;
-
-				function derive(litersal) {
-						RegExContainer.derive(literal);
+		function Container(left, right, depth, isValid) {
+				var isSubset = undefined; 
+		
+				this.solveInequality = function() {
+					result = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
 				}
 
-
-				this.getStatistic = function() {
-
-						// TODO	
-						return new Statistic();
+				this.getStatistics = function() {
+					return left.toString() + " <= " + right.toString();
 				}
-
-				return this;
-
 		}
 
 
-		function Statistic(container) {
+		function Statistic(container, isSubset, isValid) {
 
-				this.toString = function() {
-						// TODO
-						return "CALL TOSTRING";
+				this.getState = function() {
+						return (isSubset==isValid);
 				};
 
-				this.dump = function() {
-						// TODO
-						return "CALL DUMP";
-				}
-
-				return this;
+				this.toString = function() {
+						var state = (isSubset==isValid) ? "OK" : "FAIL";
+						return ((isSubset==isValid) ? "OK" : "FAIL") + " " + container.toString() + " RESULT:" + isSubset + " VALID:" + isValid;
+				};
 		}
 
 
 
 
 
-		//		//////////////////////////////////////////////////
-		///		// APC . Effect
-		//		//////////////////////////////////////////////////
-		//		APC.Effect = {};
-		//		APC.Effect.getReadEffect		= __makeReadEffects;
-		//		APC.Effect.getWriteEffect		= __makeWriteEffects;
-		//		APC.Effect.appendEffectsToNode	= __appendEffects;
+
+
+		function convert(transformations) {
+				var results = new Array();
+				transformations.foreach(function(i, r) {
+					results.push(new Container(r.getLeft(), r.getRight(), r.getDepth(), r.isValid()));
+				});
+				return results
+		}
+		SELF.convert = convert;
+
+
+		function make(container) {
+				var results = new Array();
+				container.foreach(function(i, c) {
+						c.solveInequality();
+						results.push(c.getStatistics());
+				});
+				return results
+		}
+		SELF.make = make;
 
 })(__RegEx);
-
-// RegExSubSet
-
-

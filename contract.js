@@ -1293,14 +1293,14 @@
 					   lderive: function(larg) {
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
-							   else if(contract0.isNullable()) return new new __OrContract(new __ConcatContract(contract0.lderive(larg), contract1), contract1.lderive(larg));
+							   else if(contract0.isNullable()) return new __OrContract(new __ConcatContract(contract0.lderive(larg), contract1), contract1.lderive(larg));
 							   else return new __ConcatContract(contract0.lderive(larg), contract1);
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
-							   else if(contract0.isNullable()) return new new __OrContract(new __ConcatContract(contract0.uderive(larg), contract1), contract1.uderive(larg));
+							   else if(contract0.isNullable()) return new __OrContract(new __ConcatContract(contract0.uderive(larg), contract1), contract1.uderive(larg));
 							   else return new __ConcatContract(contract0.uderive(larg), contract1);
 					   },
 					   //////////////////////////////////////////////////
