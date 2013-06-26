@@ -31,6 +31,58 @@
 		SELF.Replaceable = Replaceable;
 
 		//////////////////////////////////////////////////
+		// Store
+		//////////////////////////////////////////////////
+
+		/** Replaceable Store
+		 * @param literalCache	Cache
+		 * @param optCache		Cache
+		 * @param starCache		Cache
+		 * @param orCache		Cache
+		 * @param andCache		Cache
+		 * @param negCache		Cache
+		 */
+		function Store(literalCache, optCache, starCache, orCache, andCache, negCache) {
+
+				/** x */
+				this.pushLiteral = function(regex) {
+						return new Store(literalCache.push(literalCache, literal), optCache, starCache, negCache);
+				};
+
+				/** r? */
+				this.pushOptional = function(regex) {
+						return new Store(literalCache.push(literalCache, literal), optCache, starCache, negCache);
+				};
+
+				/** r* */
+				this.pushStar = function(regex) {
+						return new Store(literalCache.push(literalCache, literal), optCache, starCache, negCache);
+				};
+
+				/** r+s */
+				this.pushOr = function(regex) {
+						return new Store(literalCache.push(literalCache, literal), optCache, starCache, negCache);
+				};
+
+				/** r&s */
+				this.pushAnd = function(regex) {
+						return new Store(literalCache.push(literalCache, literal), optCache, starCache, negCache);
+				};
+
+				/** !r */
+				this.pushNegation = function(regex) {
+						return new Store(literalCache.push(literalCache, literal), optCache, starCache, negCache);
+				};
+
+				/** To String */
+				this.toString = function () { return literalCache + " / " + optCache + " / " + starCache + " / " + orCache + " / " + andCache + " / " + negCache };
+		}
+		SELF.Store = Store;
+
+
+
+
+		//////////////////////////////////////////////////
 		// Cache
 		//////////////////////////////////////////////////
 
