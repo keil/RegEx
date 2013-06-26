@@ -60,9 +60,9 @@
 				//////////////////////////////////////////////////
 
 				/** Out */ out("Call Transformation");
-				var transRes = undefined; //RegEx.Transformation.make(genRes);
+				var transRes = RegEx.Transformation.make(genRes);
 				/** Out */ if(transRes!=undefined) ok(); else fail();
-				/** Notice */ if(transRes!=undefined) notice("Tuple: " + transRes.length);
+				/** Notice */ if(transRes!=undefined) notice("Results: " + transRes.length);
 				/** Notice */ if(transRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 
 				/** Debug */
@@ -106,20 +106,35 @@
 		function out(string) {
 				putstr(padding_right(string + " ", seperator, fstWidth));
 		}
+		SELF.out = out;
 
 		function notice(string) {
 				putstr(padding_right("... " + string + " ", seperator, fstWidth+sndWidth));
 				putstr("\n");
 		}
+		SELF.notice = notice;
 
 		function ok() {
 				putstr(padding_left(" OK", seperator, sndWidth));
 				putstr("\n");
 		}
+		SELF.ok = ok;
+
+		function done() {
+				putstr(padding_left(" DONE", seperator, sndWidth));
+				putstr("\n");
+		}
+		SELF.done = done;
 
 		function fail() {
 				putstr(padding_left(" FAIL", seperator, sndWidth));
 				putstr("\n");
 		}
+		SELF.fail = fail;
+
+		function subout(string) {
+				putstr(padding_right("... " + string + " ", seperator, fstWidth));
+		}
+		SELF.subout = subout;
 
 })(__RegEx);;

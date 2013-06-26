@@ -181,6 +181,9 @@
 						var reps = rRes.getReplaceables();
 						var reps = reps.pushNegation(rep);
 
+						// Invert
+						reps.invert();
+
 						results.push(new Result(rep, depth, pool, reps));
 				});
 

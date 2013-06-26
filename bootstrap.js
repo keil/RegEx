@@ -63,6 +63,7 @@ load("contract.js");
 
 load("regex.js");
 load("config.js");
+load("run.js");
 
 load("dummy.js");
 load("pool.js");
