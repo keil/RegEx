@@ -73,6 +73,19 @@
 				this.pushNegation = function(regex) {
 						return new Store(literalCache.push(literalCache, literal), optCache, starCache, negCache);
 				};
+				
+				/** Get Literal Cache */
+				this.getLiteralCache = function() { return literalCache; };
+				/** Get Opt Cache */
+				this.getOptCache = function() { return optCache; };
+				/** Get Star Cache */
+				this.getStarCache = function() { return starCache; };
+				/** Get Or Cache */
+				this.getOrCache = function() { return orCache; };
+				/** Get And Cache */
+				this.getAndCache = function() { return andCache; };
+				/** Get Neg Cache */
+				this.getNegCache = function() { return negCache; };
 
 				/** To String */
 				this.toString = function () { return literalCache + " / " + optCache + " / " + starCache + " / " + orCache + " / " + andCache + " / " + negCache };
