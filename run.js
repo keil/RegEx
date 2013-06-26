@@ -23,7 +23,7 @@
 
 		function run() {
 
-
+				print("");
 				print(" * Efficient Solving of Regular Expression Inequalities");
 				print(" *  Regular Expression Generator");
 				print("");
@@ -35,12 +35,8 @@
 				print(" *  http://www.informatik.uni-freiburg.de/~keilr/");
 				print("");
 
-
-				out("Start of Regular Expression Generator");
-				ok();
-
-				//out("Load Modules");
-				//fail();
+				print(" *** Start of Regular Expression Generator *** \n");
+				var time = new Date().getTime();
 
 				//////////////////////////////////////////////////
 				// Generate Results 
@@ -48,7 +44,9 @@
 
 				/** Out */ out("Generate Regular Expressionsss (" + RegEx.config.depth + ")");
 				var genRes = RegEx.Generator.make(RegEx.config.depth);
-				/** Debug */ if(genRes!=undefined) ok(); else fail();
+				/** Out */ if(genRes!=undefined) ok(); else fail();
+				/** Notice */ if(genRes!=undefined) notice("Results: " + genRes.length );
+				/** Notice */ if(genRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 
 				/** Debug */
 				if(RegEx.config.debug) {
@@ -57,33 +55,71 @@
 						});
 				}
 
+				//////////////////////////////////////////////////
+				// Transform Results 
+				//////////////////////////////////////////////////
 
-				//	ok();
+				/** Out */ out("Call Transformation");
+				var transRes = undefined; //RegEx.Transformation.make(genRes);
+				/** Out */ if(transRes!=undefined) ok(); else fail();
+				/** Notice */ if(transRes!=undefined) notice("Tuple: " + transRes.length);
+				/** Notice */ if(transRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
+
+				/** Debug */
+				/** Debug */
+				if(RegEx.config.debug) {
+
+						transRes.foreach(function(i, result) {
+								__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
+						});
+				}
+
+				//////////////////////////////////////////////////
+				//  Solve Regular Expression Inequalities
+				//////////////////////////////////////////////////
+
+				/** Out */ out("Solve Regular Expression Inequalities");
+				var statistics = undefined;
+				/** Out */ if(statistics!=undefined) ok(); else fail();
+
+				/** Out */ out("Use Antimirovs Approach");
+				var statistics = undefined;
+				/** Out */ if(statistics!=undefined) ok(); else fail();
+
+				//////////////////////////////////////////////////
+				//  Evaluate Statistics
+				//////////////////////////////////////////////////
+
+				/** Out */ out("Evaluate Statistics");
+				var statRes = undefined;
+				/** Out */ if(statRes!=undefined) ok(); else fail();
 
 
+
+				// TODO
+				print("\n *** Generator finished *** \n");
+				return undefined;
 		}
 		SELF.run = run;
 
 
 		function out(string) {
-				putstr(padding_right(string, seperator, fstWidth));
+				putstr(padding_right(string + " ", seperator, fstWidth));
+		}
+
+		function notice(string) {
+				putstr(padding_right("... " + string + " ", seperator, fstWidth+sndWidth));
+				putstr("\n");
 		}
 
 		function ok() {
-				putstr(padding_left("OK", seperator, sndWidth));
+				putstr(padding_left(" OK", seperator, sndWidth));
 				putstr("\n");
 		}
 
 		function fail() {
-				putstr(padding_left("FAIL", seperator, sndWidth));
+				putstr(padding_left(" FAIL", seperator, sndWidth));
 				putstr("\n");
 		}
 
-
-
-
-
-
-
 })(__RegEx);;
-

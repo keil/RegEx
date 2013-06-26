@@ -82,12 +82,12 @@ load("run.js");
 // TEST
 //////////////////////////////////////////////////
 // MAX 4, DEFAULT 3
-var results = RegEx.Generator.make(3);
+//var results = RegEx.Generator.make(3);
 
-results.foreach(function(i, result) {
-		__sysout("RESULT (" + i + "): \n " + result.toString() + "\n");
+//results.foreach(function(i, result) {
+//		__sysout("RESULT (" + i + "): \n " + result.toString() + "\n");
 		//__sysout(result.getDummy().dump());
-});
+//});
 
 RegEx.run.run();
 
