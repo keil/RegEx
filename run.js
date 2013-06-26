@@ -42,11 +42,23 @@
 				//out("Load Modules");
 				//fail();
 
+				//////////////////////////////////////////////////
+				// Generate Results 
+				//////////////////////////////////////////////////
 
-				out("Generate Regular Expressionsss (" + RegEx.config.depth + ")");
+				/** Out */ out("Generate Regular Expressionsss (" + RegEx.config.depth + ")");
 				var genRes = RegEx.Generator.make(RegEx.config.depth);
-				if(genRes!=undefined) ok(); else fail();
-			//	ok();
+				/** Debug */ if(genRes!=undefined) ok(); else fail();
+
+				/** Debug */
+				if(RegEx.config.debug) {
+						genRes.foreach(function(i, result) {
+								__sysout("RESULT (" + i + "): \n " + result.toString() + "\n");
+						});
+				}
+
+
+				//	ok();
 
 
 		}
