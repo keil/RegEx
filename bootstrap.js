@@ -90,7 +90,7 @@ results.foreach(function(i, result) {
 
 var results = RegEx.Transformation.make(results);
 results.foreach(function(i, result) {
-	//	__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
+		__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
 		//__sysout(result.getDummy().dump());
 });
 
