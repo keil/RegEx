@@ -20,7 +20,8 @@
 		function __Container(RegExContainer) {
 
 
-
+// TODO, vergl;eichoperation mit Antimirov ableitung
+// in respect to all literals in POOL (inCache/ notInCache)
 
 				var depth = undefined;
 
