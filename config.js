@@ -35,6 +35,6 @@
 		// Debug Output
 		// Default: false
 		//////////////////////////////////////////////////
-		CONFIG.debug = false;
+		CONFIG.debug = true;
 
 })(__RegEx);;

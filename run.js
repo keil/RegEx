@@ -66,9 +66,7 @@
 				/** Notice */ if(transRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 
 				/** Debug */
-				/** Debug */
 				if(RegEx.config.debug) {
-
 						transRes.foreach(function(i, result) {
 								__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
 						});
