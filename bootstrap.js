@@ -121,4 +121,11 @@ __sysout("### " + test.dump());
 
 // load testcase
 
+
+// var invert = false;
+//		var x = false;
+
+//var result = (invert) ? x : !x; 
+//print(result);
+
 quit();

@@ -22,9 +22,12 @@
 		 */
 		function Replaceable(dummy) {
 				var origin = dummy;
+				var sign = true;
 				this.replaceBy = function(newdummy) { dummy = newdummy; };
 				this.restore = function() { dummy = origin; };
+				this.invert = function() { sign = !sign; }
 				this.getOrigin = function() { return origin; };
+				this.getSign = function() {return sign; };
 				this.dump = function() { return dummy.dump(); };
 				this.toString = function () { return "[" + dummy + "]" };
 		}
@@ -162,6 +165,18 @@
 								negCache.toString() + " & " +
 								concatCache.toString();
 				};
+
+				/** Invert */
+				this.invert = function() {
+						literalCache.invert();
+						optCache.invert();
+						starCache.invert();
+						orCache.invert();
+						andCache.invert();
+						negCache.invert();
+						concatCache.invert();
+				}
+
 		}
 		SELF.Store = Store;
 
@@ -206,6 +221,12 @@
 				this.getLength = function() { return cache.length; }
 				/** For Each*/
 				this.foreach = function(callback) { cache.foreach(callback); };
+				/** Invert */
+				this.invert = function() {
+						cache.foreach(function(i, result) {
+								result.invert();
+						});
+				}
 		}
 		SELF.Cache = Cache;
 
