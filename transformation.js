@@ -78,7 +78,8 @@
 						
 
 						// Neg Transformation
-						results.append(mkNegTransformation(result));
+						// TODO
+						//results.append(mkNegTransformation(result));
 						// ToDo Alles`:w
 						
 

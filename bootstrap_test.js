@@ -42,28 +42,43 @@ load("system.js");
 // load apc
 load("apc.js");
 
-// load configuration
-load("config.js");
-
 // load trace path
-load("path.js");
-load("pathtrie.js");
+// load("path.js");
+//load("pathtrie.js");
 
 // load contract
 load("contract.js");
 
 // load violation
-load("violation.js")
+// load("violation.js")
 
 // load parser
 load("parser.js");
 
 // load proxy
-load("proxy.js");
+// load("proxy.js");
 
 // load permit
-load("permit.js")
+// load("permit.js")
 
+//////////////////////////////////////////////////
+// RegEx
+//////////////////////////////////////////////////
+
+load("regex.js");
+load("config.js");
+load("run.js");
+
+load("dummy.js");
+load("pool.js");
+load("replaceable.js");
+
+load("generator.js");
+load("transformation.js");
+
+load("statistics.js")
+
+load("run.js");
 
 
 //////////////////////////////////////////////////
@@ -77,12 +92,12 @@ var __start = new Date().getTime();
 //__testcase("__test/__test_map.js");
 
 /* Test Parser **/ // (TESTED)
-__testcase("__test/__test_parser.js");
+/** APC */ //__testcase("__test/__test_parser.js");
 
 /* Test Path **/ // (TESTED)
 // deprecated 
 //__testcase("__test/__test_path.js"); 
-__testcase("__test/__test_path2.js");
+/** APC */ //__testcase("__test/__test_path2.js");
 
 /** Test Contract **/ // (TESTED)
 __testcase("__test/__test_contract.js");
@@ -98,18 +113,18 @@ __testcase("__test/__test_set_write.js");
 
 
 /* Test Permit **/  // (TESTED)
-__testcase("__test/__test_permit.js");
-__testcase("__test/__test_permit2.js");
-__testcase("__test/__test_permit3.js");
-__testcase("__test/__test_permit4.js");
-__testcase("__test/__test_permit5.js");
-__testcase("__test/__test_permit6.js");
-__testcase("__test/__test_permit7.js");
+/** APC */ //__testcase("__test/__test_permit.js");
+/** APC */ //__testcase("__test/__test_permit2.js");
+/** APC */ //__testcase("__test/__test_permit3.js");
+/** APC */ //__testcase("__test/__test_permit4.js");
+/** APC */ //__testcase("__test/__test_permit5.js");
+/** APC */ //__testcase("__test/__test_permit6.js");
+/** APC */ //__testcase("__test/__test_permit7.js");
 
 
 /* Test Permit (special) **/ // (TESTED)
-__testcase("__test/__test_scope.js");
-__testcase("__test/__test_scope2.js");
+/** APC */ //__testcase("__test/__test_scope.js");
+/** APC */ //__testcase("__test/__test_scope2.js");
 
 
 /* Test Path (membership) **/ // 
@@ -126,8 +141,8 @@ __testcase("__test/__test_contract_subset2.js");
 
 
 /* Tries */
-__testcase("__test/__test_pathtrie.js");
-__testcase("__test/__test_pathtrie2.js");
+/** APC */ //__testcase("__test/__test_pathtrie.js");
+/** APC */ //__testcase("__test/__test_pathtrie2.js");
 
 var __end = new Date().getTime();
 

@@ -184,7 +184,8 @@
 						// Invert
 						reps.invert();
 
-						results.push(new Result(rep, depth, pool, reps));
+						// TODO at tye moment no negation
+						//results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r.s
