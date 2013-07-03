@@ -23,12 +23,74 @@ var __RegEx = (function(APC) {
 		// Interface to APC
 		//////////////////////////////////////////////////
 
-
 		RegEx.APC = APC;
 
 		//////////////////////////////////////////////////
 		// Interface to Access Permission Contracts
 		//////////////////////////////////////////////////
+
+
+
+		function CallStatistics() {
+				var sumDerive = 0;
+				var sumLDerive = 0;
+				var sumUDerive = 0;
+				var sumSuperSetOf = 0;
+				var sumSubSetOf = 0;
+				//////////////////////////////////////////////////
+				this.incDerive = function() {sumDrive++;};
+				this.incLDerive = function() {sumLDerive++;};
+				this.incUDerive = function() {sumUDerive++;};
+				this.incSuperSetOf = function() {sumSuperSetOf++;};
+				this.incSubSetOf = function() {sumSubSetOf++;};
+				//////////////////////////////////////////////////
+				this.getDerive = function() {return sumDrive;};
+				this.getLDerive = function() {return sumLDerive;};
+				this.getUDerive = function() {return sumUDerive;};
+				this.getSuperSetOf = function() {return sumSuperSetOf;};
+				this.getSubSetOf = function() {return sumSubSetOf;};
+				//////////////////////////////////////////////////
+				this.toString = function() {
+						return "Derive:" + sumDerive + 
+								" LDerive" + sumLDerive +
+								" UDerive" + sumUDerive +	
+								" SuperSetOf" + sumSuperSetOf +
+								" SubSetOf" + sumSubSetOf; 
+
+
+				}
+		}
+
+
+		// TODO, schalter um empty und co aus zu schalten
+
+		// TODO zurückgegebene werde einpacken
+
+		/** Wrapper */
+		function EmptySetWrapper(target) {
+				//////////////////////////////////////////////////
+				this.isEmpty = function() {return target.isEmpty();};
+				this.isBlank = function() {return target.isBlank();};
+				this.isIndifferent = function() {return target.isIndifferent();};
+				this.isUniversal = function() {return target.isNullable();};
+				this.isNullable() = function() {return target.isNullable();};
+				//////////////////////////////////////////////////
+				this.first() = function() {return target.first()};
+				this.derive() = function(name) {return target.derive(name);};
+				this.lderive() = function(larg) {return target.lderive(larg);};
+				this.uderive() = function(larg) {return target.uderive(larg);};
+				//////////////////////////////////////////////////
+				this.isSuperSetOf() = function(arg, ctx) {return target.isSuperSetOf(arg, ctx)};
+				this.isSubSetOf() = function(arg, ctx) {return target.isSubSetOf(arg, ctx);};
+				this.reduce() = function() {return target.reduce();};
+				//////////////////////////////////////////////////
+				this.dump() = function() {return target.dump();};
+				this.toString() = function() {return target.toStrinf();};
+				//////////////////////////////////////////////////
+		}
+		SELF.EmptySetWrapper = EmptySetWrapper;
+
+
 
 		SELF.EmptySetLiteral	= APC.Contract.EmptySetLiteral;
 		SELF.EmptyLiteral		= APC.Contract.EmptyLiteral;
