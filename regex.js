@@ -67,7 +67,7 @@ var __RegEx = (function(APC) {
 		// TODO zurückgegebene werde einpacken
 
 		/** Wrapper */
-		function EmptySetWrapper(target) {
+		function EmptySetWrapper(target, statistics) {
 				//////////////////////////////////////////////////
 				this.isEmpty = function() {return target.isEmpty();};
 				this.isBlank = function() {return target.isBlank();};
@@ -85,8 +85,9 @@ var __RegEx = (function(APC) {
 				this.reduce() = function() {return target.reduce();};
 				//////////////////////////////////////////////////
 				this.dump() = function() {return target.dump();};
-				this.toString() = function() {return target.toStrinf();};
+				this.toString() = function() {return "wrapper of " + target.toStrinf();};
 				//////////////////////////////////////////////////
+				this.getStatistics() = function() {return statistics;};
 		}
 		SELF.EmptySetWrapper = EmptySetWrapper;
 
