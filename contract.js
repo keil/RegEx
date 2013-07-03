@@ -659,7 +659,7 @@
 					   //////////////////////////////////////////////////
 					   /** first(C?) ::= first(C) */
 					   first: function() {
-							   return contract.first().concat(new Array(new __EmptyLiteral()));
+							   return contract.first();//.concat(new Array(new __EmptyLiteral())); // TODO, empty string not practical
 					   },
 					   /** (d_name C?) ::= (d_name C) */
 					   derive: function(name) {
@@ -772,7 +772,7 @@
 					   //////////////////////////////////////////////////
 					   /** first(C*) ::= first(C) */
 					   first: function() {
-							   return contract.first().concat(new Array(new __EmptyLiteral()));
+							   return contract.first(); //.concat(new Array(new __EmptyLiteral())); // TODO, empty string not required
 					   },
 					   /** (d_name C*) ::= (d_name C).C* */
 					   derive: function(name) {
@@ -1205,7 +1205,7 @@
 							   /** SPECIAL: !(^) ~ ? | m(C) */
 							   else if(contract==new __EmptyLiteral()) return  new __QMarkLiteral();
 							   /** reduce !(C) ::= !(reduce C) */
-							   else return new __NegContract(contract.reduce);
+							   else return new __NegContract(contract.reduce());
 					   },
 					   //////////////////////////////////////////////////
 					   /** Dump
@@ -1401,16 +1401,19 @@
 
 				// verbose - true, print output: false, do not print the output
 				var verbose  = true;
+				if(verbose) __sysout("\n\n\n##################################################");
 				if(verbose) __sysout("## isSuperSetOf: " + E + ">=" + F);
 
 				var result = true;
 
 				first.foreach(function(k, literal) {
 
+						// TODO
 						var lderive_E = E.lderive(literal);
 						var lderive_F = F.uderive(literal);
 
 						if(verbose) __sysout("## first: " + first);
+						if(verbose) __sysout("## literal: " + literal);
 						if(verbose) __sysout("## lderive_E: " + lderive_E);
 						if(verbose) __sysout("## lderive_F: " + lderive_F);
 
@@ -1511,7 +1514,7 @@
 		//  cache for access permission contracts
 		//////////////////////////////////////////////////
 
-		/** Path Cache 
+		/** Contract Cache 
 		*/
 		function __ContractCache() {
 				// cache array
