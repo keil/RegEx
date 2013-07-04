@@ -121,13 +121,13 @@
 				/** Notice */ if(result!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(result!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 				/** Notice */ if(result!=undefined) notice("Results (ok): " + result.getOk());
-				/** Notice */ if(result!=undefined) notice("Results (correct): " + result.getCorrect());
+				/** Notice */ if(result!=undefined) notice("Results (indeterminable): " + result.getCorrect());
 				/** Notice */ if(result!=undefined) notice("Results (failed): " + result.getFailed());
 				result.getMaxArray().foreach(function(depth, max) {
-						/** Notice */ if(result!=undefined) notice("Results (MAX(" + depth + ")): " + max);
+						/** Notice */ if(result!=undefined && max!=undefined) notice("Results (MAX(" + depth + ")): " + max);
 				});
 				result.getAvgArray().foreach(function(depth, avg) {
-						/** Notice */ if(result!=undefined) notice("Results (ACG(" + depth + ")): " + avg);
+						/** Notice */ if(result!=undefined && avg!=undefined) notice("Results (ACG(" + depth + ")): " + avg);
 				});
 
 
@@ -165,7 +165,7 @@
 		SELF.done = done;
 
 		function fail() {
-				putstr(padding_left(" FAIL", seperator, sndWidth));
+				putstr(padding_left(" FAILED", seperator, sndWidth));
 				putstr("\n");
 		}
 		SELF.fail = fail;

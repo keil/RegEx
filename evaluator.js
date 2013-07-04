@@ -43,12 +43,24 @@
 				var avgLUDerive = new Array();
 
 
+				var failedSet = new Array();
+				var indeterminableSet = new Array();
+
+
 
 				statistics.foreach(function(i, statistic) {		
 						// Evaluate: Failed statistics 			
-						if(statistic.isValid()==statistic.isSubset()) ok++;
-						else if(!statistic.isSubset()) correct++;
-						else failed++
+						if(statistic.isValid()==statistic.isSubset()) { 		
+								ok++;
+						}
+						else if(!statistic.isSubset()) {
+								indeterminableSet.push(statistic);
+								correct++;
+						}
+						else {
+								failedSet.push(statistic);
+								failed++;
+						}
 
 						// Evaluate: max()
 						if(maxLUDerive[statistic.getDepth()]==undefined)
