@@ -60,6 +60,8 @@ var __RegEx = (function(APC) {
 
 				}
 		}
+		SELF.CallStatistics = CallStatistics;
+
 
 
 		// TODO, schalter um empty und co aus zu schalten
@@ -67,7 +69,7 @@ var __RegEx = (function(APC) {
 		// TODO zurückgegebene werde einpacken
 
 		/** Wrapper */
-		function EmptySetWrapper(target, statistics) {
+		function RegExWrapper(target, statistics) {
 				//////////////////////////////////////////////////
 				this.isEmpty = function() {return target.isEmpty();};
 				this.isBlank = function() {return target.isBlank();};
@@ -76,12 +78,31 @@ var __RegEx = (function(APC) {
 				this.isNullable() = function() {return target.isNullable();};
 				//////////////////////////////////////////////////
 				this.first() = function() {return target.first()};
-				this.derive() = function(name) {return target.derive(name);};
-				this.lderive() = function(larg) {return target.lderive(larg);};
-				this.uderive() = function(larg) {return target.uderive(larg);};
+				this.derive() = function(name) {
+						statistics.incDerive();
+						result = target.derive(name);
+						return new RegExWrapper(result, statistics);
+				};
+				this.lderive() = function(larg) {
+						statistics.incLDerive();
+						result = target.lderive(larg);
+						return new RegExWrapper(result, statistics);
+				};
+				this.uderive() = function(larg) {
+						statistics.incUDerive();
+						result = target.uderive(larg);
+						return new RegExWrapper(result, statistics);
+
+				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf() = function(arg, ctx) {return target.isSuperSetOf(arg, ctx)};
-				this.isSubSetOf() = function(arg, ctx) {return target.isSubSetOf(arg, ctx);};
+				this.isSuperSetOf() = function(arg, ctx) {
+						statistics.incSuperSetOf();
+						return target.isSuperSetOf(arg, ctx)
+				};
+				this.isSubSetOf() = function(arg, ctx) {
+						statistics.incSubSetOf();
+						result = target.isSubSetOf(arg, ctx);
+				};
 				this.reduce() = function() {return target.reduce();};
 				//////////////////////////////////////////////////
 				this.dump() = function() {return target.dump();};
@@ -89,7 +110,7 @@ var __RegEx = (function(APC) {
 				//////////////////////////////////////////////////
 				this.getStatistics() = function() {return statistics;};
 		}
-		SELF.EmptySetWrapper = EmptySetWrapper;
+		SELF.RegExWrapper = RegExWrapper;
 
 
 
