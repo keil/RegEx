@@ -107,8 +107,8 @@
 
 				/** Out */ out("Use Antimirovs Approach");
 				/** Time */ var time = new Date().getTime();
-				var statistics = undefined;
-				/** Out */ if(statistics!=undefined) ok(); else fail();
+				var antimirov = undefined;
+				/** Out */ if(antimirov!=undefined) ok(); else fail();
 
 				//////////////////////////////////////////////////
 				//  Evaluate Statistics
@@ -116,8 +116,21 @@
 
 				/** Out */ out("Evaluate Statistics");
 				/** Time */ var time = new Date().getTime();
-				var statRes = undefined;
-				/** Out */ if(statRes!=undefined) ok(); else fail();
+				var result = RegEx.Evaluator.make(statistics);;
+				/** Out */ if(result!=undefined) ok(); else fail();
+				/** Notice */ if(result!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
+				/** Notice */ if(result!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
+				/** Notice */ if(result!=undefined) notice("Results (ok): " + result.getOk());
+				/** Notice */ if(result!=undefined) notice("Results (correct): " + result.getCorrect());
+				/** Notice */ if(result!=undefined) notice("Results (failed): " + result.getFailed());
+				result.getMaxArray().foreach(function(depth, max) {
+						/** Notice */ if(result!=undefined) notice("Results (MAX(" + depth + ")): " + max);
+				});
+				result.getAvgArray().foreach(function(depth, avg) {
+						/** Notice */ if(result!=undefined) notice("Results (ACG(" + depth + ")): " + avg);
+				});
+
+
 
 
 

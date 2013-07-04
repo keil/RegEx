@@ -46,31 +46,33 @@
 
 				statistics.foreach(function(i, statistic) {		
 						// Evaluate: Failed statistics 			
-						if(statistic.isValid()==statistics.isSubset()) ok++;
-						else if(!statistics.isSubset()) correct++;
+						if(statistic.isValid()==statistic.isSubset()) ok++;
+						else if(!statistic.isSubset()) correct++;
 						else failed++
 
 						// Evaluate: max()
-						if(maxLUDerive[statistics.getDepth()]==undefined)
-							maxLUDerive[statistics.getDepth()]=0;
+						if(maxLUDerive[statistic.getDepth()]==undefined)
+							maxLUDerive[statistic.getDepth()]=0;
 
-						var sum = statistics.getLowerDerivations() + statistics.getUpperDerivations();
-						if(maxLUDerive[statistics.getDepth()]<sum)
-							maxLUDerive[statistics.getDepth()]=sum;
+						var sum = statistic.getLowerDerivations() + statistic.getUpperDerivations();
+						if(maxLUDerive[statistic.getDepth()]<sum)
+							maxLUDerive[statistic.getDepth()]=sum;
 
 						// Evaluate: avg()
-						if(maxLUDerive[statistics.getDepth()]==undefined)
-							maxLUDerive[statistics.getDepth()]=new Array();
+						if(avgLUDerive[statistic.getDepth()]==undefined)
+							avgLUDerive[statistic.getDepth()]=new Array();
 
-						var sum = statistics.getLowerDerivations() + statistics.getUpperDerivations();
-						maxLUDerive[statistics.getDepth()].push(sum);
+						var sum = statistic.getLowerDerivations() + statistic.getUpperDerivations();
+						avgLUDerive[statistic.getDepth()].push(sum);
 				});
+
 
 				// Evaluate: avg()
 				avgLUDerive.foreach(function(depth, values) {
+						if(values==undefined) return;
 						var counter = 0;
 						var sum = 0;
-						valued.foreach(function(i, value) {
+						values.foreach(function(i, value) {
 								counter++;
 								sum += value;
 						});

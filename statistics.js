@@ -63,15 +63,18 @@
 
 
 				this.getDerivations = function() {
-						return "Derivations: " + (leftStat.getDerive()+rightStat.getDerive()) +  "(" + leftStat.getDerive() + "/" + rightStat.getDerive() + ")";
+						return (leftStat.getDerive()+rightStat.getDerive());
+						//return "Derivations: " + (leftStat.getDerive()+rightStat.getDerive()) +  "(" + leftStat.getDerive() + "/" + rightStat.getDerive() + ")";
 				}
 
 				this.getLowerDerivations = function() {
-						return "Lower Derivations: " + (leftStat.getLDerive()+rightStat.getLDerive()) +  "(" + leftStat.getLDerive() + "/" + rightStat.getLDerive() + ")";
+						return (leftStat.getLDerive()+rightStat.getLDerive());
+						//return "Lower Derivations: " + (leftStat.getLDerive()+rightStat.getLDerive()) +  "(" + leftStat.getLDerive() + "/" + rightStat.getLDerive() + ")";
 				}
 
 				this.getUpperDerivations = function() {
-						return "Upper Derivations: " + (leftStat.getUDerive()+rightStat.getUDerive()) +  "(" + leftStat.getUDerive() + "/" + rightStat.getUDerive() + ")";
+						return (leftStat.getUDerive()+rightStat.getUDerive());
+						//return "Upper Derivations: " + (leftStat.getUDerive()+rightStat.getUDerive()) +  "(" + leftStat.getUDerive() + "/" + rightStat.getUDerive() + ")";
 				}
 
 
@@ -83,6 +86,11 @@
 				this.isSubset = function() {
 						return isSubset;
 				};
+
+				this.getDepth = function() {
+						return container.getDepth();
+				};
+
 
 				this.toString = function() {
 						return ((isSubset==container.isValid()) ? "OK" : "FAIL") + " " + container.toString() + " RESULT:" + isSubset + " VALID:" + container.isValid();
