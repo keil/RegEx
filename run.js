@@ -97,6 +97,12 @@
 				/** Notice */ if(statistics!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(statistics!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 
+				/** Debug */
+				if(RegEx.config.debug) {
+						statistics.foreach(function(i, result) {
+								__sysout("STATISTICS (" + i + "): \n " + result.toString() + "\n");
+						});
+				}
 
 
 				/** Out */ out("Use Antimirovs Approach");

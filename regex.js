@@ -75,40 +75,40 @@ var __RegEx = (function(APC) {
 				this.isBlank = function() {return target.isBlank();};
 				this.isIndifferent = function() {return target.isIndifferent();};
 				this.isUniversal = function() {return target.isNullable();};
-				this.isNullable() = function() {return target.isNullable();};
+				this.isNullable = function() {return target.isNullable();};
 				//////////////////////////////////////////////////
-				this.first() = function() {return target.first()};
-				this.derive() = function(name) {
+				this.first = function() {return target.first()};
+				this.derive = function(name) {
 						statistics.incDerive();
 						result = target.derive(name);
 						return new RegExWrapper(result, statistics);
 				};
-				this.lderive() = function(larg) {
+				this.lderive = function(larg) {
 						statistics.incLDerive();
 						result = target.lderive(larg);
 						return new RegExWrapper(result, statistics);
 				};
-				this.uderive() = function(larg) {
+				this.uderive = function(larg) {
 						statistics.incUDerive();
 						result = target.uderive(larg);
 						return new RegExWrapper(result, statistics);
-
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf() = function(arg, ctx) {
+				this.isSuperSetOf = function(arg, ctx) {
 						statistics.incSuperSetOf();
 						return target.isSuperSetOf(arg, ctx)
 				};
-				this.isSubSetOf() = function(arg, ctx) {
+				this.isSubSetOf = function(arg, ctx) {
 						statistics.incSubSetOf();
-						result = target.isSubSetOf(arg, ctx);
+						return target.isSubSetOf(arg, ctx);
 				};
-				this.reduce() = function() {return target.reduce();};
+				this.reduce = function() {return target.reduce();};
 				//////////////////////////////////////////////////
-				this.dump() = function() {return target.dump();};
-				this.toString() = function() {return "wrapper of " + target.toStrinf();};
+				this.dump = function() {return target.dump();};
+				this.toString = function() {return "wrapper of " + target.toString();};
 				//////////////////////////////////////////////////
-				this.getStatistics() = function() {return statistics;};
+				this.getStatistics = function() {return statistics;};
+				this.getTarget = function() {return target;};
 		}
 		SELF.RegExWrapper = RegExWrapper;
 

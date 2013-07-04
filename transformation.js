@@ -57,23 +57,23 @@
 						
 
 						// Or Transformation
-						results.append(mkOrTransformation(result));
+//						results.append(mkOrTransformation(result));
 						// TODO für alle
 
 
 						// And Transformation
-						results.append(mkAndTransformation(result));
+//						results.append(mkAndTransformation(result));
 						// TODO give a notice
 						// TODO für alle
 
 
 						// Opt Transformation
-						results.append(mkOptTransformation(result));
+//						results.append(mkOptTransformation(result));
 						// TODO alles ohne Opt
 						
 
 						// Star Transformation
-						results.append(mkStarTransformation(result));
+//						results.append(mkStarTransformation(result));
 						// TODO alles Ohne Star
 						
 
@@ -135,10 +135,14 @@
 
 						var modification = dummy.dump();
 
+						//  Wrapper
+						var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
+						var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
+
 						// r != s
-						results.push(new Result(origin, modification, result.getDepth(), false));
+						results.push(new Result(originWrapper, modificationWrapper, result.getDepth(), false));
 						// s != r
-						results.push(new Result(modification, origin, result.getDepth(), false));
+						results.push(new Result(modificationWrapper, originWrapper, result.getDepth(), false));
 
 						replaceable.restore();
 				});
@@ -156,10 +160,14 @@
 
 						var modification = dummy.dump();
 
+						//  Wrapper
+						var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
+						var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
+
 						// r != s
-						results.push(new Result(origin, modification, result.getDepth(), false));
+						results.push(new Result(originWrapper, modificationWrapper, result.getDepth(), false));
 						// s != r
-						results.push(new Result(modification, origin, result.getDepth(), true));
+						results.push(new Result(modificationWrapper, originWrapper, result.getDepth(), true));
 
 						replaceable.restore();
 				});

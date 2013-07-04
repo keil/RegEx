@@ -22,28 +22,82 @@
 				var isSubset = undefined; 
 		
 				this.solveInequality = function() {
-					result = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
+					isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
 				}
 
 				this.getStatistics = function() {
-					return left.toString() + " <= " + right.toString();
+					
+						return new Statistic(this, isSubset)
+						//return left.toString() + " <= " + right.toString();
+				}
+
+				this.toString = function() {
+					return left.getTarget().toString() + " <= " + right.getTarget().toString();
+				}
+
+				this.getLeft = function() {
+					return left;
+				}
+
+				this.getRight = function() {
+					return right;
+				}
+
+				this.getDepth = function() {
+					return depth;
+				}
+
+				this.isValid = function() {
+					return isValid;
+				}
+
+
+
+		}
+
+
+		function Statistic(container, isSubset) {
+
+				var leftStat = container.getLeft().getStatistics();
+				var rightStat = container.getRight().getStatistics();
+
+
+				this.getDerivations = function() {
+						return "Derivations: " + (leftStat.getDerive()+rightStat.getDerive()) +  "(" + leftStat.getDerive() + "/" + rightStat.getDerive() + ")";
+				}
+
+				this.getLowerDerivations = function() {
+						return "Lower Derivations: " + (leftStat.getLDerive()+rightStat.getLDerive()) +  "(" + leftStat.getLDerive() + "/" + rightStat.getLDerive() + ")";
+				}
+
+				this.getUpperDerivations = function() {
+						return "Upper Derivations: " + (leftStat.getUDerive()+rightStat.getUDerive()) +  "(" + leftStat.getUDerive() + "/" + rightStat.getUDerive() + ")";
+				}
+
+
+
+				this.getState = function() {
+						return (isSubset==container.isValid());
+				};
+
+				this.toString = function() {
+						return ((isSubset==container.isValid()) ? "OK" : "FAIL") + " " + container.toString() + " RESULT:" + isSubset + " VALID:" + container.isValid();
+				};
+
+
+				this.print = function() {
+					var result = "";
+					result += this.toString() + "\n";
+					result += "#" + this.getDerivations() + "\n";
+					result += "#" + this.getLowerDerivations() + "\n";
+					result += "#" + this.getUpperDerivations() + "\n";
+
 				}
 		}
 
 
-		function Statistic(container, isSubset, isValid) {
-
-				this.getState = function() {
-						return (isSubset==isValid);
-				};
-
-				this.toString = function() {
-						var state = (isSubset==isValid) ? "OK" : "FAIL";
-						return ((isSubset==isValid) ? "OK" : "FAIL") + " " + container.toString() + " RESULT:" + isSubset + " VALID:" + isValid;
-				};
-		}
-
-
+		// TODO Class Evaluator .. 
+		// um automatisierte ergebnisse zi berechnen
 
 
 
