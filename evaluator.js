@@ -18,12 +18,14 @@
 		RegEx.Evaluator = SELF;
 
 
-		function Result(failed, ok, correct, max, avg) {
+		function Result(failed, ok, correct, max, avg, failedSet, indeterminableSet) {
 				this.getFailed = function() {return failed;};
 				this.getOk = function() {return ok;};
 				this.getCorrect = function() {return correct;};
 				this.getMaxArray = function() {return max;};
 				this.getAvgArray = function() {return avg;};
+				this.getFailedSet = function() {return failedSet;};
+				this.getIndeterminableSet = function() {return indeterminableSet;};
 		}
 		SELF.Result = Result;
 
@@ -91,7 +93,7 @@
 						avgLUDerive[depth] = (sum/counter);
 				});
 
-				return new Result(failed, ok, correct, maxLUDerive, avgLUDerive);
+				return new Result(failed, ok, correct, maxLUDerive, avgLUDerive, failedSet, indeterminableSet);
 		}
 		SELF.make = make;
 

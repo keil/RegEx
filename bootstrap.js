@@ -78,6 +78,10 @@ load("evaluator.js");
 load("run.js");
 
 
+
+
+
+
 //////////////////////////////////////////////////
 // TEST
 //////////////////////////////////////////////////
@@ -127,5 +131,9 @@ __sysout("### " + test.dump());
 
 //var result = (invert) ? x : !x; 
 //print(result);
+
+
+//var obj1 = {name:"obj1"};
+
 
 quit();

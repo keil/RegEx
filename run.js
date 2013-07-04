@@ -121,7 +121,7 @@
 				/** Notice */ if(result!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(result!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 				/** Notice */ if(result!=undefined) notice("Results (ok): " + result.getOk());
-				/** Notice */ if(result!=undefined) notice("Results (indeterminable): " + result.getCorrect());
+				/** Notice */ if(result!=undefined) notice("Results (indeterminable/correct): " + result.getCorrect());
 				/** Notice */ if(result!=undefined) notice("Results (failed): " + result.getFailed());
 				result.getMaxArray().foreach(function(depth, max) {
 						/** Notice */ if(result!=undefined && max!=undefined) notice("Results (MAX(" + depth + ")): " + max);
@@ -129,6 +129,20 @@
 				result.getAvgArray().foreach(function(depth, avg) {
 						/** Notice */ if(result!=undefined && avg!=undefined) notice("Results (ACG(" + depth + ")): " + avg);
 				});
+
+				/** Debug */
+				if(RegEx.config.debug) {
+						result.getFailedSet().foreach(function(i, statistics) {
+								__sysout("FAILED (" + i + "): \n " + statistics.toString() + "\n");
+						});
+				}
+
+				/** Debug */
+				if(RegEx.config.debug) {
+						result.getIndeterminableSet().foreach(function(i, statistics) {
+								__sysout("INDETERMINABLE (" + i + "): \n " + statistics.toString() + "\n");
+						});
+				}
 
 
 
