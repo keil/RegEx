@@ -72,7 +72,8 @@ load("replaceable.js");
 load("generator.js");
 load("transformation.js");
 
-load("statistics.js")
+load("statistics.js");
+load("evaluator.js");
 
 load("run.js");
 

@@ -76,8 +76,12 @@
 
 
 
-				this.getState = function() {
-						return (isSubset==container.isValid());
+				this.isValid = function() {
+						return container.isValid();
+				};
+
+				this.isSubset = function() {
+						return isSubset;
 				};
 
 				this.toString = function() {
