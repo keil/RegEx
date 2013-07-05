@@ -28,7 +28,7 @@
 				this.invert = function() { sign = !sign; }
 				this.getOrigin = function() { return origin; };
 				this.getSign = function() {return sign; };
-				this.dump = function() { return dummy.dump(); };
+				this.dump = function(statistics) { return dummy.dump(statistics); };
 				this.toString = function () { return "[" + dummy + "]" };
 		}
 		SELF.Replaceable = Replaceable;

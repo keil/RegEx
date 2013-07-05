@@ -82,20 +82,20 @@ var __RegEx = (function(APC) {
 				//////////////////////////////////////////////////
 				this.first = function() {return target.first()};
 				this.derive = function(name) {
-						if(statistics!=undefined) statistics.incDerive();
+						 statistics.incDerive();
 						//result = target.derive(name);
 						//return new RegExWrapper(result, statistics);
 						return target.derive(name);
 				};
 				this.lderive = function(larg) {
-						if(statistics!=undefined) statistics.incLDerive();
+						 statistics.incLDerive();
 					//	result = target.lderive(larg);
 					//	return new RegExWrapper(result, statistics);
 					return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
 						__sysout("CALL UDERIVE");
-						if(statistics!=undefined) statistics.incUDerive();
+						 statistics.incUDerive();
 						//result = target.uderive(larg);
 						//return new RegExWrapper(result, statistics);
 						return target.uderive(larg);
@@ -103,20 +103,20 @@ var __RegEx = (function(APC) {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
 					//	__sysout("CALL IS SUPERSET" + statistics.getSuperSetOf());
-							if(statistics!=undefined)statistics.incSuperSetOf();
+							statistics.incSuperSetOf();
 					//	__sysout("CALL IS SUPERSET" + statistics.getSuperSetOf());
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
 				//			__sysout("CALL IS SUBERSET" + statistics.getSubSetOf() );
-						if(statistics!=undefined) statistics.incSubSetOf();
+						 statistics.incSubSetOf();
 				//			__sysout("CALL IS SUBERSET" + statistics.getSubSetOf() );
 						return target.isSubSetOf(arg, ctx);
 				};
 				this.reduce = function() {return target.reduce();};
 				//////////////////////////////////////////////////
 				this.dump = function() {return target.dump();};
-				this.toString = function() {return "wrapper of " + target.toString();};
+				this.toString = function() {return "wrapperof " + target.toString();};
 				//////////////////////////////////////////////////
 				this.getStatistics = function() {return statistics;};
 				this.getTarget = function() {return target;};
