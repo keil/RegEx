@@ -29,8 +29,8 @@ var __RegEx = (function(APC) {
 		// Interface to Access Permission Contracts
 		//////////////////////////////////////////////////
 
-
-
+		/** Call Statistics
+		*/
 		function CallStatistics() {
 				var sumDerive = 0;
 				var sumLDerive = 0;
@@ -56,23 +56,16 @@ var __RegEx = (function(APC) {
 								" UDerive" + sumUDerive +	
 								" SuperSetOf" + sumSuperSetOf +
 								" SubSetOf" + sumSubSetOf; 
-
-
 				}
 		}
-	SELF.CallStatistics = CallStatistics;
+		SELF.CallStatistics = CallStatistics;
 
-
-		// TODO, schalter um empty und co aus zu schalten
-
-		// TODO zurückgegebene werde einpacken
-
-		/** Wrapper */
+		/** RegEx Wrapper
+		 * Wrapper Object for Regular Expression Objects
+		 * @param target AccessPermissionContract
+		 * @param statistics Call Statistics
+		 */
 		function RegExWrapper(target, statistics) {
-
-				__sysout("CREATE WRAPPER for " + target);
-				__sysout(statistics);
-
 				//////////////////////////////////////////////////
 				this.isEmpty = function() {return target.isEmpty();};
 				this.isBlank = function() {return target.isBlank();};
@@ -82,25 +75,24 @@ var __RegEx = (function(APC) {
 				//////////////////////////////////////////////////
 				this.first = function() {return target.first()};
 				this.derive = function(name) {
-						 statistics.incDerive();
+						/* Increase counter */statistics.incDerive();
 						return target.derive(name);
 				};
 				this.lderive = function(larg) {
-						 statistics.incLDerive();
-					return target.lderive(larg);
+						/* Increase counter */statistics.incLDerive();
+						return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
-						__sysout("CALL UDERIVE");
-						 statistics.incUDerive();
+						/* Increase counter */statistics.incUDerive();
 						return target.uderive(larg);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
-							statistics.incSuperSetOf();
+						/* Increase counter */statistics.incSuperSetOf();
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
-						 statistics.incSubSetOf();
+						/* Increase counter */statistics.incSubSetOf();
 						return target.isSubSetOf(arg, ctx);
 				};
 				this.reduce = function() {return target.reduce();};
@@ -113,7 +105,9 @@ var __RegEx = (function(APC) {
 		}
 		SELF.RegExWrapper = RegExWrapper;
 
-
+		//////////////////////////////////////////////////
+		// Renaming of Access Permission Contracts
+		//////////////////////////////////////////////////
 
 		SELF.EmptySetLiteral	= APC.Contract.EmptySetLiteral;
 		SELF.EmptyLiteral		= APC.Contract.EmptyLiteral;
