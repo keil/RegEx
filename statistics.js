@@ -63,11 +63,13 @@
 
 
 				this.getDerivations = function() {
+						
 						return (leftStat.getDerive()+rightStat.getDerive());
 						//return "Derivations: " + (leftStat.getDerive()+rightStat.getDerive()) +  "(" + leftStat.getDerive() + "/" + rightStat.getDerive() + ")";
 				}
 
 				this.getLowerDerivations = function() {
+						__sysout(container);
 						return (leftStat.getLDerive()+rightStat.getLDerive());
 						//return "Lower Derivations: " + (leftStat.getLDerive()+rightStat.getLDerive()) +  "(" + leftStat.getLDerive() + "/" + rightStat.getLDerive() + ")";
 				}

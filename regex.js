@@ -60,8 +60,7 @@ var __RegEx = (function(APC) {
 
 				}
 		}
-		SELF.CallStatistics = CallStatistics;
-
+	SELF.CallStatistics = CallStatistics;
 
 
 		// TODO, schalter um empty und co aus zu schalten
@@ -71,7 +70,8 @@ var __RegEx = (function(APC) {
 		/** Wrapper */
 		function RegExWrapper(target, statistics) {
 
-				__sysout("CREATE WRAPPER");
+				__sysout("CREATE WRAPPER for " + target);
+				__sysout(statistics);
 
 				//////////////////////////////////////////////////
 				this.isEmpty = function() {return target.isEmpty();};
@@ -82,31 +82,34 @@ var __RegEx = (function(APC) {
 				//////////////////////////////////////////////////
 				this.first = function() {return target.first()};
 				this.derive = function(name) {
-						statistics.incDerive();
-						result = target.derive(name);
-						return new RegExWrapper(result, statistics);
+						if(statistics!=undefined) statistics.incDerive();
+						//result = target.derive(name);
+						//return new RegExWrapper(result, statistics);
+						return target.derive(name);
 				};
 				this.lderive = function(larg) {
-						statistics.incLDerive();
-						result = target.lderive(larg);
-						return new RegExWrapper(result, statistics);
+						if(statistics!=undefined) statistics.incLDerive();
+					//	result = target.lderive(larg);
+					//	return new RegExWrapper(result, statistics);
+					return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
 						__sysout("CALL UDERIVE");
-						statistics.incUDerive();
-						result = target.uderive(larg);
-						return new RegExWrapper(result, statistics);
+						if(statistics!=undefined) statistics.incUDerive();
+						//result = target.uderive(larg);
+						//return new RegExWrapper(result, statistics);
+						return target.uderive(larg);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
 					//	__sysout("CALL IS SUPERSET" + statistics.getSuperSetOf());
-						statistics.incSuperSetOf();
+							if(statistics!=undefined)statistics.incSuperSetOf();
 					//	__sysout("CALL IS SUPERSET" + statistics.getSuperSetOf());
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
 				//			__sysout("CALL IS SUBERSET" + statistics.getSubSetOf() );
-						statistics.incSubSetOf();
+						if(statistics!=undefined) statistics.incSubSetOf();
 				//			__sysout("CALL IS SUBERSET" + statistics.getSubSetOf() );
 						return target.isSubSetOf(arg, ctx);
 				};

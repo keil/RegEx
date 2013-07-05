@@ -116,7 +116,7 @@
 				var pool = result.getPool();
 
 				// Origin
-				var origin = dummy.dump();
+		//		var origin = dummy.dump();
 
 				// Set
 				var set = new Array();				
@@ -130,19 +130,29 @@
 				// Modification
 				set.foreach(function(i, replaceable) {
 
+						// Origin
+						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
+
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
 
-						var modification = dummy.dump();
+
+						
+
+						// TODO
+						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
+
+						
+
 
 						//  Wrapper
-						var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
-						var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
+					//	var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
+					//	var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
 
 						// r != s
-						results.push(new Result(originWrapper, modificationWrapper, result.getDepth(), false));
+						results.push(new Result(origin, modification, result.getDepth(), false));
 						// s != r
-						results.push(new Result(modificationWrapper, originWrapper, result.getDepth(), false));
+						results.push(new Result(modification, origin, result.getDepth(), false));
 
 						replaceable.restore();
 				});
@@ -155,19 +165,27 @@
 				// Modification
 				set.foreach(function(i, replaceable) {
 
+						// Origin
+						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
+
+
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
 
-						var modification = dummy.dump();
+						
+					
+						// TODO
+						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
+
 
 						//  Wrapper
-						var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
-						var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
+				//		var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
+				//		var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
 
 						// r != s
-						results.push(new Result(originWrapper, modificationWrapper, result.getDepth(), false));
+						results.push(new Result(origin, modification, result.getDepth(), false));
 						// s != r
-						results.push(new Result(modificationWrapper, originWrapper, result.getDepth(), true));
+						results.push(new Result(modification, origin, result.getDepth(), true));
 
 						replaceable.restore();
 				});
