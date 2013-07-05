@@ -51,7 +51,7 @@
 		 */
 		function make(depth) {
 				var pool = new RegEx.Pool.Pool(undefined, undefined);
-				
+
 				var reps = new RegEx.Replaceable.Store(
 								new RegEx.Replaceable.Cache(), // Literal
 								new RegEx.Replaceable.Cache(), // Opt
