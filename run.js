@@ -21,6 +21,8 @@
 		var sndWidth = 20;
 		var seperator = ".";
 
+		/** Main Application
+		*/
 		function run() {
 
 				print("");
@@ -104,7 +106,6 @@
 						});
 				}
 
-
 				/** Out */ out("Use Antimirovs Approach");
 				/** Time */ var time = new Date().getTime();
 				var antimirov = undefined;
@@ -130,60 +131,66 @@
 						/** Notice */ if(result!=undefined && avg!=undefined) notice("Results (ACG(" + depth + ")): " + avg);
 				});
 
-				/** Debug */
-				if(RegEx.config.debug) {
+				/** Full Output */
+				if(RegEx.config.fulloutput) {
 						result.getFailedSet().foreach(function(i, statistics) {
 								__sysout("FAILED (" + i + "): \n " + statistics.toString() + "\n");
 						});
 				}
 
-				/** Debug */
-				if(RegEx.config.debug) {
+				/** Full Output */
+				if(RegEx.config.fulloutput) {
 						result.getIndeterminableSet().foreach(function(i, statistics) {
 								__sysout("INDETERMINABLE (" + i + "): \n " + statistics.toString() + "\n");
 						});
 				}
 
-
-
-
-
-				// TODO
 				print("\n *** Generator finished *** \n");
 				return undefined;
 		}
 		SELF.run = run;
 
-
+		/** Standard Output
+		*/
 		function out(string) {
 				putstr(padding_right(string + " ", seperator, fstWidth));
 		}
 		SELF.out = out;
 
+		/** Notice Output
+		*/
 		function notice(string) {
 				putstr(padding_right("... " + string + " ", seperator, fstWidth+sndWidth));
 				putstr("\n");
 		}
 		SELF.notice = notice;
 
+		/** OK Output
+		*/
 		function ok() {
 				putstr(padding_left(" OK", seperator, sndWidth));
 				putstr("\n");
 		}
 		SELF.ok = ok;
 
+		/** DONE Output
+		*/
 		function done() {
 				putstr(padding_left(" DONE", seperator, sndWidth));
 				putstr("\n");
 		}
 		SELF.done = done;
 
+		/** FAILED Output
+		*/
 		function fail() {
 				putstr(padding_left(" FAILED", seperator, sndWidth));
 				putstr("\n");
 		}
 		SELF.fail = fail;
 
+		/** Sub-Standard Output
+		*/
 		function subout(string) {
 				putstr(padding_right("... " + string + " ", seperator, fstWidth));
 		}

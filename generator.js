@@ -61,8 +61,6 @@
 								new RegEx.Replaceable.Cache(), // Neg
 								new RegEx.Replaceable.Cache()  // Concat
 								);
-				//var reps = new RegEx.Replaceable.Cache();	
-
 				return generate(depth, pool, reps);
 		}
 		SELF.make = make;
