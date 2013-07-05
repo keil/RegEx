@@ -9,8 +9,8 @@
  * Author Matthias Keil
  *  http://www.informatik.uni-freiburg.de/~keilr/
  *
- * $Date: 2013-03-07 11:18:52 +0100 (Thu, 07 Mar 2013) $
- * $Rev: 23136 $
+ * $Date$
+ * $Rev$
  */
 __APC.Parser = (function(APC){
 		/*

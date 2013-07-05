@@ -9,8 +9,8 @@
  * Author Matthias Keil
  *  http://www.informatik.uni-freiburg.de/~keilr/
  *
- * $Date: 2013-03-08 08:28:48 +0100 (Fri, 08 Mar 2013) $
- * $Rev: 23154 $
+ * $Date$
+ * $Rev$
  */
 (function(APC){
 

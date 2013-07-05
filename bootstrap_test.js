@@ -9,8 +9,8 @@
  * Author Matthias Keil
  *  http://www.informatik.uni-freiburg.de/~keilr/
  *
- * $Date: 2013-04-29 12:48:15 +0200 (Mon, 29 Apr 2013) $
- * $Rev: 23200 $
+ * $Date$
+ * $Rev$
  */
 
 // load hash set
