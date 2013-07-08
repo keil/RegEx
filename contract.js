@@ -1400,7 +1400,7 @@
 		function unfold(E, F, first, ctx) {
 
 				// verbose - true, print output: false, do not print the output
-				var verbose  = true;
+				var verbose  = false || APC.RegEx.config.verbose;
 				if(verbose) __sysout("\n\n\n##################################################");
 				if(verbose) __sysout("## isSuperSetOf: " + E + ">=" + F);
 

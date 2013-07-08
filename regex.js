@@ -24,6 +24,7 @@ var __RegEx = (function(APC) {
 		//////////////////////////////////////////////////
 
 		RegEx.APC = APC;
+		APC.RegEx = RegEx;
 
 		//////////////////////////////////////////////////
 		// Interface to Access Permission Contracts
@@ -49,16 +50,16 @@ var __RegEx = (function(APC) {
 				};
 				this.lderive = function(larg) {
 
-									__sysout("$$$ CALL lderive on " + target + " with " + larg);
-									__sysout(statistics);
+	//								__sysout("$$$ CALL lderive on " + target + " with " + larg);
+	//								__sysout(statistics);
 
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
 						return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
 
-						__sysout("$$$ CALL uderive on " + target + " with " + larg);
-						__sysout(statistics);
+	//					__sysout("$$$ CALL uderive on " + target + " with " + larg);
+	//					__sysout(statistics);
 
 
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
@@ -66,15 +67,15 @@ var __RegEx = (function(APC) {
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
-						__sysout("$$$ CALL isSuperSetOf on " + target + " with " + arg);
-						__sysout(statistics);
+	//					__sysout("$$$ CALL isSuperSetOf on " + target + " with " + arg);
+	//					__sysout(statistics);
 
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
-						__sysout("$$$ CALL isSubSetOf on " + target + " with " + arg);
-						__sysout(statistics);
+	//					__sysout("$$$ CALL isSubSetOf on " + target + " with " + arg);
+	//					__sysout(statistics);
 
 
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();

@@ -70,20 +70,20 @@
 				/** Solve Inequality
 				*/	
 				this.solveInequality = function() {
-						__sysout("\n\n\n@@@@@@@@@@@@@@@@@@@@ SOLVE INEQUALITY");
-						__sysout("@INEQUALITY: " + left + " <= " + right);
-						__sysout("@CALLSTAT (PRE): " + callStatistics);
+	//					__sysout("\n\n\n@@@@@@@@@@@@@@@@@@@@ SOLVE INEQUALITY");
+	//					__sysout("@INEQUALITY: " + left + " <= " + right);
+	//					__sysout("@CALLSTAT (PRE): " + callStatistics);
 		//				__sysout("@RIGHT CALLSTAT (PRE): " + right.getStatistics());
 
 						RegEx.Statistics.currentCallStatistics = callStatistics;
 						isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
 						RegEx.Statistics.currentCallStatistics = undefined;
 
-						__sysout("@ISVALID: " + isValid);
-						__sysout("@ISSUBSET: " + isSubset);
+	//					__sysout("@ISVALID: " + isValid);
+	//					__sysout("@ISSUBSET: " + isSubset);
 		//				__sysout("@LEFT CALLSTAT (POST): " + left.getStatistics());
-						__sysout("@CALLSTAT (POST): " + callStatistics);
-						__sysout("@@@@@@@@@@@@@@@@@@@@\n\n\n");
+	//					__sysout("@CALLSTAT (POST): " + callStatistics);
+	//					__sysout("@@@@@@@@@@@@@@@@@@@@\n\n\n");
 				}
 
 				/** Return Statistics
