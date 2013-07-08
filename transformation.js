@@ -54,34 +54,34 @@
 						results.append(mkLiteralTransformation(result));
 						// TODO für alle
 						//
-						
+
 
 						// Or Transformation
-//						results.append(mkOrTransformation(result));
+						results.append(mkOrTransformation(result));
 						// TODO für alle
 
 
 						// And Transformation
-//						results.append(mkAndTransformation(result));
+					//	results.append(mkAndTransformation(result));
 						// TODO give a notice
 						// TODO für alle
 
 
 						// Opt Transformation
-//						results.append(mkOptTransformation(result));
+						//						results.append(mkOptTransformation(result));
 						// TODO alles ohne Opt
-						
+
 
 						// Star Transformation
-//						results.append(mkStarTransformation(result));
+						//						results.append(mkStarTransformation(result));
 						// TODO alles Ohne Star
-						
+
 
 						// Neg Transformation
 						// TODO
 						//results.append(mkNegTransformation(result));
 						// ToDo Alles`:w
-						
+
 
 				});
 
@@ -115,19 +115,20 @@
 				var dummy = result.getDummy();
 				var pool = result.getPool();
 
+				// Origin
+				var origin = dummy.dump();
+
 				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
-//				set.append(result.getReplaceables().getOptionalCache());	
-//				set.append(result.getReplaceables().getStarCache());
-//				set.append(result.getReplaceables().getOrCache());
-//				set.append(result.getReplaceables().getAndCache());
-//				set.append(result.getReplaceables().getConcatCache());			
+				set.append(result.getReplaceables().getOptionalCache());	
+				set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getOrCache());
+				//set.append(result.getReplaceables().getAndCache());
+				set.append(result.getReplaceables().getConcatCache());			
 
 				// Modification
 				set.foreach(function(i, replaceable) {
-
-						var origin = dummy.dump();
 
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
@@ -135,27 +136,10 @@
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));
-						
-						replaceable.restore();
-
-						
-
-/**
-						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
-
-						var newLiteral = pool.getNotInLiteral();
-						replaceable.replaceBy(newLiteral);
-						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
-
-						
-						
 						// s != r
 						results.push(new Result(modification, origin, result.getDepth(), false));
 
-									
 						replaceable.restore();
-*/
-
 				});
 
 
@@ -163,11 +147,9 @@
 				var set = new Array();				
 				set.append(result.getReplaceables().getNegationCache());
 
-		/**		
+
 				// Modification
 				set.foreach(function(i, replaceable) {
-
-						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
 
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
@@ -175,40 +157,26 @@
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));
-						
-							replaceable.restore();
-						
-						
-						
-							var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
-
-						var newLiteral = pool.getNotInLiteral();
-						replaceable.replaceBy(newLiteral);
-						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
-
-						
-						
 						// s != r
 						results.push(new Result(modification, origin, result.getDepth(), true));
 
 						replaceable.restore();
 				});
-**/
 
-						// r <= r*
-						// TODO
-						// r* != r
-						// TODO
-						
-						
-						// r? <= r
-						// TODO
-						// r != r?
-						// TODO
+				// r <= r*
+				// TODO
+				// r* != r
+				// TODO
 
-						// r <= !(s)
-						// TODO
-						// !(s) != r
+
+				// r? <= r
+				// TODO
+				// r != r?
+				// TODO
+
+				// r <= !(s)
+				// TODO
+				// !(s) != r
 
 
 				return results;
@@ -226,16 +194,31 @@
 				// Origin
 				var origin = dummy.dump();
 
+				// Set
+				var set = new Array();				
+				set.append(result.getReplaceables().getLiteralCache());
+//				set.append(result.getReplaceables().getOptionalCache());	
+//				set.append(result.getReplaceables().getStarCache());
+//				set.append(result.getReplaceables().getOrCache());
+				//set.append(result.getReplaceables().getAndCache());
+//				set.append(result.getReplaceables().getConcatCache());			
+
 				// Modification
-				result.getReplaceables().getAllCachesWithoutNegation().foreach(function(i, replaceable) {
+				set.foreach(function(i, replaceable) {
 
 						var newLiteral = new RegEx.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
 						replaceable.replaceBy(newLiteral);
 
 						var modification = dummy.dump();
 
-						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
-						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
+					//	results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
+					//	results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
+
+__sysout(replaceable.getSign());
+
+						results.push(new Result(origin, modification, result.getDepth(), true));
+						results.push(new Result(modification, origin, result.getDepth(), false));
+
 
 						replaceable.restore();
 				});
@@ -284,7 +267,7 @@
 
 				// Origin
 				var origin = dummy.dump();
-				
+
 				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
@@ -340,7 +323,7 @@
 
 				// Origin
 				var origin = dummy.dump();
-				
+
 				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
@@ -397,7 +380,7 @@
 
 				// Origin
 				var origin = dummy.dump();
-				
+
 				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
