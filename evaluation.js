@@ -58,7 +58,11 @@
 				var failedSet = new Array();
 				var indeterminableSet = new Array();
 
-				statistics.foreach(function(i, statistic) {		
+
+
+				statistics.foreach(function(i, statistic) {	
+
+
 						// Evaluate: Failed statistics 			
 						if(statistic.isValid()==statistic.isSubset()) { 		
 								okSum++;
@@ -87,6 +91,8 @@
 				avgTmpLUDerive[statistic.getDepth()].push(sum);
 
 				});
+
+
 
 				// Evaluate: avg()
 				avgTmpLUDerive.foreach(function(depth, values) {

@@ -70,7 +70,7 @@ var __RegEx = (function(APC) {
 				this.isEmpty = function() {return target.isEmpty();};
 				this.isBlank = function() {return target.isBlank();};
 				this.isIndifferent = function() {return target.isIndifferent();};
-				this.isUniversal = function() {return target.isNullable();};
+				this.isUniversal = function() {return target.isUniversal();};
 				this.isNullable = function() {return target.isNullable();};
 				//////////////////////////////////////////////////
 				this.first = function() {return target.first()};

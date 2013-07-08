@@ -158,7 +158,8 @@
 								var reps = sRes.getReplaceables();
 								var reps = reps.pushAnd(rep);
 
-								results.push(new Result(rep, depth, pool, reps));
+								// TODO deaktiviert, da a&b = {} und das imemr subset !!
+							//	results.push(new Result(rep, depth, pool, reps));
 						});
 				});
 

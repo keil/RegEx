@@ -118,11 +118,11 @@
 				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
-				set.append(result.getReplaceables().getOptionalCache());	
-				set.append(result.getReplaceables().getStarCache());
-				set.append(result.getReplaceables().getOrCache());
-				set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getConcatCache());
+//				set.append(result.getReplaceables().getOptionalCache());	
+//				set.append(result.getReplaceables().getStarCache());
+//				set.append(result.getReplaceables().getOrCache());
+//				set.append(result.getReplaceables().getAndCache());
+//				set.append(result.getReplaceables().getConcatCache());			
 
 				// Modification
 				set.foreach(function(i, replaceable) {
@@ -135,10 +135,27 @@
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));
+						
+						replaceable.restore();
+
+						
+
+/**
+						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
+
+						var newLiteral = pool.getNotInLiteral();
+						replaceable.replaceBy(newLiteral);
+						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
+
+						
+						
 						// s != r
 						results.push(new Result(modification, origin, result.getDepth(), false));
 
+									
 						replaceable.restore();
+*/
+
 				});
 
 
@@ -146,6 +163,7 @@
 				var set = new Array();				
 				set.append(result.getReplaceables().getNegationCache());
 
+		/**		
 				// Modification
 				set.foreach(function(i, replaceable) {
 
@@ -157,12 +175,25 @@
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));
+						
+							replaceable.restore();
+						
+						
+						
+							var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
+
+						var newLiteral = pool.getNotInLiteral();
+						replaceable.replaceBy(newLiteral);
+						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
+
+						
+						
 						// s != r
 						results.push(new Result(modification, origin, result.getDepth(), true));
 
 						replaceable.restore();
 				});
-
+**/
 
 						// r <= r*
 						// TODO

@@ -34,7 +34,18 @@
 				/** Solve Inequality
 				*/	
 				this.solveInequality = function() {
+						__sysout("\n\n\n@@@@@@@@@@@@@@@@@@@@ SOLVE INEQUALITY");
+						__sysout("@INEQUALITY: " + left + " <= " + right);
+						__sysout("@LEFT CALLSTAT (PRE): " + left.getStatistics());
+						__sysout("@RIGHT CALLSTAT (PRE): " + right.getStatistics());
+
 						isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
+
+						__sysout("@ISVALID: " + isValid);
+						__sysout("@ISSUBSET: " + isSubset);
+						__sysout("@LEFT CALLSTAT (POST): " + left.getStatistics());
+						__sysout("@RIGHT CALLSTAT (POST): " + right.getStatistics());
+						__sysout("@@@@@@@@@@@@@@@@@@@@\n\n\n");
 				}
 
 				/** Return Statistics
