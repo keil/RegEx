@@ -17,115 +17,153 @@
 		SELF = {};
 		RegEx.Statistics = SELF;
 
+		//////////////////////////////////////////////////
+		// Container
+		//////////////////////////////////////////////////
 
+		/** Container
+		 * @param left left RegEx Wrapper
+		 * @param right right RegEx Wrapper
+		 * @param depth nesting index
+		 * @param isValid true, if left <= right, false otherwise
+		 */
 		function Container(left, right, depth, isValid) {
+				// true, if left <= right, false otherwise
 				var isSubset = undefined; 
-		
+
+				/** Solve Inequality
+				*/	
 				this.solveInequality = function() {
-					isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
+						isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
 				}
 
+				/** Return Statistics
+				*/	
 				this.getStatistics = function() {
-					
 						return new Statistic(this, isSubset)
-						//return left.toString() + " <= " + right.toString();
 				}
 
+				/** To String
+				*/
 				this.toString = function() {
-					return left.getTarget().toString() + " <= " + right.getTarget().toString();
+						return left.getTarget().toString() + " <= " + right.getTarget().toString();
 				}
 
+				/** Left
+				 * @return left RegEx
+				 */
 				this.getLeft = function() {
-					return left;
+						return left;
 				}
 
+				/** Right
+				 * @return right RegEx
+				 */
 				this.getRight = function() {
-					return right;
+						return right;
 				}
 
+				/** Depth
+				 * @return depth
+				 */
 				this.getDepth = function() {
-					return depth;
+						return depth;
 				}
 
+				/** Is Valid SubSet
+				 * @return isValid
+				 */
 				this.isValid = function() {
-					return isValid;
+						return isValid;
 				}
-
-
-
 		}
 
+		//////////////////////////////////////////////////
+		// Statistic (Result)
+		//////////////////////////////////////////////////
 
+		/** Statistic
+		 * @param container the evaluated container
+		 * @param isSubset the evaluated result
+		 */
 		function Statistic(container, isSubset) {
+				// Call Statistics
+				var leftCallStat = container.getLeft().getStatistics();
+				var rightCallStat = container.getRight().getStatistics();
 
-				var leftStat = container.getLeft().getStatistics();
-				var rightStat = container.getRight().getStatistics();
-
-
+				/** Sum of called symbol-derivations
+				*/
 				this.getDerivations = function() {
-						
-						return (leftStat.getDerive()+rightStat.getDerive());
-						//return "Derivations: " + (leftStat.getDerive()+rightStat.getDerive()) +  "(" + leftStat.getDerive() + "/" + rightStat.getDerive() + ")";
+						return (leftCallStat.getDerive()+rightCallStat.getDerive());
 				}
 
+				/** Sum of called lower-derivations
+				*/
 				this.getLowerDerivations = function() {
-						__sysout(container);
-						return (leftStat.getLDerive()+rightStat.getLDerive());
-						//return "Lower Derivations: " + (leftStat.getLDerive()+rightStat.getLDerive()) +  "(" + leftStat.getLDerive() + "/" + rightStat.getLDerive() + ")";
+						return (leftCallStat.getLDerive()+rightCallStat.getLDerive());
 				}
 
+				/** Sum of called upper-derivations
+				*/
 				this.getUpperDerivations = function() {
-						return (leftStat.getUDerive()+rightStat.getUDerive());
-						//return "Upper Derivations: " + (leftStat.getUDerive()+rightStat.getUDerive()) +  "(" + leftStat.getUDerive() + "/" + rightStat.getUDerive() + ")";
+						return (leftCallStat.getUDerive()+rightCallStat.getUDerive());
 				}
 
-
-
+				/** Is Valid
+				 * @return true, if left <= rigth, false othweise
+				 */
 				this.isValid = function() {
 						return container.isValid();
 				};
 
+				/** Is Subset (Evaluation Result)
+				 * @return true, if left <= rigth, false othweise
+				 */
 				this.isSubset = function() {
 						return isSubset;
 				};
 
+				/** Depth
+				 * @return depth
+				 */
 				this.getDepth = function() {
 						return container.getDepth();
 				};
 
-
+				/** To String
+				*/
 				this.toString = function() {
 						return ((isSubset==container.isValid()) ? "OK" : "FAIL") + " " + container.toString() + " RESULT:" + isSubset + " VALID:" + container.isValid();
 				};
 
-
+				/** Print
+				*/
 				this.print = function() {
-					var result = "";
-					result += this.toString() + "\n";
-					result += "#" + this.getDerivations() + "\n";
-					result += "#" + this.getLowerDerivations() + "\n";
-					result += "#" + this.getUpperDerivations() + "\n";
+						var result = "";
+						result += this.toString() + "\n";
+						result += "#" + this.getDerivations() + "\n";
+						result += "#" + this.getLowerDerivations() + "\n";
+						result += "#" + this.getUpperDerivations() + "\n";
 
 				}
 		}
 
-
-		// TODO Class Evaluator .. 
-		// um automatisierte ergebnisse zi berechnen
-
-
-
-
+		//////////////////////////////////////////////////
+		// Comvert
+		//////////////////////////////////////////////////
 
 		function convert(transformations) {
 				var results = new Array();
 				transformations.foreach(function(i, r) {
-					results.push(new Container(r.getLeft(), r.getRight(), r.getDepth(), r.isValid()));
+						results.push(new Container(r.getLeft(), r.getRight(), r.getDepth(), r.isValid()));
 				});
 				return results
 		}
 		SELF.convert = convert;
 
+		//////////////////////////////////////////////////
+		// Make
+		//////////////////////////////////////////////////
 
 		function make(container) {
 				var results = new Array();
