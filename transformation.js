@@ -115,9 +115,6 @@
 				var dummy = result.getDummy();
 				var pool = result.getPool();
 
-				// Origin
-		//		var origin = dummy.dump();
-
 				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
@@ -130,24 +127,11 @@
 				// Modification
 				set.foreach(function(i, replaceable) {
 
-						// Origin
 						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
 
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
-
-
-						
-
-						// TODO
 						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
-
-						
-
-
-						//  Wrapper
-					//	var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
-					//	var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));
@@ -165,22 +149,11 @@
 				// Modification
 				set.foreach(function(i, replaceable) {
 
-						// Origin
 						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
-
 
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
-
-						
-					
-						// TODO
 						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
-
-
-						//  Wrapper
-				//		var originWrapper = new RegEx.Expressions.RegExWrapper(origin, new RegEx.Expressions.CallStatistics());
-				//		var modificationWrapper = new RegEx.Expressions.RegExWrapper(modification, new RegEx.Expressions.CallStatistics());
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));
@@ -189,9 +162,6 @@
 
 						replaceable.restore();
 				});
-
-
-
 
 
 						// r <= r*

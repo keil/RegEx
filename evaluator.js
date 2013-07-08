@@ -17,6 +17,9 @@
 		SELF = {};
 		RegEx.Evaluator = SELF;
 
+		//////////////////////////////////////////////////
+		// Make
+		//////////////////////////////////////////////////
 
 		function Result(failed, ok, correct, max, avg, failedSet, indeterminableSet) {
 				this.getFailed = function() {return failed;};
@@ -29,6 +32,9 @@
 		}
 		SELF.Result = Result;
 
+		//////////////////////////////////////////////////
+		// Make
+		//////////////////////////////////////////////////
 
 
 		function make(statistics) {
