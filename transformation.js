@@ -127,11 +127,11 @@
 				// Modification
 				set.foreach(function(i, replaceable) {
 
-						var origin = dummy.dump(new RegEx.Expressions.CallStatistics());
+						var origin = dummy.dump();
 
 						var newLiteral = pool.getNotInLiteral();
 						replaceable.replaceBy(newLiteral);
-						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
+						var modification = dummy.dump();
 
 						// r != s
 						results.push(new Result(origin, modification, result.getDepth(), false));

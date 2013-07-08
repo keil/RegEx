@@ -77,7 +77,7 @@
 						}
 
 				// sum of all derivations (upper and lower)
-				var sum = statistic.getLowerDerivations() + statistic.getUpperDerivations();
+				var sum = statistic.getLowerDerivationsStat() + statistic.getUpperDerivationsStat();
 
 				// Evaluate: max()
 				if(maxLUDerive[statistic.getDepth()]==undefined || maxLUDerive[statistic.getDepth()]<sum) {

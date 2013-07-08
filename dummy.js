@@ -19,85 +19,85 @@
 
 		/** Dummy of {} */
 		function EmptySetDummy() {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.EmptySetLiteral(), statistics); };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.EmptySetLiteral()); };
 				this.toString = function() { return "dummyof " + (new RegEx.Expressions.EmptySetLiteral()) };
 		}
 		SELF.EmptySetDummy = EmptySetDummy;
 
 		/** Dummy of ^ */
 		function EmptyDummy() {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.EmptyLiteral(), statistics); };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.EmptyLiteral()); };
 				this.toString = function() { return "dummyof " + (new RegEx.Expressions.EmptyLiteral()) };
 		}
 		SELF.EmptyDummy = EmptyDummy;
 
 		/** Dummy of @ */
 		function AtDummy() {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.AtLiteral(), statistics); };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.AtLiteral()); };
 				this.toString = function() { return "dummyof " + (new RegEx.Expressions.AtLiteral()) };
 		}
 		SELF.AtDummy = AtDummy;
 
 		/** Dummy of ? */
 		function QMarkDummy() {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.QMarkLiteral(), statistics); };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.QMarkLiteral()); };
 				this.toString = function() { return "dummyof " + (RegEx.Expressions.QMarkLiteral()) };
 		}
 		SELF.QMarkDummy = QMarkDummy;
 
 		/** Dummy of a */
 		function NameDummy(varname) {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.NameLiteral(varname), statistics); };	
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.NameLiteral(varname)); };	
 				this.toString = function() { return "dummyof " + (RegEx.Expressions.NameLiteral(varname)) };
 		}
 		SELF.NameDummy = NameDummy;
 
 		/** Dummy of A */
 		function RegExDummy(regex) {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.RegExLiteral(regex), statistics); };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.RegExLiteral(regex)); };
 				this.toString = function() { return "dummyof " + (new RegEx.Expressions.RegExLiteral(regex)) };
 		}
 		SELF.RegExDummy = RegExDummy;
 
 		/** Dummy of r? */
 		function OptionalDummy(dumpable) {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.OptionalRegEx(dumpable.dump(statistics)), statistics); };
-				this.toString = function() { return "dummyof " +  (new RegEx.Expressions.OptionalRegEx(dumpable.dump(new RegEx.Expressions.CallStatistics()))) };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.OptionalRegEx(dumpable.dump())); };
+				this.toString = function() { return "dummyof " +  (new RegEx.Expressions.OptionalRegEx(dumpable.dump())) };
 		}
 		SELF.OptionalDummy = OptionalDummy;
 
 		/** Dummy of r* */
 		function StarDummy(dumpable) {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.StarRegEx(dumpable.dump(statistics)), statistics); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.StarRegEx(dumpable.dump(new RegEx.Expressions.CallStatistics()))) };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.StarRegEx(dumpable.dump())); };
+				this.toString = function() { return "dummyof " + (new RegEx.Expressions.StarRegEx(dumpable.dump())) };
 		}
 		SELF.StarDummy = StarDummy;
 
 		/** Dummy of r+s */
 		function OrDummy(dumpable0, dumpable1) {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.OrRegEx(dumpable0.dump(statistics), dumpable1.dump(statistics)), statistics); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.OrRegEx(dumpable0.dump(new RegEx.Expressions.CallStatistics()), dumpable1.dump(new RegEx.Expressions.CallStatistics()))) };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.OrRegEx(dumpable0.dump(), dumpable1.dump())); };
+				this.toString = function() { return "dummyof " + (new RegEx.Expressions.OrRegEx(dumpable0.dump(), dumpable1.dump())) };
 		}
 		SELF.OrDummy = OrDummy;
 
 		/** Dummy of r&s */
 		function AndDummy(dumpable0, dumpable1) {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.AndRegEx(dumpable0.dump(statistics), dumpable1.dump(statistics)), statistics); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.AndRegEx(dumpable0.dump(new RegEx.Expressions.CallStatistics()), dumpable1.dump(new RegEx.Expressions.CallStatistics()))) };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.AndRegEx(dumpable0.dump(), dumpable1.dump())); };
+				this.toString = function() { return "dummyof " + (new RegEx.Expressions.AndRegEx(dumpable0.dump(), dumpable1.dump())) };
 		}
 		SELF.AndDummy = AndDummy;
 
 		/** Dummy of !r */
 		function NegationDummy(dumpable) {
-				this.dump = function(statistics) { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.NegRegEx(dumpable.dump(statistics)), statistics); };
-				this.toString = function () { return "dummyof " + (new RegEx.Expressions.NegRegEx(dumpable.dump(new RegEx.Expressions.CallStatistics()))) };
+				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.NegRegEx(dumpable.dump())); };
+				this.toString = function () { return "dummyof " + (new RegEx.Expressions.NegRegEx(dumpable.dump())) };
 		}
 		SELF.NegationDummy = NegationDummy;
 
 		/** Dummy of r,s */
 		function ConcatDummy(dumpable0, dumpable1) {
-				this.dump = function(statistics) {return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.ConcatRegEx(dumpable0.dump(statistics), dumpable1.dump(statistics)), statistics); }
-				this.toString = function () { return "dummyof " + (new RegEx.Expressions.ConcatRegEx(dumpable0.dump(new RegEx.Expressions.CallStatistics()), dumpable1.dump(new RegEx.Expressions.CallStatistics()))) };
+				this.dump = function() {return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.ConcatRegEx(dumpable0.dump(), dumpable1.dump())); }
+				this.toString = function () { return "dummyof " + (new RegEx.Expressions.ConcatRegEx(dumpable0.dump(), dumpable1.dump())) };
 		}
 		SELF.ConcatDummy = ConcatDummy;
 

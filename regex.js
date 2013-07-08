@@ -29,37 +29,6 @@ var __RegEx = (function(APC) {
 		// Interface to Access Permission Contracts
 		//////////////////////////////////////////////////
 
-		/** Call Statistics
-		*/
-		function CallStatistics() {
-				var sumDerive = 0;
-				var sumLDerive = 0;
-				var sumUDerive = 0;
-				var sumSuperSetOf = 0;
-				var sumSubSetOf = 0;
-				//////////////////////////////////////////////////
-				this.incDerive = function() {sumDrive++;};
-				this.incLDerive = function() {sumLDerive++;};
-				this.incUDerive = function() {sumUDerive++;};
-				this.incSuperSetOf = function() {sumSuperSetOf++;};
-				this.incSubSetOf = function() {sumSubSetOf++;};
-				//////////////////////////////////////////////////
-				this.getDerive = function() {return sumDrive;};
-				this.getLDerive = function() {return sumLDerive;};
-				this.getUDerive = function() {return sumUDerive;};
-				this.getSuperSetOf = function() {return sumSuperSetOf;};
-				this.getSubSetOf = function() {return sumSubSetOf;};
-				//////////////////////////////////////////////////
-				this.toString = function() {
-						return "Derive:" + sumDerive + 
-								" LDerive" + sumLDerive +
-								" UDerive" + sumUDerive +	
-								" SuperSetOf" + sumSuperSetOf +
-								" SubSetOf" + sumSubSetOf; 
-				}
-		}
-		SELF.CallStatistics = CallStatistics;
-
 		/** RegEx Wrapper
 		 * Wrapper Object for Regular Expression Objects
 		 * @param target AccessPermissionContract
@@ -75,24 +44,40 @@ var __RegEx = (function(APC) {
 				//////////////////////////////////////////////////
 				this.first = function() {return target.first()};
 				this.derive = function(name) {
-						/* Increase counter */statistics.incDerive();
+						/* Increase counter */ if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incDeriveStat();
 						return target.derive(name);
 				};
 				this.lderive = function(larg) {
-						/* Increase counter */statistics.incLDerive();
+
+									__sysout("$$$ CALL lderive on " + target + " with " + larg);
+									__sysout(statistics);
+
+						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
 						return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
-						/* Increase counter */statistics.incUDerive();
+
+						__sysout("$$$ CALL uderive on " + target + " with " + larg);
+						__sysout(statistics);
+
+
+						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
 						return target.uderive(larg);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
-						/* Increase counter */statistics.incSuperSetOf();
+						__sysout("$$$ CALL isSuperSetOf on " + target + " with " + arg);
+						__sysout(statistics);
+
+						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
-						/* Increase counter */statistics.incSubSetOf();
+						__sysout("$$$ CALL isSubSetOf on " + target + " with " + arg);
+						__sysout(statistics);
+
+
+						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
 						return target.isSubSetOf(arg, ctx);
 				};
 				this.reduce = function() {return target.reduce();};
@@ -100,7 +85,6 @@ var __RegEx = (function(APC) {
 				this.dump = function() {return target.dump();};
 				this.toString = function() {return "wrapperof " + target.toString();};
 				//////////////////////////////////////////////////
-				this.getStatistics = function() {return statistics;};
 				this.getTarget = function() {return target;};
 		}
 		SELF.RegExWrapper = RegExWrapper;

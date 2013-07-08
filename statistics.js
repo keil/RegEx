@@ -21,6 +21,41 @@
 		// Container
 		//////////////////////////////////////////////////
 
+		/** Call Statistics
+		*/
+		function CallStatistics() {
+				var sumDerive = 0;
+				var sumLDerive = 0;
+				var sumUDerive = 0;
+				var sumSuperSetOf = 0;
+				var sumSubSetOf = 0;
+				//////////////////////////////////////////////////
+				this.incDeriveStat = function() {sumDrive++;};
+				this.incLDeriveStat = function() {sumLDerive++;};
+				this.incUDeriveStat = function() {sumUDerive++;};
+				this.incSuperSetOfStat = function() {sumSuperSetOf++;};
+				this.incSubSetOfStat = function() {sumSubSetOf++;};
+				//////////////////////////////////////////////////
+				this.getDeriveStat = function() {return sumDrive;};
+				this.getLDeriveStat = function() {return sumLDerive;};
+				this.getUDeriveStat = function() {return sumUDerive;};
+				this.getSuperSetOfStat = function() {return sumSuperSetOf;};
+				this.getSubSetOfStat = function() {return sumSubSetOf;};
+				//////////////////////////////////////////////////
+				this.toString = function() {
+						return "Derive:" + sumDerive + 
+								" LDerive" + sumLDerive +
+								" UDerive" + sumUDerive +	
+								" SuperSetOf" + sumSuperSetOf +
+								" SubSetOf" + sumSubSetOf; 
+				}
+		}
+		SELF.CallStatistics = CallStatistics;
+
+		//////////////////////////////////////////////////
+		// Container
+		//////////////////////////////////////////////////
+
 		/** Container
 		 * @param left left RegEx Wrapper
 		 * @param right right RegEx Wrapper
@@ -29,22 +64,25 @@
 		 */
 		function Container(left, right, depth, isValid) {
 				// true, if left <= right, false otherwise
-				var isSubset = undefined; 
+				var isSubset = undefined;
+			   var callStatistics = new CallStatistics();	
 
 				/** Solve Inequality
 				*/	
 				this.solveInequality = function() {
 						__sysout("\n\n\n@@@@@@@@@@@@@@@@@@@@ SOLVE INEQUALITY");
 						__sysout("@INEQUALITY: " + left + " <= " + right);
-						__sysout("@LEFT CALLSTAT (PRE): " + left.getStatistics());
-						__sysout("@RIGHT CALLSTAT (PRE): " + right.getStatistics());
+						__sysout("@CALLSTAT (PRE): " + callStatistics);
+		//				__sysout("@RIGHT CALLSTAT (PRE): " + right.getStatistics());
 
+						RegEx.Statistics.currentCallStatistics = callStatistics;
 						isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context());
+						RegEx.Statistics.currentCallStatistics = undefined;
 
 						__sysout("@ISVALID: " + isValid);
 						__sysout("@ISSUBSET: " + isSubset);
-						__sysout("@LEFT CALLSTAT (POST): " + left.getStatistics());
-						__sysout("@RIGHT CALLSTAT (POST): " + right.getStatistics());
+		//				__sysout("@LEFT CALLSTAT (POST): " + left.getStatistics());
+						__sysout("@CALLSTAT (POST): " + callStatistics);
 						__sysout("@@@@@@@@@@@@@@@@@@@@\n\n\n");
 				}
 
@@ -87,6 +125,14 @@
 				this.isValid = function() {
 						return isValid;
 				}
+
+				/** get Call Statistics
+				 * @return callStatistics
+				 */
+				this.getCallStatistics = function() {
+						return callStatistics;
+				}
+
 		}
 
 		//////////////////////////////////////////////////
@@ -99,25 +145,24 @@
 		 */
 		function Statistic(container, isSubset) {
 				// Call Statistics
-				var leftCallStat = container.getLeft().getStatistics();
-				var rightCallStat = container.getRight().getStatistics();
+				var callStat = container.getCallStatistics();
 
 				/** Sum of called symbol-derivations
 				*/
-				this.getDerivations = function() {
-						return (leftCallStat.getDerive()+rightCallStat.getDerive());
+				this.getDerivationsStat = function() {
+						return callStat.getDeriveStat();
 				}
 
 				/** Sum of called lower-derivations
 				*/
-				this.getLowerDerivations = function() {
-						return (leftCallStat.getLDerive()+rightCallStat.getLDerive());
+				this.getLowerDerivationsStat = function() {
+						return callStat.getLDeriveStat();
 				}
 
 				/** Sum of called upper-derivations
 				*/
-				this.getUpperDerivations = function() {
-						return (leftCallStat.getUDerive()+rightCallStat.getUDerive());
+				this.getUpperDerivationsStat = function() {
+						return callStat.getUDeriveStat();
 				}
 
 				/** Is Valid
@@ -152,9 +197,9 @@
 				this.print = function() {
 						var result = "";
 						result += this.toString() + "\n";
-						result += "#" + this.getDerivations() + "\n";
-						result += "#" + this.getLowerDerivations() + "\n";
-						result += "#" + this.getUpperDerivations() + "\n";
+						result += "#" + this.getDerivationsStat() + "\n";
+						result += "#" + this.getLowerDerivationsStat() + "\n";
+						result += "#" + this.getUpperDerivationsStat() + "\n";
 
 				}
 		}

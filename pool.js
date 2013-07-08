@@ -55,11 +55,11 @@
 						inCounter++;
 						var key = inString+inCounter;
 
-						if(inCache.has(new RegEx.Dummy.NameDummy(key).dump(new RegEx.Expressions.CallStatistics()).toString())) {
+						if(inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())) {
 								return this.getInLiteral();
 						} else {
 								var literal = new RegEx.Dummy.NameDummy(key);
-								inCache.set(literal.dump(new RegEx.Expressions.CallStatistics()).toString(), literal);
+								inCache.set(literal.dump().toString(), literal);
 								return literal;
 						}
 				};
@@ -70,11 +70,11 @@
 						notInCounter++;
 						var key = notInString+notInCounter;
 
-						if(notInCache.has(new RegEx.Dummy.NameDummy(key).dump(new RegEx.Expressions.CallStatistics()).toString())) {
+						if(notInCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())) {
 								return this.getInLiteral();
 						} else {
 								var literal = new RegEx.Dummy.NameDummy(key);
-								notInCache.set(literal.dump(new RegEx.Expressions.CallStatistics()).toString(), literal);
+								notInCache.set(literal.dump().toString(), literal);
 								return literal;
 						}
 				};
