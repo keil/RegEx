@@ -117,7 +117,7 @@
 
 				/** Out */ out("Evaluate Statistics");
 				/** Time */ var time = new Date().getTime();
-				var result = RegEx.Evaluator.make(statistics);;
+				var result = RegEx.Evaluation.make(statistics);;
 				/** Out */ if(result!=undefined) ok(); else fail();
 				/** Notice */ if(result!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(result!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");

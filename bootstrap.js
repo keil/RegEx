@@ -62,7 +62,7 @@ load("transformation.js");
 // Statistics
 load("statistics.js");
 // Evaluator
-load("evaluator.js");
+load("evaluation.js");
 
 // Main Application
 load("run.js");

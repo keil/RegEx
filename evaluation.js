@@ -15,10 +15,10 @@
 (function(RegEx) {
 
 		SELF = {};
-		RegEx.Evaluator = SELF;
+		RegEx.Evaluation = SELF;
 
 		//////////////////////////////////////////////////
-		// Make
+		// Result
 		//////////////////////////////////////////////////
 
 		function Result(failed, ok, correct, max, avg, failedSet, indeterminableSet) {
