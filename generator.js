@@ -50,28 +50,17 @@
 		 * @return Array of RegEx.Generator.Result
 		 */
 		function make(depth) {
-				var pool = new RegEx.Pool.Pool(undefined, undefined);
-
-				var reps = new RegEx.Replaceable.Store(
-								new RegEx.Replaceable.Cache(), // Literal
-								new RegEx.Replaceable.Cache(), // Opt
-								new RegEx.Replaceable.Cache(), // Star
-								new RegEx.Replaceable.Cache(), // Or
-								new RegEx.Replaceable.Cache(), // And
-								new RegEx.Replaceable.Cache(), // Neg
-								new RegEx.Replaceable.Cache()  // Concat
-								);
-				return generate(depth, pool, reps);
+				var pool = new RegEx.Pool.Pool(undefined, undefined);	
+				return generate(depth, pool);
 		}
 		SELF.make = make;
 
 		/** Generate Function
 		 * @param depth	Nesting Index
 		 * @param pool	Literal Pool
-		 * @param reps	Replaceables Cache
 		 * @return Array of RegEx.Generator.Result
 		 */
-		function generate(depth, pool, reps) {
+		function generate(depth, pool) {
 
 				var results = new Array();
 
@@ -79,7 +68,7 @@
 				if(depth==0) return results;
 
 				// r?
-				generate((depth-1), pool, reps).foreach(function(i, rRes) {
+				generate((depth-1), pool).foreach(function(i, rRes) {
 
 						// Depth
 						var depth = rRes.getDepth()+1;
@@ -92,14 +81,15 @@
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
 						// Replaceables
-						var reps = rRes.getReplaceables();
-						var reps = reps.pushOptional(rep);
+						var reps = new RegEx.Replaceable.Store();
+						reps.merge(rRes.getReplaceables());
+						reps.pushOptional(rep);
 
 						results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r*
-				generate((depth-1), pool, reps).foreach(function(i, rRes) {
+				generate((depth-1), pool).foreach(function(i, rRes) {
 
 						// Depth
 						var depth = rRes.getDepth()+1;
@@ -112,15 +102,16 @@
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
 						// Replaceables
-						var reps = rRes.getReplaceables();
-						var reps = reps.pushStar(rep);
+						var reps = new RegEx.Replaceable.Store();
+						reps.merge(rRes.getReplaceables());
+						reps.pushStar(rep);
 
 						results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r+s
-				generate((depth-1), pool, reps).foreach(function(i, rRes) {
-						generate((depth-1), rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
+				generate((depth-1), pool).foreach(function(i, rRes) {
+						generate((depth-1), rRes.getPool()).foreach(function(j, sRes) {
 
 								// Depth
 								var depth = Math.max(rRes.getDepth(), sRes.getDepth())+1;
@@ -133,16 +124,18 @@
 								var rep = new RegEx.Replaceable.Replaceable(dummy);
 
 								// Replaceables
-								var reps = sRes.getReplaceables();
-								var reps = reps.pushOr(rep);
+								var reps = new RegEx.Replaceable.Store();
+								reps.merge(rRes.getReplaceables());
+								reps.merge(sRes.getReplaceables());
+								reps.pushOr(rep);
 
 								results.push(new Result(rep, depth, pool, reps));
 						});
 				});
 
 				// r&s
-				generate((depth-1), pool, reps).foreach(function(i, rRes) {
-						generate((depth-1), rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
+				generate((depth-1), pool).foreach(function(i, rRes) {
+						generate((depth-1), rRes.getPool()).foreach(function(j, sRes) {
 
 								// Depth
 								var depth = Math.max(rRes.getDepth(), sRes.getDepth())+1;
@@ -155,16 +148,18 @@
 								var rep = new RegEx.Replaceable.Replaceable(dummy);
 
 								// Replaceables
-								var reps = sRes.getReplaceables();
-								var reps = reps.pushAnd(rep);
+								var reps = new RegEx.Replaceable.Store();
+								reps.merge(rRes.getReplaceables());
+								reps.merge(sRes.getReplaceables());
+								reps.pushAnd(rep);
 
 								// TODO deaktiviert, da a&b = {} und das imemr subset !!
-							//	results.push(new Result(rep, depth, pool, reps));
+								// results.push(new Result(rep, depth, pool, reps));
 						});
 				});
 
 				// !r
-				generate((depth-1), pool, reps).foreach(function(i, rRes) {
+				generate((depth-1), pool).foreach(function(i, rRes) {
 
 						// Depth
 						var depth = rRes.getDepth()+1;
@@ -177,20 +172,19 @@
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
 
 						// Replaceables
-						var reps = rRes.getReplaceables();
-						var reps = reps.pushNegation(rep);
+						var reps = new RegEx.Replaceable.Store();
+						reps.merge(rRes.getReplaceables());
 
 						// Invert
 						reps.invert();
+						reps.pushNegation(rep);
 
-						// TODO: At the moment no negation!
-						// Because of problmes with reduce()-function, negations are currently not in the generated set.
-						//results.push(new Result(rep, depth, pool, reps));
+						results.push(new Result(rep, depth, pool, reps));
 				});
 
 				// r.s
-				generate((depth-1), pool, reps).foreach(function(i, rRes) {
-						generate(1, rRes.getPool(), rRes.getReplaceables()).foreach(function(j, sRes) {
+				generate((depth-1), pool).foreach(function(i, rRes) {
+						generate(1, rRes.getPool()).foreach(function(j, sRes) {
 
 								// Depth
 								var depth = Math.max(rRes.getDepth(), sRes.getDepth())+1;
@@ -203,8 +197,10 @@
 								var rep = new RegEx.Replaceable.Replaceable(dummy);
 
 								// Replaceables
-								var reps = sRes.getReplaceables();
-								var reps = reps.pushConcat(rep);
+								var reps = new RegEx.Replaceable.Store();
+								reps.merge(rRes.getReplaceables());
+								reps.merge(sRes.getReplaceables());
+								reps.pushConcat(rep);
 
 								results.push(new Result(rep, depth, pool, reps));
 						});
@@ -215,25 +211,29 @@
 						// {} 
 						var dummy = new RegEx.Dummy.EmptySetDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.pushLiteral(rep);
+						var reps = new RegEx.Replaceable.Store();
+						reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 
 						// ^
 						var dummy = new RegEx.Dummy.EmptyDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.pushLiteral(rep);
+						var reps = new RegEx.Replaceable.Store();
+						reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 
 						// @
 						var dummy = new RegEx.Dummy.AtDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.pushLiteral(rep);
+						var reps = new RegEx.Replaceable.Store();
+						reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 
 						// ?
 						var dummy = new RegEx.Dummy.QMarkDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var reps = reps.pushLiteral(rep);
+						var reps = new RegEx.Replaceable.Store();
+						reps.pushLiteral(rep);
 						results.push(new Result(dummy, 1, pool, reps));
 				}
 
@@ -241,7 +241,8 @@
 				var pool =  new RegEx.Pool.Pool(pool);
 				var dummy = pool.getInLiteral();
 				var rep = new RegEx.Replaceable.Replaceable(dummy);
-				var reps = reps.pushLiteral(rep);
+				var reps = new RegEx.Replaceable.Store();
+				reps.pushLiteral(rep);
 				results.push(new Result(rep, 1, pool, reps));
 
 				return results;
