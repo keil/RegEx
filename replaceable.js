@@ -19,17 +19,20 @@
 
 		/** Replaceable 
 		 * @param dummy	Dummy Object
+		 * @param sign Sign
 		 */
-		function Replaceable(dummy) {
+
+		function Replaceable(dummy, sign) {
 				var origin = dummy;
-				var sign = true;
-				this.replaceBy = function(newdummy) { dummy = newdummy; };
+				var sign = (sign==undefined) ? true: sign;
+
+				this.replaceWith = function(newdummy) { dummy = newdummy; };
 				this.restore = function() { dummy = origin; };
 				this.invert = function() { sign = !sign; }
 				this.getOrigin = function() { return origin; };
-				this.getSign = function() {return sign; };
+				this.getSign = function() { return sign; };
 				this.dump = function(statistics) { return dummy.dump(statistics); };
-				this.toString = function () { return "[" + dummy + "]" };
+				this.toString = function () { return "[" + ((sign)?"+":"-") + dummy + "]" };
 		}
 		SELF.Replaceable = Replaceable;
 
@@ -48,95 +51,60 @@
 		 */
 		function Store(literalCache, optCache, starCache, orCache, andCache, negCache, concatCache) {
 
+				literalCache = (literalCache==undefined)? new Cache():  new Cache(literalCache);
+				optCache = (optCache==undefined)? new Cache():  new Cache(optCache);
+				starCache = (starCache==undefined)? new Cache():  new Cache(starCache);
+				orCache = (orCache==undefined)? new Cache():  new Cache(orCache);
+				andCache = (andCache==undefined)? new Cache():  new Cache(andCache);
+				negCache = (negCache==undefined)? new Cache():  new Cache(negCache);
+				concatCache = (concatCache==undefined)? new Cache():  new Cache(concatCache);
+
+				/** Merge 
+				 * @param store	Store
+				 */
+				this.merge = function(store) {
+						literalCache.append(store.getLiteralCache()),
+								optCache.append(store.getOptionalCache()),
+								starCache.append(store.getStarCache()),
+								orCache.append(store.getOrCache()),
+								andCache.append(store.getAndCache()),
+								negCache.append(store.getNegationCache()),
+								concatCache.append(store.getConcatCache())
+				};
+
 				/** x */
 				this.pushLiteral = function(regex) {
-						return new Store(
-										literalCache.push(regex),
-										optCache,
-										starCache,
-										orCache,
-										andCache,
-										negCache,
-										concatCache
-										);
+						literalCache.push(regex);
 				};
 
 				/** r? */
 				this.pushOptional = function(regex) {
-						return new Store(
-										literalCache,
-										optCache.push(regex),
-										starCache,
-										orCache,
-										andCache,
-										negCache,
-										concatCache
-										);
+						optCache.push(regex);
 				};
 
 				/** r* */
 				this.pushStar = function(regex) {
-						return new Store(
-										literalCache,
-										optCache,
-										starCache.push(regex),
-										orCache,
-										andCache,
-										negCache,
-										concatCache
-										);
+						starCache.push(regex);
 				};
 
 				/** r+s */
 				this.pushOr = function(regex) {
-						return new Store(
-										literalCache,
-										optCache,
-										starCache,
-										orCache.push(regex),
-										andCache,
-										negCache,
-										concatCache
-										);
+						orCache.push(regex);
 				};
 
 				/** r&s */
 				this.pushAnd = function(regex) {
-						return new Store(
-										literalCache,
-										optCache,
-										starCache,
-										orCache,
-										andCache.push(regex),
-										negCache,
-										concatCache
-										);
+						andCache.push(regex);
 				};
 
 				/** !r */
 				this.pushNegation = function(regex) {
-						return new Store(
-										literalCache,
-										optCache,
-										starCache,
-										orCache,
-										andCache,
-										negCache.push(regex),
-										concatCache
-										);
+						negCache.push(regex); 
 				};
 
 				/** r.s */
 				this.pushConcat = function(regex) {
-						return new Store(
-										literalCache,
-										optCache,
-										starCache,
-										orCache,
-										andCache,
-										negCache,
-										concatCache.push(regex)
-										);
+						concatCache.push(regex);
 				};
 
 				/** Get Literal Cache */
@@ -179,7 +147,6 @@
 						return set;
 				}
 
-
 				/** To String */
 				this.toString = function () {
 						return literalCache.toString() + " & " + 
@@ -193,15 +160,16 @@
 
 				/** Invert */
 				this.invert = function() {
-						literalCache.invert();
-						optCache.invert();
-						starCache.invert();
-						orCache.invert();
-						andCache.invert();
-						negCache.invert();
-						concatCache.invert();
+						return new Store(
+										literalCache.invert(),
+										optCache.invert(),
+										starCache.invert(),
+										orCache.invert(),
+										andCache.invert(),
+										negCache.invert(),
+										concatCache.invert()
+										);
 				}
-
 		}
 		SELF.Store = Store;
 
@@ -227,15 +195,24 @@
 						return newCache;
 				}
 
+				// copy elements from arg
 				var cache = (arg==undefined) ? new Array() : clone(arg, replaceable);
 
 				/** Push
 				 * @param replaceable	Replaceable
-				 * @return Replaceable Cache
 				 */
 				this.push = function(replaceable) {
-						return new Cache(cache, replaceable);
+						cache.push(replaceable);
 				};
+
+				/** Append
+				 * @param arg	Cache
+				 */
+				this.append = function(arg) {
+						arg.foreach(function(i, result) {
+								cache.push(result);
+						});
+				}
 
 				/** To String */
 				this.toString = function () { return cache.toString(); };
