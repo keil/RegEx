@@ -49,42 +49,28 @@ var __RegEx = (function(APC) {
 						return target.derive(name);
 				};
 				this.lderive = function(larg) {
-
-	//								__sysout("$$$ CALL lderive on " + target + " with " + larg);
-	//								__sysout(statistics);
-
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
 						return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
-
-	//					__sysout("$$$ CALL uderive on " + target + " with " + larg);
-	//					__sysout(statistics);
-
-
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
 						return target.uderive(larg);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
-	//					__sysout("$$$ CALL isSuperSetOf on " + target + " with " + arg);
-	//					__sysout(statistics);
-
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
-	//					__sysout("$$$ CALL isSubSetOf on " + target + " with " + arg);
-	//					__sysout(statistics);
-
-
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
 						return target.isSubSetOf(arg, ctx);
 				};
 				this.reduce = function() {return target.reduce();};
 				//////////////////////////////////////////////////
 				this.dump = function() {return target.dump();};
-				this.toString = function() {return "wrapperof " + target.toString();};
+				this.toString = function() {
+						return "wrapperof " + target.toString();
+				};
 				//////////////////////////////////////////////////
 				this.getTarget = function() {return target;};
 		}
