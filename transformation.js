@@ -51,7 +51,7 @@
 				arg.foreach(function(i, result) {
 
 						// Literal Transformation
-						results.append(mkLiteralTransformation(result));
+						//			results.append(mkLiteralTransformation(result));
 						// TODO für alle
 						//
 
@@ -62,24 +62,25 @@
 
 
 						// And Transformation
-					//	results.append(mkAndTransformation(result));
+						results.append(mkAndTransformation(result));
+
 						// TODO give a notice
 						// TODO für alle
 
 
 						// Opt Transformation
-						//						results.append(mkOptTransformation(result));
+						results.append(mkOptTransformation(result));
 						// TODO alles ohne Opt
 
 
 						// Star Transformation
-						//						results.append(mkStarTransformation(result));
+						results.append(mkStarTransformation(result));
 						// TODO alles Ohne Star
 
 
 						// Neg Transformation
 						// TODO
-						//results.append(mkNegTransformation(result));
+						results.append(mkNegTransformation(result));
 						// ToDo Alles`:w
 
 
@@ -98,86 +99,32 @@
 		}
 		SELF.make = make;
 
-		//////////////////////////////////////////////////
-		// Transformation Rules
-		//////////////////////////////////////////////////
-
 		/**
 		 * Replace: ..r.. -> ..s..
-		 * Replace: ..r.. -> ..r*..
-		 * Replace: ..r.. -> ..r?..
-		 * Replace: ..r.. -> ..!(s)..
 		 * @param result	Generator Result
 		 */
 		function mkLiteralTransformation(result) {
 				var results = new Array();
 
-				var dummy = result.getDummy();
-				var pool = result.getPool();
-
-				// Origin
-				var origin = dummy.dump();
-
-				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
 				set.append(result.getReplaceables().getOptionalCache());	
 				set.append(result.getReplaceables().getStarCache());
 				set.append(result.getReplaceables().getOrCache());
 				//set.append(result.getReplaceables().getAndCache());
+				//set.append(result.getReplaceables().getNegationCache());
 				set.append(result.getReplaceables().getConcatCache());			
 
-				// Modification
-				set.foreach(function(i, replaceable) {
+				result.append.(iterate(result, set, function(replaceable, pool) {
+						return pool.getNotInLiteral();
+				}, false, false));
 
-						var newLiteral = pool.getNotInLiteral();
-						replaceable.replaceBy(newLiteral);
-						var modification = dummy.dump();
-
-						// r != s
-						results.push(new Result(origin, modification, result.getDepth(), false));
-						// s != r
-						results.push(new Result(modification, origin, result.getDepth(), false));
-
-						replaceable.restore();
-				});
-
-
-				// Set
 				var set = new Array();				
-				set.append(result.getReplaceables().getNegationCache());
+				set.append(result.getReplaceables().getAndCache());
 
-
-				// Modification
-				set.foreach(function(i, replaceable) {
-
-						var newLiteral = pool.getNotInLiteral();
-						replaceable.replaceBy(newLiteral);
-						var modification = dummy.dump(new RegEx.Expressions.CallStatistics());
-
-						// r != s
-						results.push(new Result(origin, modification, result.getDepth(), false));
-						// s != r
-						results.push(new Result(modification, origin, result.getDepth(), true));
-
-						replaceable.restore();
-				});
-
-				// r <= r*
-				// TODO
-				// r* != r
-				// TODO
-
-
-				// r? <= r
-				// TODO
-				// r != r?
-				// TODO
-
-				// r <= !(s)
-				// TODO
-				// !(s) != r
-
+				result.append(iterate(result, set, function(replaceable, pool) {
+						return pool.getNotInLiteral();
+				}, true, true));
 
 				return results;
 		}
@@ -188,40 +135,18 @@
 		function mkOrTransformation(result) {
 				var results = new Array();
 
-				var dummy = result.getDummy();
-				var pool = result.getPool();
-
-				// Origin
-				var origin = dummy.dump();
-
-				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
-//				set.append(result.getReplaceables().getOptionalCache());	
-//				set.append(result.getReplaceables().getStarCache());
-//				set.append(result.getReplaceables().getOrCache());
-				//set.append(result.getReplaceables().getAndCache());
-//				set.append(result.getReplaceables().getConcatCache());			
+				set.append(result.getReplaceables().getOptionalCache());	
+				set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getOrCache());
+				set.append(result.getReplaceables().getAndCache());
+				set.append(result.getReplaceables().getNegationCache());
+				set.append(result.getReplaceables().getConcatCache());			
 
-				// Modification
-				set.foreach(function(i, replaceable) {
-
-						var newLiteral = new RegEx.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-					//	results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
-					//	results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
-
-__sysout(replaceable.getSign());
-
-						results.push(new Result(origin, modification, result.getDepth(), true));
-						results.push(new Result(modification, origin, result.getDepth(), false));
-
-
-						replaceable.restore();
-				});
+				results.append(iterate(result, set, function(replaceable, pool) {
+						return new RegEx.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
+				}, true, false));
 
 				return results;
 		}
@@ -232,86 +157,44 @@ __sysout(replaceable.getSign());
 		function mkAndTransformation(result) {
 				var results = new Array();
 
-				var dummy = result.getDummy();
-				var pool = result.getPool();
+				var set = new Array();				
+				set.append(result.getReplaceables().getLiteralCache());
+				set.append(result.getReplaceables().getOptionalCache());	
+				set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getOrCache());
+				set.append(result.getReplaceables().getAndCache());
+				set.append(result.getReplaceables().getNegationCache());
+				set.append(result.getReplaceables().getConcatCache());			
 
-				// Origin
-				var origin = dummy.dump();
-
-				// Modification
-				result.getReplaceables().getAllCachesWithoutNegation().foreach(function(i, replaceable) {
-
-						var newLiteral = new RegEx.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? false : true));
-						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? true : false));
-
-						replaceable.restore();
-				});
+				results.append(iterate(result, set, function(replaceable, pool) {
+						return new RegEx.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
+				}, false, true));
 
 				return results;
 		}
 
-
-		// TODO
 		/** Replace: ..r.. -> ..r?..
 		 * @param result	Generator Result
 		 */
 		function mkOptTransformation(result) {
 				var results = new Array();
 
-				var dummy = result.getDummy();
-
-				// Origin
-				var origin = dummy.dump();
-
-				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
-				set.append(result.getReplaceables().getOrCache());
-				set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getConcatCache());
+				//set.append(result.getReplaceables().getOptionalCache());	
+				//set.append(result.getReplaceables().getStarCache());
+				//set.append(result.getReplaceables().getOrCache());
+				//set.append(result.getReplaceables().getAndCache());
+				//set.append(result.getReplaceables().getNegationCache());
+				//set.append(result.getReplaceables().getConcatCache());			
+				// TODO, test if nullable, otherwise dont replace
 
-				// Modification
-				set.foreach(function(i, replaceable) {
-
-						var newLiteral = new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
-						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
-
-						replaceable.restore();
-				});
-
-				// Set
-				var set = new Array();
-				set.append(result.getReplaceables().getOptionalCache());	
-				set.append(result.getReplaceables().getStarCache());
-				set.append(result.getReplaceables().getNegationCache());
-
-				// Modification
-				set.foreach(function(i, replaceable) {
-
-						var newLiteral = new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-						results.push(new Result(origin, modification, result.getDepth(), true));
-						results.push(new Result(modification, origin, result.getDepth(), true));
-
-						replaceable.restore();
-				});
+				results.append(iterate(result, set, function(replaceable, pool) {
+						return new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
+				}, true, false));
 
 				return results;
 		}
-
 
 		/** Replace: ..r.. -> ..r*..
 		 * @param result	Generator Result
@@ -319,51 +202,19 @@ __sysout(replaceable.getSign());
 		function mkStarTransformation(result) {
 				var results = new Array();
 
-				var dummy = result.getDummy();
-
-				// Origin
-				var origin = dummy.dump();
-
-				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
-				set.append(result.getReplaceables().getOptionalCache());
-				set.append(result.getReplaceables().getOrCache());
-				set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getConcatCache());
+				//set.append(result.getReplaceables().getOptionalCache());	
+				//set.append(result.getReplaceables().getStarCache());
+				//set.append(result.getReplaceables().getOrCache());
+				//set.append(result.getReplaceables().getAndCache());
+				//set.append(result.getReplaceables().getNegationCache());
+				//set.append(result.getReplaceables().getConcatCache());
+				// TODO, test if nullable, otherwise dont replace			
 
-				// Modification
-				set.foreach(function(i, replaceable) {
-
-						var newLiteral = new RegEx.Dummy.StarDummy(replaceable.getOrigin());
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? true : false));
-						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? false : true));
-
-						replaceable.restore();
-				});
-
-				// Set
-				var set = new Array();				
-				set.append(result.getReplaceables().getStarCache());
-				set.append(result.getReplaceables().getNegationCache());
-
-				// Modification
-				set.foreach(function(i, replaceable) {
-
-						var newLiteral = new RegEx.Dummy.StarDummy(replaceable.getOrigin());
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-						results.push(new Result(origin, modification, result.getDepth(), true));
-						results.push(new Result(modification, origin, result.getDepth(), true));
-
-						replaceable.restore();
-				});
+				results.append(iterate(result, set, function(replaceable, pool) {
+						return new RegEx.Dummy.StarDummy(replaceable.getOrigin());
+				}, true, false));
 
 				return results;
 		}
@@ -375,55 +226,69 @@ __sysout(replaceable.getSign());
 		function mkNegTransformation(result) {
 				var results = new Array();
 
-				var dummy = result.getDummy();
-				var pool = result.getPool();
-
-				// Origin
-				var origin = dummy.dump();
-
-				// Set
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
-				set.append(result.getReplaceables().getOptionalCache());
-				set.append(result.getReplaceables().getStarCache());
-				set.append(result.getReplaceables().getOrCache());
-				set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getConcatCache());
-				set.append(result.getReplaceables().getNegationCache());
+				//set.append(result.getReplaceables().getOptionalCache());	
+				//set.append(result.getReplaceables().getStarCache());
+				//set.append(result.getReplaceables().getOrCache());
+				//set.append(result.getReplaceables().getAndCache());
+				//set.append(result.getReplaceables().getNegationCache());
+				//set.append(result.getReplaceables().getConcatCache());
+				// TODO, test if nullable, otherwise dont replace			
 
-				// Modification
-				set.foreach(function(i, replaceable) {
+				results.append(iterate(result, set, function(replaceable, pool) {
+						return replaceable.getOrigin();
+				}, false, false));
 
-						var newLiteral = new RegEx.Dummy.NegationDummy(replaceable.getOrigin());
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-						results.push(new Result(origin, modification, result.getDepth(), false));
-						results.push(new Result(modification, origin, result.getDepth(), false));
-
-						replaceable.restore();
-				});
-
-				// Set
 				var set = new Array();				
-				set.append(result.getReplaceables().getNegationCache());
+				set.append(result.getReplaceables().getLiteralCache());
+				//set.append(result.getReplaceables().getOptionalCache());	
+				//set.append(result.getReplaceables().getStarCache());
+				//set.append(result.getReplaceables().getOrCache());
+				//set.append(result.getReplaceables().getAndCache());
+				//set.append(result.getReplaceables().getNegationCache());
+				//set.append(result.getReplaceables().getConcatCache());
+				// TODO, test if nullable, otherwise dont replace			
 
-				// Modification
-				set.foreach(function(i, replaceable) {
-
-						var newLiteral = pool.getNotInLiteral();
-						replaceable.replaceBy(newLiteral);
-
-						var modification = dummy.dump();
-
-						results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign()) ? false : true));
-						results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign()) ? true : false));
-
-						replaceable.restore();
-				});
+				results.append(iterate(result, set, function(replaceable, pool) {
+						return pool.getNotInLiteral();
+				}, false, false));
 
 				return results;
 		}
 
+
+
+		/** Iterate
+		 * @param result	Generator Result
+		 * @param set		Replaceables Set
+		 * @param modCall	Callback Function for Modifications
+		 * @param oRmFlag	Flag, if E<=F
+		 * @param mRoFlag	Flag, if F<=E
+		 */
+		function iterate(result, set, modCall, oRmFlag, mRoFlag) {
+				// new result Array
+				var results = new Array();
+				// Dummy and Pool
+				var dummy = result.getDummy();
+				var pool = result.getPool();
+				// Origin
+				var origin = dummy.dump();
+
+				// Modification
+				set.foreach(function(i, replaceable) {
+						var newLiteral = modCall(replaceable, pool)
+						replaceable.replaceWith(newLiteral);
+				var modification = dummy.dump();
+				// Transformation Result
+				results.push(new Result(origin, modification, result.getDepth(), (replaceable.getSign() ? oRmFlag : !oRmFlag)));
+				results.push(new Result(modification, origin, result.getDepth(), (replaceable.getSign() ? mRoFlag: !mRoFlag)));
+				results.push(new Result(origin, origin, result.getDepth(), true));
+				results.push(new Result(modification, modification, result.getDepth(), true));
+				// Restore
+				replaceable.restore();
+				});
+
+				return results;
+		}
 })(__RegEx);
