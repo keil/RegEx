@@ -66,7 +66,7 @@
 
 				/* @return new NotIn-literal
 				*/
-				this.getNotInLiteral = function() {
+				this.getNotInLiteral = function() {	
 						notInCounter++;
 						var key = notInString+notInCounter;
 
