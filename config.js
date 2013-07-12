@@ -48,6 +48,6 @@
 		//  Print failed and indeterminable cases
 		// Default: false
 		//////////////////////////////////////////////////
-		CONFIG.fulloutput = false;
+		CONFIG.fulloutput = true;
 
 })(__RegEx);;

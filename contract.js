@@ -277,6 +277,8 @@
 					   isSuperSetOf: function(arg, ctx) {
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
+							   	/** C <= C' |= false  | v(C) and ~v(C') */
+							   else if(arg.isNullable()) return false;
 							   /** C <= C' |= true  | n(C) */
 							   else if (arg.isEmpty()) return true;
 
@@ -473,6 +475,8 @@
 					   isSuperSetOf: function(arg, ctx) {
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
+							    /** C <= C' |= false  | v(C) and ~v(C') */
+							   else if(arg.isNullable()) return false;
 							   /** C <= C' |= true  | n(C) */
 							   else if (arg.isEmpty()) return true;
 							   /** C <= C' |= true  | w(C) & !n(C') */
@@ -571,6 +575,8 @@
 					   isSuperSetOf: function(arg, ctx) {
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
+							   /** C <= C' |= false  | v(C) and ~v(C') */
+							   else if(arg.isNullable()) return false;
 							   /** C <= C' |= true  | n(C) */
 							   else if (arg.isEmpty()) return true;
 							   /** C <= C' |= true  | w(C) & !n(C') */
@@ -659,7 +665,7 @@
 					   //////////////////////////////////////////////////
 					   /** first(C?) ::= first(C) */
 					   first: function() {
-							   return contract.first();//.concat(new Array(new __EmptyLiteral())); // TODO, empty string not practical
+							   return contract.first().concat(new Array(new __EmptyLiteral()));
 					   },
 					   /** (d_name C?) ::= (d_name C) */
 					   derive: function(name) {
@@ -772,7 +778,7 @@
 					   //////////////////////////////////////////////////
 					   /** first(C*) ::= first(C) */
 					   first: function() {
-							   return contract.first(); //.concat(new Array(new __EmptyLiteral())); // TODO, empty string not required
+							   return contract.first().concat(new Array(new __EmptyLiteral())); // TODO, empty string not required
 					   },
 					   /** (d_name C*) ::= (d_name C).C* */
 					   derive: function(name) {
