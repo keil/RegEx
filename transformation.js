@@ -77,15 +77,19 @@
 
 				var set = new Array();				
 				set.append(result.getReplaceables().getLiteralCache());
-				//		set.append(result.getReplaceables().getOptionalCache());	
-				//		set.append(result.getReplaceables().getStarCache());
-				//			set.append(result.getReplaceables().getOrCache());
+				//set.append(result.getReplaceables().getOptionalCache());	
+				//set.append(result.getReplaceables().getStarCache());
+				//set.append(result.getReplaceables().getOrCache());
 				//set.append(result.getReplaceables().getAndCache());
 				//set.append(result.getReplaceables().getNegationCache());
-				//			set.append(result.getReplaceables().getConcatCache());			
+				//set.append(result.getReplaceables().getConcatCache());			
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
 						return pool.getNotInLiteral();
+				}, false, false));
+
+				results.append(iterate(result, set, function(replaceable, pool, origin) {
+						return new RegEx.Dummy.NegationDummy(replaceable.getOrigin());
 				}, false, false));
 
 				var set = new Array();				
@@ -216,7 +220,7 @@
 				//set.append(result.getReplaceables().getStarCache());
 				//set.append(result.getReplaceables().getOrCache());
 				//set.append(result.getReplaceables().getAndCache());
-			//	set.append(result.getReplaceables().getNegationCache());
+				//	set.append(result.getReplaceables().getNegationCache());
 				//set.append(result.getReplaceables().getConcatCache());
 				// TODO, test if nullable, otherwise dont replace			
 

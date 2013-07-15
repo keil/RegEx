@@ -21,7 +21,6 @@
 		 * @param dummy	Dummy Object
 		 * @param sign Sign
 		 */
-
 		function Replaceable(dummy, sign) {
 				var origin = dummy;
 				var sign = (sign==undefined) ? true: sign;

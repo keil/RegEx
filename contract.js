@@ -277,7 +277,7 @@
 					   isSuperSetOf: function(arg, ctx) {
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
-							   	/** C <= C' |= false  | v(C) and ~v(C') */
+							   /** C <= C' |= false  | v(C) and ~v(C') */
 							   else if(arg.isNullable()) return false;
 							   /** C <= C' |= true  | n(C) */
 							   else if (arg.isEmpty()) return true;
@@ -475,7 +475,7 @@
 					   isSuperSetOf: function(arg, ctx) {
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
-							    /** C <= C' |= false  | v(C) and ~v(C') */
+							   /** C <= C' |= false  | v(C) and ~v(C') */
 							   else if(arg.isNullable()) return false;
 							   /** C <= C' |= true  | n(C) */
 							   else if (arg.isEmpty()) return true;
@@ -1151,7 +1151,8 @@
 					   //////////////////////////////////////////////////
 					   /** first(!C) ::= first(C) */
 					   first: function() {
-							   return new Array(new __QMarkLiteral()); 
+							  // return new Array(new __QMarkLiteral()); 
+							    return new Array(new __QMarkLiteral()).concat(contract.first());
 					   },
 					   /** (d_name !C) :== !(d_name C) */
 					   derive: function(name) {
@@ -1207,7 +1208,7 @@
 							   /** !(C) ~ @ | m*(C) */
 							   if(contract.isUniversal()) return  new __AtLiteral();
 							   /** SPECIAL: !(C) ~ @ | m(C) */
-							   else if(contract.isIndifferent()) return  new __AtLiteral();
+						//	   else if(contract.isIndifferent()) return  new __AtLiteral();
 							   /** SPECIAL: !(^) ~ ? | m(C) */
 							   else if(contract==new __EmptyLiteral()) return  new __QMarkLiteral();
 							   /** reduce !(C) ::= !(reduce C) */
@@ -1525,6 +1526,7 @@
 		function __ContractCache() {
 				// cache array
 				var cache = new StringMap();
+				var reduced = new Array();
 
 				return {
 
@@ -1533,10 +1535,17 @@
 						 * @return access permission contract
 						 */
 						c: function(contract) {
-								if(this.contains(contract.toString())) {
-										return this.get(contract.toString());
+								var key = contract.toString();
+								var value = contract;
+
+								if(this.contains(key)) {
+										return this.get(key);
 								} else {
-										return this.put(contract.toString(), contract);
+										if(!reduced[key]) {
+												reduced[contract.toString()]=true;
+												return this.c(contract.reduce());
+										} else 
+												return this.put(key, value);
 								}
 						},
 

@@ -33,9 +33,11 @@ var __RegEx = (function(APC) {
 		/** RegEx Wrapper
 		 * Wrapper Object for Regular Expression Objects
 		 * @param target AccessPermissionContract
-		 * @param statistics Call Statistics
 		 */
-		function RegExWrapper(target, statistics) {
+
+		var counter = 0;
+		function RegExWrapper(target) {
+				var uid = counter++;
 				//////////////////////////////////////////////////
 				this.isEmpty = function() {return target.isEmpty();};
 				this.isBlank = function() {return target.isBlank();};
@@ -65,11 +67,14 @@ var __RegEx = (function(APC) {
 						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
 						return target.isSubSetOf(arg, ctx);
 				};
-				this.reduce = function() {return target.reduce();};
+				this.reduce = function() {
+						return this;
+						//return new RegExWrapper(target.reduce());
+				};
 				//////////////////////////////////////////////////
 				this.dump = function() {return target.dump();};
 				this.toString = function() {
-						return "wrapperof " + target.toString();
+						return "wrapperof #" + uid + " " + target.toString();
 				};
 				//////////////////////////////////////////////////
 				this.getTarget = function() {return target;};
