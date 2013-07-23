@@ -141,7 +141,7 @@
 				/** Full Output */
 				if(RegEx.config.fulloutput) {
 						result.getIndeterminableSet().foreach(function(i, statistics) {
-			//					__sysout("INDETERMINABLE (" + i + "): \n " + statistics.toString() + "\n");
+								__sysout("INDETERMINABLE (" + i + "): \n " + statistics.toString() + "\n");
 						});
 				}
 
