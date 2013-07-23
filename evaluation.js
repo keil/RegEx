@@ -58,10 +58,7 @@
 				var failedSet = new Array();
 				var indeterminableSet = new Array();
 
-
-
 				statistics.foreach(function(i, statistic) {	
-
 
 						// Evaluate: Failed statistics 			
 						if(statistic.isValid()==statistic.isSubset()) { 		

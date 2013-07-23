@@ -30,8 +30,8 @@
 				this.invert = function() { sign = !sign; }
 				this.getOrigin = function() { return origin; };
 				this.getSign = function() { return sign; };
-				this.dump = function(statistics) { return dummy.dump(statistics); };
-				this.toString = function () { return "[" + ((sign)?"+":"-") + dummy + "]" };
+				this.dump = function() { return dummy.dump(); };
+				this.toString = function () { return "[" + ((sign)?"+":"-") + dummy.toString() + "]" };
 		}
 		SELF.Replaceable = Replaceable;
 

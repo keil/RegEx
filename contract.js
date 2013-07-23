@@ -1152,7 +1152,7 @@
 					   /** first(!C) ::= first(C) */
 					   first: function() {
 							  // return new Array(new __QMarkLiteral()); 
-							    return new Array(new __QMarkLiteral()).concat(contract.first());
+							    return new Array(new __QMarkLiteral()); //.concat(contract.first());
 					   },
 					   /** (d_name !C) :== !(d_name C) */
 					   derive: function(name) {
@@ -1425,6 +1425,9 @@
 						if(verbose) __sysout("## lderive_F: " + lderive_F);
 
 						result = result && lderive_E.isSuperSetOf(lderive_F, ctx);
+						
+						if(verbose) __sysout("## result: " + result);
+						
 						if(!result) return result; // break
 				});
 				return result;
@@ -1544,12 +1547,12 @@
 										if(!reduced[key]) {
 												reduced[contract.toString()]=true;
 
-												var	tmp = RegEx.Statistics.currentCallStatistics;
-												RegEx.Statistics.currentCallStatistics=undefined;
+										//		var	tmp = RegEx.Statistics.currentCallStatistics;
+										//		RegEx.Statistics.currentCallStatistics=undefined;
 
 												contract = contract.reduce();
 
-												RegEx.Statistics.currentCallStatistics=tmp;
+										//		RegEx.Statistics.currentCallStatistics=tmp;
 
 												return this.c(contract);
 										} else 

@@ -80,5 +80,8 @@ testN("", "a");
 testN("a", "");
 
 
+testN("a?", "a");
+testN("a*", "a");
+
 
 

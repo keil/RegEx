@@ -154,7 +154,7 @@
 								reps.pushAnd(rep);
 
 								// TODO deaktiviert, da a&b = {} und das imemr subset !!
-								// results.push(new Result(rep, depth, pool, reps));
+								//results.push(new Result(rep, depth, pool, reps));
 						});
 				});
 

@@ -37,6 +37,8 @@ var __RegEx = (function(APC) {
 
 		var counter = 0;
 		function RegExWrapper(target) {
+return target;
+
 				var uid = counter++;
 				//////////////////////////////////////////////////
 				this.isEmpty = function() {return target.isEmpty();};
@@ -47,46 +49,48 @@ var __RegEx = (function(APC) {
 				//////////////////////////////////////////////////
 				this.first = function() {return target.first()};
 				this.derive = function(name) {
-						/* Increase counter */ if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+//						/* Increase counter */ if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incDeriveStat();
 						return target.derive(name);
 				};
 				this.lderive = function(larg) {
-						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
 						return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
-						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
 						return target.uderive(larg);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
-						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
-						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
 						return target.isSubSetOf(arg, ctx);
 				};
 				this.reduce = function() {
-						var tmp;
+		//				var tmp;
 						/* Deactivate Statistics */
-						tmp = RegEx.Statistics.currentCallStatistics;
-						RegEx.Statistics.currentCallStatistics=undefined;
+		//				tmp = RegEx.Statistics.currentCallStatistics;
+		//				RegEx.Statistics.currentCallStatistics=undefined;
 
-						target = target.reduce();
+		//				target = target.reduce();
 
-						/* Deactivate Statistics */
-						RegEx.Statistics.currentCallStatistics = tmp;
+		//				/* Deactivate Statistics */
+		//				RegEx.Statistics.currentCallStatistics = tmp;
 
 						return this;
 				};
 				//////////////////////////////////////////////////
 				this.dump = function() {return target.dump();};
 				this.toString = function() {
-						return "wrapperof #" + uid + " " + target.toString();
+						//return "wrapperof " + target.toString();
+						//return "<#" + uid + " " + target.toString() + ">";
+						return target.toString();
 				};
 				//////////////////////////////////////////////////
-				//this.getTarget = function() {return target;};
+				this.getTarget = function() {return target;};
 		}
 		SELF.RegExWrapper = RegExWrapper;
 
