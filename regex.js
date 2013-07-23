@@ -68,8 +68,17 @@ var __RegEx = (function(APC) {
 						return target.isSubSetOf(arg, ctx);
 				};
 				this.reduce = function() {
+						var tmp;
+						/* Deactivate Statistics */
+						tmp = RegEx.Statistics.currentCallStatistics;
+						RegEx.Statistics.currentCallStatistics=undefined;
+
+						target = target.reduce();
+
+						/* Deactivate Statistics */
+						RegEx.Statistics.currentCallStatistics = tmp;
+
 						return this;
-						//return new RegExWrapper(target.reduce());
 				};
 				//////////////////////////////////////////////////
 				this.dump = function() {return target.dump();};
@@ -77,7 +86,7 @@ var __RegEx = (function(APC) {
 						return "wrapperof #" + uid + " " + target.toString();
 				};
 				//////////////////////////////////////////////////
-				this.getTarget = function() {return target;};
+				//this.getTarget = function() {return target;};
 		}
 		SELF.RegExWrapper = RegExWrapper;
 
