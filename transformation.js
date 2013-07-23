@@ -57,7 +57,7 @@
 						// And Transformation
 						results.append(mkAndTransformation(result));
 						// Opt Transformation
-						//results.append(mkOptTransformation(result)); // TODO, at the moment not applicable, because a?? <= a?
+						//results.append(mkOptTransformation(result)); //  TODO, at the moment not applicable, because a?? <= a? 
 						// Star Transformation
 						//results.append(mkStarTransformation(result)); // TODO, at the moment not applicable, because a?? <= a?
 						// Neg Transformation
@@ -85,6 +85,8 @@
 				//set.append(result.getReplaceables().getConcatCache());			
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
+						var tmp = pool.getNotInLiteral();
+return tmp;
 						return pool.getNotInLiteral();
 				}, false, false));
 
@@ -99,8 +101,8 @@
 						return pool.getNotInLiteral();
 				}, true, true));
 
-				var set = new Array();				
-				set.append(result.getReplaceables().getLiteralCache());
+//				var set = new Array();				
+//				set.append(result.getReplaceables().getLiteralCache());
 				//set.append(result.getReplaceables().getOptionalCache());	
 				//set.append(result.getReplaceables().getStarCache());
 				//set.append(result.getReplaceables().getOrCache());
@@ -167,8 +169,8 @@
 				var results = new Array();
 
 				var set = new Array();				
-				set.append(result.getReplaceables().getLiteralCache());
-				//set.append(result.getReplaceables().getOptionalCache());	
+				//set.append(result.getReplaceables().getLiteralCache());
+				set.append(result.getReplaceables().getOptionalCache());	
 				//set.append(result.getReplaceables().getStarCache());
 				//set.append(result.getReplaceables().getOrCache());
 				//set.append(result.getReplaceables().getAndCache());
@@ -176,9 +178,9 @@
 				//set.append(result.getReplaceables().getConcatCache());			
 				// TODO, test if nullable, otherwise dont replace
 
-				results.append(iterate(result, set, function(replaceable, pool, origin) {
-						return new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
-				}, true, false));
+//				results.append(iterate(result, set, function(replaceable, pool, origin) {
+//						return replaceable.getOrigin();
+//				}, true, false));
 
 				return results;
 		}
@@ -190,18 +192,18 @@
 				var results = new Array();
 
 				var set = new Array();				
-				set.append(result.getReplaceables().getLiteralCache());
+				//set.append(result.getReplaceables().getLiteralCache());
 				//set.append(result.getReplaceables().getOptionalCache());	
-				//set.append(result.getReplaceables().getStarCache());
+				set.append(result.getReplaceables().getStarCache());
 				//set.append(result.getReplaceables().getOrCache());
 				//set.append(result.getReplaceables().getAndCache());
 				//set.append(result.getReplaceables().getNegationCache());
 				//set.append(result.getReplaceables().getConcatCache());
 				// TODO, test if nullable, otherwise dont replace			
 
-				results.append(iterate(result, set, function(replaceable, pool, origin) {
-						return new RegEx.Dummy.StarDummy(replaceable.getOrigin());
-				}, true, false));
+//				results.append(iterate(result, set, function(replaceable, pool, origin) {
+//						return replaceable.getOrigin();
+//				}, false, true));
 
 				return results;
 		}
@@ -240,7 +242,7 @@
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
 						return new RegEx.Dummy.NegationDummy(pool.getNotInLiteral());
-				}, true, false));
+				}, false, false));
 
 				return results;
 		}
@@ -262,7 +264,6 @@
 				var pool = result.getPool();
 				// Origin
 				var origin = dummy.dump();
-
 				// Modification
 				set.foreach(function(i, replaceable) {
 						var newLiteral = modCall(replaceable, pool, origin);
