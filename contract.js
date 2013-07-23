@@ -665,7 +665,7 @@
 					   //////////////////////////////////////////////////
 					   /** first(C?) ::= first(C) */
 					   first: function() {
-							   return contract.first().concat(new Array(new __EmptyLiteral()));
+							   return contract.first();//.concat(new Array(new __EmptyLiteral()));
 					   },
 					   /** (d_name C?) ::= (d_name C) */
 					   derive: function(name) {
@@ -778,7 +778,7 @@
 					   //////////////////////////////////////////////////
 					   /** first(C*) ::= first(C) */
 					   first: function() {
-							   return contract.first().concat(new Array(new __EmptyLiteral())); // TODO, empty string not required
+							   return contract.first();//.concat(new Array(new __EmptyLiteral())); // TODO, empty string not required
 					   },
 					   /** (d_name C*) ::= (d_name C).C* */
 					   derive: function(name) {
@@ -1543,7 +1543,15 @@
 								} else {
 										if(!reduced[key]) {
 												reduced[contract.toString()]=true;
-												return this.c(contract.reduce());
+
+												var	tmp = RegEx.Statistics.currentCallStatistics;
+												RegEx.Statistics.currentCallStatistics=undefined;
+
+												contract = contract.reduce();
+
+												RegEx.Statistics.currentCallStatistics=tmp;
+
+												return this.c(contract);
 										} else 
 												return this.put(key, value);
 								}
