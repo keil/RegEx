@@ -104,6 +104,7 @@
 						// Replaceables
 						var reps = new RegEx.Replaceable.Store();
 						reps.merge(rRes.getReplaceables());
+						/* TODO test */reps.clearStar();
 						reps.pushStar(rep);
 
 						results.push(new Result(rep, depth, pool, reps));

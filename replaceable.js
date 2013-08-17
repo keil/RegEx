@@ -121,6 +121,40 @@
 				/** Get Concat Cache */
 				this.getConcatCache = function() { return concatCache; };
 
+				/** x */
+				this.clearLiteral = function() {
+						literalCache = new Cache();
+				};
+
+				/** r? */
+				this.clearOptional = function() {
+						optCache = new Cache();
+				};
+
+				/** r* */
+				this.clearStar = function() {
+						starCache = new Cache();
+				};
+
+				/** r+s */
+				this.clearOr = function() {
+						orCache = new Cache();
+				};
+
+				/** r&s */
+				this.clearAnd = function() {
+						andCache = new Cache();
+				};
+
+				/** !r */
+				this.clearNegation = function() {
+						negCache = new Cache(); 
+				};
+
+				/** r.s */
+				this.clearConcat = function() {
+						concatCache = new Cache();
+				};
 				/** Get All */
 				this.getAllCaches = function() {
 						var set = new Array();
