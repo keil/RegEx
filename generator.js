@@ -85,9 +85,9 @@
 						var store = new RegEx.Replaceable.Store();
 						store.merge(rRes.getReplaceables());
 						/* FLAG */ store.setInOpt();
-						store.push(rep);
+						//store.push(rep);
 
-						results.push(new Result(rep, depth, pool, store));
+						//results.push(new Result(rep, depth, pool, store));
 				});
 
 				// r*
@@ -108,9 +108,9 @@
 						var store = new RegEx.Replaceable.Store();
 						store.merge(rRes.getReplaceables());
 						/* FLAG */ store.setInStar();
-						store.push(rep);
+						//store.push(rep);
 
-						results.push(new Result(rep, depth, pool, store));
+						//results.push(new Result(rep, depth, pool, store));
 				});
 
 				// r+s
@@ -133,7 +133,7 @@
 								store.merge(rRes.getReplaceables());
 								store.merge(sRes.getReplaceables());
 								/* FLAG */ store.setInOr();
-								store.push(rep);
+								//store.push(rep);
 
 								results.push(new Result(rep, depth, pool, store));
 						});
@@ -159,9 +159,9 @@
 								store.merge(rRes.getReplaceables());
 								store.merge(sRes.getReplaceables());
 								/* FLAG */ store.setInAnd();
-								store.push(rep);
+								//store.push(rep);
 
-								results.push(new Result(rep, depth, pool, store));
+								//results.push(new Result(rep, depth, pool, store));
 						});
 				});
 
@@ -183,10 +183,10 @@
 						var store = new RegEx.Replaceable.Store();
 						store.merge(rRes.getReplaceables());
 						/* FLAG */ store.setInNeg();
-						/* INVERT */ store.invert();
-						store.push(rep);
+			//			/* INVERT */ store.invert();
+						//store.push(rep);
 
-						results.push(new Result(rep, depth, pool, store));
+						//results.push(new Result(rep, depth, pool, store));
 				});
 
 				// r.s
@@ -209,7 +209,7 @@
 								store.merge(rRes.getReplaceables());
 								store.merge(sRes.getReplaceables());
 								/* FLAG */ store.setInConcat();
-								store.push(rep);
+								//store.push(rep);
 								
 								results.push(new Result(rep, depth, pool, store));
 						});
@@ -231,14 +231,14 @@
 						var store = new RegEx.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
-*/
+
 						// @
 						var dummy = new RegEx.Dummy.AtDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
 						var store = new RegEx.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
-
+*/
 						// ?
 						var dummy = new RegEx.Dummy.QMarkDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);

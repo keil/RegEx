@@ -951,15 +951,15 @@
 							   /** (C+C') ~ {} | w(C)&w(C') */
 							   else if(contract0.isBlank()&&contract1.isBlank()) return new __AtLiteral();
 							   /** (C+C') ~ C/C' | n(C)/n(C') */
-							   else if(contract0.isEmpty()) return contract1;
-							   else if(contract1.isEmpty()) return contract0;
+							   else if(contract0.isEmpty()) return contract1.reduce();
+							   else if(contract1.isEmpty()) return contract0.reduce();
 							   /** (C+C') ~ C/C' | w(C)/w(C') */
-							   else if(contract0.isBlank()) return contract1;
-							   else if(contract1.isBlank()) return contract0;
+							   else if(contract0.isBlank()) return contract1.reduce();
+							   else if(contract1.isBlank()) return contract0.reduce();
 							   /** (C+C') ~ C | C >= C' */
-							   else if(contract0.isSuperSetOf(contract1, new __CcContext())) return contract0;
+							   else if(contract0.isSuperSetOf(contract1, new __CcContext())) return contract0.reduce();
 							   /** (C+C') ~ C' | C <= C' */
-							   else if(contract1.isSuperSetOf(contract0, new __CcContext())) return contract1;
+							   else if(contract1.isSuperSetOf(contract0, new __CcContext())) return contract1.reduce();
 							   /** reduce C+C' ::= (reduce C)+(reduce C') */
 							   else return new __OrContract(contract0.reduce(), contract1.reduce());
 					   },
@@ -1089,9 +1089,9 @@
 							   else if(contract0.isBlank()) return new __AtLiteral();
 							   else if(contract1.isBlank()) return new __AtLiteral();
 							   /** (C&C') ~ C' | C >= C' */
-							   else if(contract0.isSubSetOf(contract1, new __CcContext())) return contract0;
+							   else if(contract0.isSubSetOf(contract1, new __CcContext())) return contract0.reduce();
 							   /** (C&C') ~ C | C <= C' */
-							   else if(contract1.isSubSetOf(contract0, new __CcContext())) return contract1;
+							   else if(contract1.isSubSetOf(contract0, new __CcContext())) return contract1.reduce();
 							   /** reduce C&C' ::= (reduce C)&(reduce C') */
 							   else return new __AndContract(contract0.reduce(), contract1.reduce());
 					   },
@@ -1206,11 +1206,11 @@
 					   /** reduce !C */
 					   reduce: function() {
 							   /** !(C) ~ @ | m*(C) */
-							   if(contract.isUniversal()) return  new __AtLiteral();
+							   if(contract.isUniversal()) return new __AtLiteral();
 							   /** SPECIAL: !(C) ~ @ | m(C) */
 						//	   else if(contract.isIndifferent()) return  new __AtLiteral();
 							   /** SPECIAL: !(^) ~ ? | m(C) */
-							   else if(contract==new __EmptyLiteral()) return  new __QMarkLiteral();
+							   else if(contract==new __EmptyLiteral()) return new __QMarkLiteral();
 							   /** reduce !(C) ::= !(reduce C) */
 							   else return new __NegContract(contract.reduce());
 					   },

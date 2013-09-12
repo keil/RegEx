@@ -51,7 +51,7 @@
 				arg.foreach(function(i, result) {
 
 						// Literal Transformation
-//						results.append(mkLiteralTransformation(result));
+						results.append(mkLiteralTransformation(result));
 						// Or Transformation
 //						results.append(mkOrTransformation(result));
 						// And Transformation
@@ -76,17 +76,26 @@
 				var results = new Array();
 
 				var set = new Array();				
-				set.append(result.getReplaceables().getLiteralCache());
-				//set.append(result.getReplaceables().getOptionalCache());	
-				//set.append(result.getReplaceables().getStarCache());
-				//set.append(result.getReplaceables().getOrCache());
-				//set.append(result.getReplaceables().getAndCache());
-				//set.append(result.getReplaceables().getNegationCache());
-				//set.append(result.getReplaceables().getConcatCache());			
+				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
 						return pool.getNotInLiteral();
-				}, false, false, false));
+				}, /* Orig <= Mod */ function(rep) {
+						var result = false;
+						if(rep.inAnd) result=true;
+
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = false;
+						if(rep.inAnd) result=true;
+						if(rep.isNeg) result=true;
+
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = false;
+
+						return result;
+				}));
 
 //				results.append(iterate(result, set, function(replaceable, pool, origin) {
 //						return new RegEx.Expressions.RegExWrapper(new RegEx.Dummy.NegationDummy(replaceable.getOrigin()));
@@ -255,7 +264,7 @@
 		 * @param mRoFlag		Flag, if F<=E
 		 * @param signDependend	Flag, true observes the sign, false not
 		 */
-		function iterate(result, set, modCall, oRmFlag, mRoFlag, signDependend) {
+		function iterate(result, set, modCall, oRmFlagArg, mRoFlagArg, signDependendArg) {
 				// new result Array
 				var results = new Array();
 				// Dummy and Pool
@@ -265,20 +274,26 @@
 				var origin = dummy.dump().reduce();
 				// Modification
 				set.foreach(function(i, replaceable) {
+
+						oRmFlag = oRmFlagArg(replaceable);
+						mRoFlag = mRoFlagArg(replaceable);
+						signDependend = signDependendArg(replaceable);
+
 						var newLiteral = modCall(replaceable, pool, origin);
 						if(newLiteral==undefined) return;
 
-//						__sysout("\n\nREPLACEABLE: " + dummy.toString());
+						__sysout("\n\nREPLACEABLE: " + dummy.toString());
 
 					
 						replaceable.replaceWith(newLiteral);
 						var modification = dummy.dump().reduce();
+
 						// Transformation Result
 
-//						__sysout("ORIGIN: " + origin);
-//						__sysout("NEW: " + newLiteral);
-//						__sysout("REPLACEABLE: " + dummy.toString());
-//						__sysout("MODIFICATION: " + modification);
+						__sysout("ORIGIN: " + origin);
+						__sysout("NEW: " + newLiteral);
+						__sysout("REPLACEABLE: " + dummy.toString());
+						__sysout("MODIFICATION: " + modification.reduce());
 
 						if(origin==modification) {
 								// in case that the normalization reduces the regex to two equivalent regular expressions

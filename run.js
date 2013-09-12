@@ -90,7 +90,6 @@
 				/** Notice */ if(container!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(container!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 
-
 				/** Out */ out("Solve Regular Expression Inequalities");
 				/** Time */ var time = new Date().getTime();
 				var statistics = RegEx.Statistics.make(container);
