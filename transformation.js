@@ -51,17 +51,17 @@
 				arg.foreach(function(i, result) {
 
 						// Literal Transformation
-						results.append(mkLiteralTransformation(result));
+//						results.append(mkLiteralTransformation(result));
 						// Or Transformation
-						results.append(mkOrTransformation(result));
+//						results.append(mkOrTransformation(result));
 						// And Transformation
-						results.append(mkAndTransformation(result));
+//						results.append(mkAndTransformation(result));
 						// Opt Transformation
 						//results.append(mkOptTransformation(result)); //  TODO, at the moment not applicable, because a?? <= a? 
 						// Star Transformation
-						results.append(mkStarTransformation(result)); // TODO, at the moment not applicable, because a?? <= a?
+//						results.append(mkStarTransformation(result)); // TODO, at the moment not applicable, because a?? <= a?
 						// Neg Transformation
-						results.append(mkNegTransformation(result));
+//						results.append(mkNegTransformation(result));
 				});
 
 				return results;
@@ -268,17 +268,17 @@
 						var newLiteral = modCall(replaceable, pool, origin);
 						if(newLiteral==undefined) return;
 
-						__sysout("\n\nREPLACEABLE: " + dummy.toString());
+//						__sysout("\n\nREPLACEABLE: " + dummy.toString());
 
 					
 						replaceable.replaceWith(newLiteral);
 						var modification = dummy.dump().reduce();
 						// Transformation Result
 
-						__sysout("ORIGIN: " + origin);
-						__sysout("NEW: " + newLiteral);
-						__sysout("REPLACEABLE: " + dummy.toString());
-						__sysout("MODIFICATION: " + modification);
+//						__sysout("ORIGIN: " + origin);
+//						__sysout("NEW: " + newLiteral);
+//						__sysout("REPLACEABLE: " + dummy.toString());
+//						__sysout("MODIFICATION: " + modification);
 
 						if(origin==modification) {
 								// in case that the normalization reduces the regex to two equivalent regular expressions
