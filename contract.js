@@ -74,19 +74,27 @@
 					   },
 					   /** (d_name {}) ::= {} */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __EmptySetLiteral();
 					   },
 					   /** (d_literal {}) ::= {} */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   return this;
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   return this;
 					   },
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 
@@ -95,6 +103,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   /** C <= C' |= true  | n(C) */
 							   return true;
 					   },
@@ -161,19 +171,27 @@
 					   },
 					   /** (d_name ^) ::= {} */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __EmptySetLiteral();
 					   },
 					   /** (d_literal ^) ::= ^ if literal == ^, @ oterhwise */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   return (larg==this) ? this : new __EmptySetLiteral();
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   return (larg==this) ? this : new __EmptySetLiteral();
 					   },
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** C <= C' |= true  | n(C) */
@@ -190,6 +208,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   /** C <= C' |= true  | n(C') */
 							   if(arg.isNullable()) return true;
 							   /** C <= C' |= false  | v(C) and ~v(C') */
@@ -258,16 +278,22 @@
 					   },
 					   /** (d_name @) ::= @ */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __EmptySetLiteral();
 					   },
 					   /** (d_literal @) ::= @ */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   if(larg==new __EmptyLiteral()) return this;
 							   else if(larg==this) return new __EmptyLiteral();
 							   else return new __EmptySetLiteral();
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   if(larg==new __EmptyLiteral()) return this;
 							   else if(larg==this) return new __EmptyLiteral();
 							   else return new __EmptySetLiteral();
@@ -275,6 +301,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** C <= C' |= false  | v(C) and ~v(C') */
@@ -290,6 +318,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -355,21 +385,29 @@
 					   },
 					   /** (d_name ?) ::= ^ */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __EmptyLiteral();
 					   },
 					   /** (d_literal ?) ::= ? if literal=^, ^ otherwise */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __EmptyLiteral();
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __EmptyLiteral();
 					   },
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** C <= C' |= false  | v(C) and ~v(C') */
@@ -390,6 +428,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -455,16 +495,22 @@
 					   },
 					   /** (d_name varname) ::= ^ if varname == name, @ otherwise */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return (name == varname) ? new __EmptyLiteral() : new __EmptySetLiteral();
 					   },
 					   /** (d_literal varname) ::= varname if literal=^, ^ if literal==varname, ^,{} if liteal==?, {} oterhwise */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   if(larg==this) return new __EmptyLiteral(); 
 							   else if (larg==new __EmptyLiteral()) return this;
 							   else return new __EmptySetLiteral();
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   if(larg==this) return new __EmptyLiteral(); 
 							   else if (larg==new __EmptyLiteral()) return this;
 							   else if (larg==new __QMarkLiteral()) return new __EmptyLiteral();
@@ -473,6 +519,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** C <= C' |= false  | v(C) and ~v(C') */
@@ -490,6 +538,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -555,16 +605,22 @@
 					   },
 					   /** (d_name RegEx) ::= ^ if RegEx ~ name, {} otherwise */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return (new RegExp(regex)).test(name) ? new __EmptyLiteral() : new __EmptySetLiteral();
 					   },
 					   /** (d_literal RegEx) ::= RegEx if literal==^, ^ if literal==RegEx,  ^,{} if liteal==?, {} oterhwise */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   if(larg==this) return new __EmptyLiteral(); 
 							   else if (larg==new __EmptyLiteral()) return this;
 							   else return new __EmptySetLiteral();
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   if(larg==this) return new __EmptyLiteral(); 
 							   else if (larg==new __EmptyLiteral()) return this;
 							   else if (larg==new __QMarkLiteral()) return new __EmptyLiteral();
@@ -573,6 +629,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** C <= C' |= false  | v(C) and ~v(C') */
@@ -590,6 +648,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -669,16 +729,22 @@
 					   },
 					   /** (d_name C?) ::= (d_name C) */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return  contract.derive(name);
 					   },
 					   /** (d_literal C?) ::= (d_literal C)? */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return contract.lderive(larg);
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return contract.uderive(larg);
@@ -686,6 +752,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** ^ <= C' |= true  | v(C') */
@@ -705,6 +773,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -782,16 +852,22 @@
 					   },
 					   /** (d_name C*) ::= (d_name C).C* */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __ConcatContract(contract.derive(name), this);
 					   },
 					   /** (d_literal C*) ::= (d_literal C).C* */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   /** (d_^ C*) ::= C* */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __ConcatContract(contract.lderive(larg), new __StarContract(contract));
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   /** (d_^ C*) ::= C* */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __ConcatContract(contract.uderive(larg), new __StarContract(contract));
@@ -799,6 +875,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** ^ <= C' |= true  | v(C') */
@@ -818,6 +896,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -903,16 +983,22 @@
 					   },
 					   /** (d_name C0+C1) :== (d_name C0) + (d_name C1) */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __OrContract(contract0.derive(name), contract1.derive(name));
 					   },
 					   /** (d_literal C0+C1) ::= (d_literal C0) + (d_literal C1) */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __OrContract(contract0.lderive(larg), contract1.lderive(larg))
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __OrContract(contract0.uderive(larg), contract1.uderive(larg))
@@ -920,6 +1006,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** ^ <= C' |= true  | v(C') */
@@ -941,6 +1029,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -1039,16 +1129,22 @@
 					   },
 					   /** (d_name C0&C1) :== (d_name C0) & (d_name C1) */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __AndContract(contract0.derive(name), contract1.derive(name));
 					   },
 					   /** (d_literal C0&C1) ::= (d_literal C0) & (d_literal C1) */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __AndContract(contract0.lderive(larg), contract1.lderive(larg));
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __AndContract(contract0.uderive(larg), contract1.uderive(larg))
@@ -1056,6 +1152,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** ^ <= C' |= true  | v(C') */
@@ -1077,6 +1175,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -1151,15 +1251,19 @@
 					   //////////////////////////////////////////////////
 					   /** first(!C) ::= first(C) */
 					   first: function() {
-							  // return new Array(new __QMarkLiteral()); 
-							    return new Array(new __QMarkLiteral()); //.concat(contract.first());
+							   // return new Array(new __QMarkLiteral()); 
+							   return new Array(new __QMarkLiteral()); //.concat(contract.first());
 					   },
 					   /** (d_name !C) :== !(d_name C) */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   return new __NegContract(contract.derive(name));
 					   },
 					   /** (d_literal !C) ::= !(b_literal C) */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   //if (larg==new __EmptyLiteral()) return this;
 							   //else return new __NegContract(contract.lderive(larg));
@@ -1169,6 +1273,8 @@
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else return new __NegContract(contract.lderive(larg));
@@ -1176,6 +1282,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** ^ <= C' |= true  | v(C') */
@@ -1200,6 +1308,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -1208,7 +1318,7 @@
 							   /** !(C) ~ @ | m*(C) */
 							   if(contract.isUniversal()) return new __AtLiteral();
 							   /** SPECIAL: !(C) ~ @ | m(C) */
-						//	   else if(contract.isIndifferent()) return  new __AtLiteral();
+							   //	   else if(contract.isIndifferent()) return  new __AtLiteral();
 							   /** SPECIAL: !(^) ~ ? | m(C) */
 							   else if(contract==new __EmptyLiteral()) return new __QMarkLiteral();
 							   /** reduce !(C) ::= !(reduce C) */
@@ -1293,11 +1403,15 @@
 					   },
 					   /** (d_name C0.C1) :== (d_name C0).C1 + (d_name C1) if v(C0), (d_name C0).c1 otherwise */
 					   derive: function(name) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+
 							   if(contract0.isNullable()) return new __OrContract(__ConcatContract(contract0.derive(name), contract1), contract1.derive(name));
 							   else return new __ConcatContract(contract0.derive(name), contract1);
 					   },
 					   /** (d_literal C0.C1) ::= (d_literal C0).C1 + (d_literal C1) if v(C0), (d_literal C0).c1 otherwise */
 					   lderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else if(contract0.isNullable()) return new __OrContract(new __ConcatContract(contract0.lderive(larg), contract1), contract1.lderive(larg));
@@ -1305,6 +1419,8 @@
 					   },
 					   /** TODO - EXPERIMENTAL */
 					   uderive: function(larg) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+
 							   /** (d_^ C?) ::= C? */
 							   if (larg==new __EmptyLiteral()) return this;
 							   else if(contract0.isNullable()) return new __OrContract(new __ConcatContract(contract0.uderive(larg), contract1), contract1.uderive(larg));
@@ -1313,6 +1429,8 @@
 					   //////////////////////////////////////////////////
 					   /** ctx |- C <= this */
 					   isSuperSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+
 							   /** C <= C' |= true  | C=C' */
 							   if(arg==this) return true;
 							   /** ^ <= C' |= true  | v(C') */
@@ -1334,6 +1452,8 @@
 					   },
 					   /** ctx |- C >= this */
 					   isSubSetOf: function(arg, ctx) {
+							   /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+
 							   return arg.isSuperSetOf(this, ctx);
 					   },
 					   //////////////////////////////////////////////////
@@ -1425,9 +1545,9 @@
 						if(verbose) __sysout("## lderive_F: " + lderive_F);
 
 						result = result && lderive_E.isSuperSetOf(lderive_F, ctx);
-						
+
 						if(verbose) __sysout("## result: " + result);
-						
+
 						if(!result) return result; // break
 				});
 				return result;
@@ -1548,12 +1668,12 @@
 										if(!reduced[key]) {
 												reduced[contract.toString()]=true;
 
-										//		var	tmp = RegEx.Statistics.currentCallStatistics;
-										//		RegEx.Statistics.currentCallStatistics=undefined;
+												//		var	tmp = RegEx.Statistics.currentCallStatistics;
+												//		RegEx.Statistics.currentCallStatistics=undefined;
 
 												contract = contract.reduce();
 
-										//		RegEx.Statistics.currentCallStatistics=tmp;
+												//		RegEx.Statistics.currentCallStatistics=tmp;
 
 												return this.c(contract);
 										} else 

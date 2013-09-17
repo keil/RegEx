@@ -71,6 +71,20 @@
 				/** Solve Inequality
 				*/	
 				this.solveInequality = function() {
+
+/*						var proxy = new Proxy(left, {
+							get: function(target, name, receiver) {
+									__sysout(name);
+									return new Proxy(target[name], this);
+							},
+							apply: function(target, thisArg, args) {
+									return target.apply(thisArg, args);
+							},
+						});
+
+						left=proxy;
+*/
+
 						RegEx.Statistics.currentCallStatistics = callStatistics;
 						//isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context()); // TODO other direction
 						isSubset = right.isSuperSetOf(left, new RegEx.APC.Contract.Containment.Context());
