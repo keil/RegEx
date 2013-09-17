@@ -240,11 +240,11 @@
 						results.push(new Result(dummy, 1, pool, store));
 */
 						// ?
-						var dummy = new RegEx.Dummy.QMarkDummy();
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var store = new RegEx.Replaceable.Store();
-						store.push(rep);
-						results.push(new Result(dummy, 1, pool, store));
+//						var dummy = new RegEx.Dummy.QMarkDummy();
+//						var rep = new RegEx.Replaceable.Replaceable(dummy);
+//						var store = new RegEx.Replaceable.Store();
+//						store.push(rep);
+//						results.push(new Result(dummy, 1, pool, store));
 				}
 
 				// x 

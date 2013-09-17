@@ -53,15 +53,15 @@
 						// Literal Transformation
 						results.append(mkLiteralTransformation(result));
 						// Or Transformation
-//						results.append(mkOrTransformation(result));
+						results.append(mkOrTransformation(result));
 						// And Transformation
-//						results.append(mkAndTransformation(result));
+						results.append(mkAndTransformation(result));
 						// Opt Transformation
-						//results.append(mkOptTransformation(result)); //  TODO, at the moment not applicable, because a?? <= a? 
+						results.append(mkOptTransformation(result));
 						// Star Transformation
-//						results.append(mkStarTransformation(result)); // TODO, at the moment not applicable, because a?? <= a?
+						results.append(mkStarTransformation(result));
 						// Neg Transformation
-//						results.append(mkNegTransformation(result));
+						results.append(mkNegTransformation(result));
 				});
 
 				return results;
@@ -83,44 +83,29 @@
 				}, /* Orig <= Mod */ function(rep) {
 						var result = false;
 						if(rep.inAnd) result=true;
-
 						return result;
 				}, /* Mod <= Orig */ function (rep) {
 						var result = false;
 						if(rep.inAnd) result=true;
 						if(rep.isNeg) result=true;
-
 						return result;
 				}, /* use +/- */ function(rep) {
 						var result = false;
-
 						return result;
 				}));
 
-//				results.append(iterate(result, set, function(replaceable, pool, origin) {
-//						return new RegEx.Expressions.RegExWrapper(new RegEx.Dummy.NegationDummy(replaceable.getOrigin()));
-//				}, false, false, false));
-
-//				var set = new Array();				
-//				set.append(result.getReplaceables().getAndCache());
-
-//				results.append(iterate(result, set, function(replaceable, pool, origin) {
-//						return pool.getNotInLiteral();
-//				}, true, true));
-
-//				var set = new Array();				
-//				set.append(result.getReplaceables().getLiteralCache());
-				//set.append(result.getReplaceables().getOptionalCache());	
-				//set.append(result.getReplaceables().getStarCache());
-				//set.append(result.getReplaceables().getOrCache());
-				//set.append(result.getReplaceables().getAndCache());
-				//set.append(result.getReplaceables().getNegationCache());
-				//set.append(result.getReplaceables().getConcatCache());
-
-//				results.append(iterate(result, set, function(replaceable, pool, origin) {
-//						return new RegEx.Dummy.NegationDummy(replaceable.getOrigin());
-//				}, false, false));
-
+				results.append(iterate(result, set, function(replaceable, pool, origin) {
+						return new RegEx.Dummy.QMarkDummy();
+				}, /* Orig <= Mod */ function(rep) {
+						var result = true;
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = false;
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = false;
+						return result;
+				}));
 
 				return results;
 		}
@@ -132,17 +117,22 @@
 				var results = new Array();
 
 				var set = new Array();				
-				set.append(result.getReplaceables().getLiteralCache());
-				set.append(result.getReplaceables().getOptionalCache());	
-				set.append(result.getReplaceables().getStarCache());
-				set.append(result.getReplaceables().getOrCache());
-				set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getNegationCache());
-				set.append(result.getReplaceables().getConcatCache());			
+				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
 						return new RegEx.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
-				}, true, false));
+				}, /* Orig <= Mod */ function(rep) {
+						var result = true;
+						if(rep.inAnd) result=false;
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = false;
+						if(rep.inAnd) result=true;
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = true;
+						return result;
+				}));
 
 				return results;
 		}
@@ -154,17 +144,22 @@
 				var results = new Array();
 
 				var set = new Array();				
-				set.append(result.getReplaceables().getLiteralCache());
-				set.append(result.getReplaceables().getOptionalCache());	
-				set.append(result.getReplaceables().getStarCache());
-				set.append(result.getReplaceables().getOrCache());
-				set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getNegationCache());
-				set.append(result.getReplaceables().getConcatCache());			
+				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
 						return new RegEx.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
-				}, false, true));
+				}, /* Orig <= Mod */ function(rep) {
+						var result = false;
+						if(rep.inAnd) result=true;
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = true;
+						if(rep.inAnd) result=true;
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = true;
+						return result;
+				}));
 
 				return results;
 		}
@@ -176,18 +171,24 @@
 				var results = new Array();
 
 				var set = new Array();				
-				//set.append(result.getReplaceables().getLiteralCache());
-				set.append(result.getReplaceables().getOptionalCache());	
-				//set.append(result.getReplaceables().getStarCache());
-				//set.append(result.getReplaceables().getOrCache());
-				//set.append(result.getReplaceables().getAndCache());
-				//set.append(result.getReplaceables().getNegationCache());
-				//set.append(result.getReplaceables().getConcatCache());			
-				// TODO, test if nullable, otherwise dont replace
+				set.append(result.getReplaceables().getCache());
 
-//				results.append(iterate(result, set, function(replaceable, pool, origin) {
-//						return replaceable.getOrigin();
-//				}, true, false));
+				results.append(iterate(result, set, function(replaceable, pool, origin) {
+						return new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
+				}, /* Orig <= Mod */ function(rep) {
+						var result = true;
+						if(rep.inOpt) result=true;
+						if(rep.inStar) result=true;
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = false;
+						if(rep.inOpt) result=true;
+						if(rep.inStar) result=true;
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = true;
+						return result;
+				}));
 
 				return results;
 		}
@@ -199,23 +200,26 @@
 				var results = new Array();
 
 				var set = new Array();				
-				//set.append(result.getReplaceables().getLiteralCache());
-				//set.append(result.getReplaceables().getOptionalCache());	
-				set.append(result.getReplaceables().getStarCache());
-				//set.append(result.getReplaceables().getOrCache());
-				//set.append(result.getReplaceables().getAndCache());
-				//set.append(result.getReplaceables().getNegationCache());
-				//set.append(result.getReplaceables().getConcatCache());
-				// TODO, test if nullable, otherwise dont replace			
+				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
-						return replaceable.getOrigin().getSubDummy();
-				}, false, true, true));
+						return new RegEx.Dummy.StarDummy(replaceable.getOrigin());
+				}, /* Orig <= Mod */ function(rep) {
+						var result = true;
+						if(rep.inStar) result=true;
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = false;
+						if(rep.inStar) result=true;
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = true;
+						return result;
+				}));
 
 				return results;
 		}
 
-		// TODO
 		/** Replace: ..!(r).. -> ..r..
 		 * Replace: ..!(r).. -> ..!(s)..
 		 * @param result	Generator Result
@@ -224,32 +228,37 @@
 				var results = new Array();
 
 				var set = new Array();				
-				//set.append(result.getReplaceables().getLiteralCache());
-				//set.append(result.getReplaceables().getOptionalCache());	
-				//set.append(result.getReplaceables().getStarCache());
-				//set.append(result.getReplaceables().getOrCache());
-				//set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getNegationCache());
-				//set.append(result.getReplaceables().getConcatCache());
-				// TODO, test if nullable, otherwise dont replace			
+				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
-						return replaceable.getOrigin().getSubDummy();
-				}, false, false));
-
-				var set = new Array();				
-				//set.append(result.getReplaceables().getLiteralCache());
-				//set.append(result.getReplaceables().getOptionalCache());	
-				//set.append(result.getReplaceables().getStarCache());
-				//set.append(result.getReplaceables().getOrCache());
-				//set.append(result.getReplaceables().getAndCache());
-				set.append(result.getReplaceables().getNegationCache());
-				//set.append(result.getReplaceables().getConcatCache());
-				// TODO, test if nullable, otherwise dont replace			
+						return new RegEx.Dummy.NegationDummy(replaceable.getOrigin());
+				}, /* Orig <= Mod */ function(rep) {
+						var result = false;
+						if(rep.inAnd) result=true;
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = false;
+						if(rep.inAnd) result=true;
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = true;
+						return result;
+				}));
 
 				results.append(iterate(result, set, function(replaceable, pool, origin) {
-						return new RegEx.Dummy.NegationDummy(pool.getNotInLiteral());
-				}, false, false));
+						return new RegEx.Dummy.NegationDummy( pool.getNotInLiteral());
+				}, /* Orig <= Mod */ function(rep) {
+						var result = true;
+						if(rep.inAnd) result=false;
+						return result;
+				}, /* Mod <= Orig */ function (rep) {
+						var result = false;
+						if(rep.inAnd) result=true;
+						return result;
+				}, /* use +/- */ function(rep) {
+						var result = true;
+						return result;
+				}));
 
 				return results;
 		}
@@ -282,19 +291,10 @@
 						var newLiteral = modCall(replaceable, pool, origin);
 						if(newLiteral==undefined) return;
 
-						__sysout("\n\nREPLACEABLE: " + dummy.toString());
-
-					
 						replaceable.replaceWith(newLiteral);
 						var modification = dummy.dump().reduce();
 
 						// Transformation Result
-
-						__sysout("ORIGIN: " + origin);
-						__sysout("NEW: " + newLiteral);
-						__sysout("REPLACEABLE: " + dummy.toString());
-						__sysout("MODIFICATION: " + modification.reduce());
-
 						if(origin==modification) {
 								// in case that the normalization reduces the regex to two equivalent regular expressions
 								results.push(new Result(origin, modification, result.getDepth(), true));
