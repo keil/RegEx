@@ -161,7 +161,7 @@
 								/* FLAG */ store.setInAnd();
 								//store.push(rep);
 
-								//results.push(new Result(rep, depth, pool, store));
+							//	results.push(new Result(rep, depth, pool, store));
 						});
 				});
 
@@ -183,10 +183,10 @@
 						var store = new RegEx.Replaceable.Store();
 						store.merge(rRes.getReplaceables());
 						/* FLAG */ store.setInNeg();
-			//			/* INVERT */ store.invert();
+						/* INVERT */ store.invert();
 						//store.push(rep);
 
-						//results.push(new Result(rep, depth, pool, store));
+						results.push(new Result(rep, depth, pool, store));
 				});
 
 				// r.s
@@ -210,15 +210,15 @@
 								store.merge(sRes.getReplaceables());
 								/* FLAG */ store.setInConcat();
 								//store.push(rep);
-								
+
 								results.push(new Result(rep, depth, pool, store));
 						});
 				});
 
 				// OPTINAL: represents real/used regex
 				if(RegEx.config.full) {
-// deaktivated because of space reasons
-/*						// {} 
+
+						// {} 
 						var dummy = new RegEx.Dummy.EmptySetDummy();
 						var rep = new RegEx.Replaceable.Replaceable(dummy);
 						var store = new RegEx.Replaceable.Store();
@@ -238,13 +238,14 @@
 						var store = new RegEx.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
-*/
+
 						// ?
-//						var dummy = new RegEx.Dummy.QMarkDummy();
-//						var rep = new RegEx.Replaceable.Replaceable(dummy);
-//						var store = new RegEx.Replaceable.Store();
-//						store.push(rep);
-//						results.push(new Result(dummy, 1, pool, store));
+						var dummy = new RegEx.Dummy.QMarkDummy();
+						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var store = new RegEx.Replaceable.Store();
+						store.push(rep);
+						//results.push(new Result(dummy, 1, pool, store));
+						// Generated ?-RegEx will not work with the transformed results.
 				}
 
 				// x 

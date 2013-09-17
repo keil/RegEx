@@ -61,8 +61,9 @@
 		 * @param right right RegEx Wrapper
 		 * @param depth nesting index
 		 * @param isValid true, if left <= right, false otherwise
+		 * @param type Transformation Type
 		 */
-		function Container(left, right, depth, isValid) {
+		function Container(left, right, depth, isValid, type) {
 				// true, if left <= right, false otherwise
 				var isSubset = undefined;
 			   var callStatistics = new CallStatistics();	
@@ -115,6 +116,14 @@
 				this.isValid = function() {
 						return isValid;
 				}
+
+				/** get Type
+				 * @return type
+				 */
+				this.getType = function() {
+						return type;
+				}
+
 
 				/** get Call Statistics
 				 * @return callStatistics
@@ -179,7 +188,7 @@
 				/** To String
 				*/
 				this.toString = function() {
-						return ((isSubset==container.isValid()) ? "OK" : "FAIL") + " " + container.toString() + " RESULT:" + isSubset + " VALID:" + container.isValid();
+						return "[:" + container.getType()  + "] " + ((isSubset==container.isValid()) ? "OK" : "FAIL") + " " + container.toString() + " RESULT:" + isSubset + " VALID:" + container.isValid();
 				};
 
 				/** Print
@@ -201,7 +210,7 @@
 		function convert(transformations) {
 				var results = new Array();
 				transformations.foreach(function(i, r) {
-						results.push(new Container(r.getLeft(), r.getRight(), r.getDepth(), r.isValid()));
+						results.push(new Container(r.getLeft(), r.getRight(), r.getDepth(), r.isValid(), r.getType()));
 				});
 				return results
 		}
