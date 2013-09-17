@@ -1538,6 +1538,7 @@
 						 * @return access permission contract
 						 */
 						c: function(contract) {
+
 								var key = contract.toString();
 								var value = contract;
 

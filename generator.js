@@ -87,7 +87,7 @@
 						/* FLAG */ store.setInOpt();
 						//store.push(rep);
 
-						//results.push(new Result(rep, depth, pool, store));
+						results.push(new Result(rep, depth, pool, store));
 				});
 
 				// r*
