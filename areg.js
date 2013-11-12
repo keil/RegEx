@@ -35,9 +35,9 @@
 		/**
 		 * Atom (a,b,c,...)
 		 */
-		function __Atom(a) {			
-				if(!(this instanceof __Atom)) {
-						return __cache.c(new __Atom (a));
+		function Atom(a) {			
+				if(!(this instanceof Atom)) {
+						return __cache.c(new Atom (a));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -58,20 +58,20 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return (a == b) ? new __Empty() : new __Null();
+						return (a == b) ? new Empty() : new Null();
 				};
 				this.nderiv(l) {
-						return (l == this) ? new __Empty() : new __Null();
+						return (l == this) ? new Empty() : new Null();
 				};
 				this.pderiv(literal) {
 
-						//	if(larg==this) return new __Empty(); 
-						//	 else if (larg==new __Empty()) return this;
-						//	 else if (larg==new __QMark()) return new __Empty();
-						//	 else return new __Null();
+						//	if(larg==this) return new Empty(); 
+						//	 else if (larg==new Empty()) return this;
+						//	 else if (larg==new QMark()) return new Empty();
+						//	 else return new Null();
 
 						// TODO: chech for character set
-						return (l == this) ? new __Empty() : new __Null();
+						return (l == this) ? new Empty() : new Null();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
@@ -86,7 +86,7 @@
 						else if(arg.isBlank()) return true;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -116,9 +116,9 @@
 		/**
 		 * Set (A,B,C,...)
 		 */
-		function __Set(A) {			
-				if(!(this instanceof __Set)) {
-						return __cache.c(new __Set (A));
+		function Set(A) {			
+				if(!(this instanceof Set)) {
+						return __cache.c(new Set (A));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -141,21 +141,21 @@
 				//////////////////////////////////////////////////
 				this.deriv(b) {
 						// TODO
-						//return (a == b) ? new __Empty() : new __Null();
+						//return (a == b) ? new Empty() : new Null();
 				};
 				this.nderiv(l) {
 						// TODO
-						//return (l == this) ? new __Empty() : new __Null();
+						//return (l == this) ? new Empty() : new Null();
 				};
 				this.pderiv(literal) {
 
-						//	if(larg==this) return new __Empty(); 
-						//	 else if (larg==new __Empty()) return this;
-						//	 else if (larg==new __QMark()) return new __Empty();
-						//	 else return new __Null();
+						//	if(larg==this) return new Empty(); 
+						//	 else if (larg==new Empty()) return this;
+						//	 else if (larg==new QMark()) return new Empty();
+						//	 else return new Null();
 
 						// TODO: chech for character set
-						return (l == this) ? new __Empty() : new __Null();
+						return (l == this) ? new Empty() : new Null();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
@@ -170,7 +170,7 @@
 						else if(arg.isBlank()) return true;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -194,21 +194,19 @@
 				};
 		}
 
-		//  _   _                  _           _    _____      _   
-		// | \ | |                | |         | |  / ____|    | |  
-		// |  \| | ___  __ _  __ _| |_ ___  __| | | (___   ___| |_ 
-		// | . ` |/ _ \/ _` |/ _` | __/ _ \/ _` |  \___ \ / _ \ __|
-		// | |\  |  __/ (_| | (_| | ||  __/ (_| |  ____) |  __/ |_ 
-		// |_| \_|\___|\__, |\__,_|\__\___|\__,_| |_____/ \___|\__|
-		//              __/ |                                      
-		//             |___/                                       		
+		//  _____                     _           _    _____      _   
+		// |_   _|                   | |         | |  / ____|    | |  
+		//   | |  _ ____   _____ _ __| |_ ___  __| | | (___   ___| |_ 
+		//   | | | '_ \ \ / / _ \ '__| __/ _ \/ _` |  \___ \ / _ \ __|
+		//  _| |_| | | \ V /  __/ |  | ||  __/ (_| |  ____) |  __/ |_ 
+		// |_____|_| |_|\_/ \___|_|   \__\___|\__,_| |_____/ \___|\__|
 
 		/**
-		 * NSet (^A,^B,^C,...)
+		 * Inv (^A,^B,^C,...)
 		 */
-		function __Set(A) {			
-				if(!(this instanceof __Set)) {
-						return __cache.c(new __Set (A));
+		function Inv(A) {			
+				if(!(this instanceof Set)) {
+						return __cache.c(new Set (A));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -233,21 +231,21 @@
 				//////////////////////////////////////////////////
 				this.deriv(b) {
 						// TODO
-						//return (a == b) ? new __Empty() : new __Null();
+						//return (a == b) ? new Empty() : new Null();
 				};
 				this.nderiv(l) {
 						// TODO
-						//return (l == this) ? new __Empty() : new __Null();
+						//return (l == this) ? new Empty() : new Null();
 				};
 				this.pderiv(literal) {
 
-						//	if(larg==this) return new __Empty(); 
-						//	 else if (larg==new __Empty()) return this;
-						//	 else if (larg==new __QMark()) return new __Empty();
-						//	 else return new __Null();
+						//	if(larg==this) return new Empty(); 
+						//	 else if (larg==new Empty()) return this;
+						//	 else if (larg==new QMark()) return new Empty();
+						//	 else return new Null();
 
 						// TODO: chech for character set
-						return (l == this) ? new __Empty() : new __Null();
+						return (l == this) ? new Empty() : new Null();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
@@ -284,9 +282,9 @@
 		/**
 		 * QMArk (?)
 		 */
-		function __QMark() {			
-				if(!(this instanceof __QMark)) {
-						return __cache.c(new __QMark ());
+		function QMark() {			
+				if(!(this instanceof QMark)) {
+						return __cache.c(new QMark ());
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -308,21 +306,21 @@
 				//////////////////////////////////////////////////
 				this.deriv(b) {
 						// TODO
-						return new __Empty();
+						return new Empty();
 				};
 				this.nderiv(l) {
 						// TODO
-						return new __Empty();
+						return new Empty();
 				};
 				this.pderiv(literal) {
 
-						//	if(larg==this) return new __Empty(); 
-						//	 else if (larg==new __Empty()) return this;
-						//	 else if (larg==new __QMark()) return new __Empty();
-						//	 else return new __Null();
+						//	if(larg==this) return new Empty(); 
+						//	 else if (larg==new Empty()) return this;
+						//	 else if (larg==new QMark()) return new Empty();
+						//	 else return new Null();
 
 						// TODO: chech for character set
-						return new __Empty();
+						return new Empty();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
@@ -339,7 +337,7 @@
 						else if(arg.isUniversal()) return false;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -369,9 +367,9 @@
 		/**
 		 * Null (Ø)
 		 */
-		function __Null() {
-				if(!(this instanceof __Null)) {
-						return __cache.c(new __Null ());
+		function Null() {
+				if(!(this instanceof Null)) {
+						return __cache.c(new Null ());
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -437,9 +435,9 @@
 		/**
 		 * Empty (ϵ)
 		 */
-		function __Empty() {
-				if(!(this instanceof __Empty)) {
-						return __cache.c(new __Empty ());
+		function Empty() {
+				if(!(this instanceof Empty)) {
+						return __cache.c(new Empty ());
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -460,13 +458,13 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return new __Null();
+						return new Null();
 				};
 				this.nderiv(l) {
-						return new __Null();
+						return new Null();
 				};
 				this.pderiv(l) {
-						return new __Null();
+						return new Null();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
@@ -479,7 +477,7 @@
 						else if(arg.isBlank()) return true;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -515,20 +513,20 @@
 		/**
 		 * Kleene Star (r*)
 		 */
-		function __Star(r) {
+		function Star(r) {
 
 				// TODO
 				// NORMALIZATION
 				/** ^* ~ ^ */
-				if(contract==new __Empty()) return new __Empty();
+				if(contract==new Empty()) return new Empty();
 				/** ^* ~ ^ */
-				else if(contract==new __Empty()) return new __Empty();
+				else if(contract==new Empty()) return new Empty();
 				/** @* ~ ^ */
-				else if(contract==new __AtLiteral()) return new __Empty();
+				else if(contract==new __AtLiteral()) return new Empty();
 
 
-				if(!(this instanceof __Star)) {
-						return __cache.c(new __Star (r));
+				if(!(this instanceof Star)) {
+						return __cache.c(new Star (r));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -550,27 +548,27 @@
 				//////////////////////////////////////////////////
 				this.deriv(b) {
 						// TODO
-						return new __Dot(contract.derive(name), this);
+						return new Dot(contract.derive(name), this);
 				};
 				this.nderiv(l) {
 						// TODO
 						/** (d_^ C*) ::= C* */
-						if (larg==new __Empty()) return this;
-						else return new __Dot(contract.nderive(larg), new __Star(contract));
+						if (larg==new Empty()) return this;
+						else return new Dot(contract.nderive(larg), new Star(contract));
 
 				};
 				this.pderiv(l) {
 						// TODO
 						/** (d_^ C*) ::= C* */
-						if (larg==new __Empty()) return this;
-						else return new __Dot(contract.pderive(larg), new __Star(contract));
+						if (larg==new Empty()) return this;
+						else return new Dot(contract.pderive(larg), new Star(contract));
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
-						else if((arg==new __Empty())) return true;
+						else if((arg==new Empty())) return true;
 						/** C <= C' |= true  | n(C) */
 						else if(arg.isEmpty()) return true;
 						/** C <= C' |= true  | w(C) & !n(C') */
@@ -579,7 +577,7 @@
 						else if(this.isUniversal()) return true;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -595,11 +593,11 @@
 
 						// TODO
 						/** C* ~ ^ | n(C) */
-						if(contract.isEmpty()) return new __Empty();
+						if(contract.isEmpty()) return new Empty();
 						/** C* ~ ^ | w(C) */
-						else if(contract.isBlank()) return new __Empty();
+						else if(contract.isBlank()) return new Empty();
 						/** reduce C* ::= (reduce C)* */
-						else return new __Star(contract.reduce());
+						else return new Star(contract.reduce());
 
 						return this;
 				};
@@ -621,21 +619,21 @@
 		/**
 		 * Alternative (r+s)
 		 */
-		function __Alt(r, s) {
+		function Or(r, s) {
 
 				// TODO
 				// NORMALIZATION
 				/** (C+C) ~ C */
 				if(contract0==contract1) return contract0;
 				/** ({}+C) ~ C */
-				else if(contract0==new __Null()) return contract1;
-				else if(contract1==new __Null()) return contract0;
+				else if(contract0==new Null()) return contract1;
+				else if(contract1==new Null()) return contract0;
 				/** (@+C) ~ C */
 				else if(contract0==new __AtLiteral()) return contract1;
 				else if(contract1==new __AtLiteral()) return contract0;
 
-				if(!(this instanceof __Alt)) {
-						return __cache.c(new __Alt (r,s));
+				if(!(this instanceof Or)) {
+						return __cache.c(new Or (r,s));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -656,15 +654,15 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return new __Alt(r.derive(name), s.derive(name));
+						return new Or(r.derive(name), s.derive(name));
 				};
 				this.nderiv(l) {
 						// TODO
-						return new __Alt(contract0.nderive(larg), contract1.nderive(larg))
+						return new Or(contract0.nderive(larg), contract1.nderive(larg))
 				};
 				this.pderiv(l) {
 						// TODO
-						return new __Alt(contract0.pderive(larg), contract1.pderive(larg))
+						return new Or(contract0.pderive(larg), contract1.pderive(larg))
 
 				};
 				//////////////////////////////////////////////////
@@ -672,7 +670,7 @@
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
-						else if((arg==new __Empty()) && this.isNullable()) return true;
+						else if((arg==new Empty()) && this.isNullable()) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
 						else if(arg.isNullable() && !this.isNullable()) return false;
 						/** C <= C' |= true  | n(C) */
@@ -683,7 +681,7 @@
 						else if(this.isUniversal()) return true;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -699,7 +697,7 @@
 				this.reduce = function () {
 
 						/** (C+C') ~ {} | n(C)&n(C') */
-						if(contract0.isEmpty()&&contract1.isEmpty()) return new __Null();
+						if(contract0.isEmpty()&&contract1.isEmpty()) return new Null();
 						/** (C+C') ~ {} | w(C)&w(C') */
 						else if(contract0.isBlank()&&contract1.isBlank()) return new __AtLiteral();
 						/** (C+C') ~ C/C' | n(C)/n(C') */
@@ -709,11 +707,11 @@
 						else if(contract0.isBlank()) return contract1.reduce();
 						else if(contract1.isBlank()) return contract0.reduce();
 						/** (C+C') ~ C | C >= C' */
-						else if(contract0.isSuperSetOf(contract1, new __CcContext())) return contract0.reduce();
+						else if(contract0.isSuperSetOf(contract1, new Ctx())) return contract0.reduce();
 						/** (C+C') ~ C' | C <= C' */
-						else if(contract1.isSuperSetOf(contract0, new __CcContext())) return contract1.reduce();
+						else if(contract1.isSuperSetOf(contract0, new Ctx())) return contract1.reduce();
 						/** reduce C+C' ::= (reduce C)+(reduce C') */
-						else return new __Alt(contract0.reduce(), contract1.reduce());
+						else return new Or(contract0.reduce(), contract1.reduce());
 
 						return this;
 				};
@@ -737,22 +735,22 @@
 		/**
 		 * Intersection (r&s)
 		 */
-		function __And(r, s) {
+		function And(r, s) {
 				// TODO
 				// NORMALIZATION
 				/** (C&C) ~ C */
 				if(contract0==contract1) return contract0;
 				/** ({}&C) ~ {} */
-				else if(contract0==new __Null()) return new __Null();
-				else if(contract1==new __Null()) return new __Null();
+				else if(contract0==new Null()) return new Null();
+				else if(contract1==new Null()) return new Null();
 				/** (@&C) ~ @ */
 				else if(contract0==new __AtLiteral()) return new __AtLiteral();
 				else if(contract1==new __AtLiteral()) return new __AtLiteral();
 
 
 
-				if(!(this instanceof __And)) {
-						return __cache.c(new __And (r,s));
+				if(!(this instanceof And)) {
+						return __cache.c(new And (r,s));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -774,20 +772,20 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return new __And(contract0.derive(name), contract1.derive(name));
+						return new And(contract0.derive(name), contract1.derive(name));
 				};
 				this.nderiv(l) {
-						return new __And(contract0.nderive(larg), contract1.nderive(larg));
+						return new And(contract0.nderive(larg), contract1.nderive(larg));
 				};
 				this.pderiv(l) {
-						return new __And(contract0.pderive(larg), contract1.pderive(larg))
+						return new And(contract0.pderive(larg), contract1.pderive(larg))
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
-						else if((arg==new __Empty()) && this.isNullable()) return true;
+						else if((arg==new Empty()) && this.isNullable()) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
 						else if(arg.isNullable() && !this.isNullable()) return false;
 						/** C <= C' |= true  | n(C) */
@@ -798,7 +796,7 @@
 						else if(this.isUniversal()) return true;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -812,17 +810,17 @@
 				//////////////////////////////////////////////////
 				this.reduce = function () {
 						/** (C&C') ~ C/C' | n(C)/n(C') */
-						if(contract0.isEmpty()) return new __Null();
-						else if(contract1.isEmpty()) return new __Null();
+						if(contract0.isEmpty()) return new Null();
+						else if(contract1.isEmpty()) return new Null();
 						/** (C&C') ~ C/C' | w(C)/w(C') */
 						else if(contract0.isBlank()) return new __AtLiteral();
 						else if(contract1.isBlank()) return new __AtLiteral();
 						/** (C&C') ~ C' | C >= C' */
-						else if(contract0.isSubSetOf(contract1, new __CcContext())) return contract0.reduce();
+						else if(contract0.isSubSetOf(contract1, new Ctx())) return contract0.reduce();
 						/** (C&C') ~ C | C <= C' */
-						else if(contract1.isSubSetOf(contract0, new __CcContext())) return contract1.reduce();
+						else if(contract1.isSubSetOf(contract0, new Ctx())) return contract1.reduce();
 						/** reduce C&C' ::= (reduce C)&(reduce C') */
-						else return new __And(contract0.reduce(), contract1.reduce());
+						else return new And(contract0.reduce(), contract1.reduce());
 
 						return this;
 				};
@@ -847,9 +845,9 @@
 		/**
 		 * Negation !(r)
 		 */
-		function __Neg(r) {
-				if(!(this instanceof __Neg)) {
-						return __cache.c(new __Neg (r));
+		function Neg(r) {
+				if(!(this instanceof Neg)) {
+						return __cache.c(new Neg (r));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -874,20 +872,20 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return new __Neg(contract.derive(name));
+						return new Neg(contract.derive(name));
 				};
 				this.nderiv(l) {
-						return new __Neg(contract.pderive(larg));
+						return new Neg(contract.pderive(larg));
 				};
 				this.pderiv(l) {
-						return new __Neg(contract.nderive(larg));
+						return new Neg(contract.nderive(larg));
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (r, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
-						else if((arg==new __Empty()) && this.isNullable()) return true;
+						else if((arg==new Empty()) && this.isNullable()) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
 						else if(arg.isNullable() && !this.isNullable()) return false;
 						/** C <= C' |= true  | n(C) */
@@ -899,7 +897,7 @@
 						/** C <= C' |= false  | m(C) and !m(C') */
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						var ccExp = new __CcExp(arg, this);
+						var ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						//else return unfold(this, arg, contract.first(), ctx.bind(ccExp)) && unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -920,9 +918,9 @@
 						/** SPECIAL: !(C) ~ @ | m(C) */
 						//	   else if(contract.isIndifferent()) return  new __AtLiteral();
 						/** SPECIAL: !(^) ~ ? | m(C) */
-						else if(contract==new __Empty()) return new __QMark();
+						else if(contract==new Empty()) return new QMark();
 						/** reduce !(C) ::= !(reduce C) */
-						else return new __Neg(contract.reduce());
+						else return new Neg(contract.reduce());
 
 						return this;
 				};
@@ -942,20 +940,20 @@
 		/**
 		 * Concatenation (r·s)
 		 */
-		function __Dot(r, s) {
+		function Dot(r, s) {
 
 				// TODO
 				// NORMALIZATION
 				/** (^.C) ~ C */
-				if(contract0 == new __Empty()) return contract1;
+				if(contract0 == new Empty()) return contract1;
 				/** ({}.C) ~ C */
-				if(contract0 == new __Null()) return new __Null();
+				if(contract0 == new Null()) return new Null();
 				/** (@.C) ~ C */
 				if(contract0 == new __AtLiteral()) return new __AtLiteral();
 
 
-				if(!(this instanceof __Dot)) {
-						return __cache.c(new __Dot (s));
+				if(!(this instanceof Dot)) {
+						return __cache.c(new Dot (s));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -976,23 +974,23 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						if(contract0.isNullable()) return new __Alt(__Dot(contract0.derive(name), contract1), contract1.derive(name));
-						else return new __Dot(contract0.derive(name), contract1);
+						if(contract0.isNullable()) return new Or(Dot(contract0.derive(name), contract1), contract1.derive(name));
+						else return new Dot(contract0.derive(name), contract1);
 
 						// TODO
 				};
 				this.nderiv(l) {
 						// TODO
-						if (larg==new __Empty()) return this;
-						else if(contract0.isNullable()) return new __Alt(new __Dot(contract0.nderive(larg), contract1), contract1.nderive(larg));
-						else return new __Dot(contract0.nderive(larg), contract1);
+						if (larg==new Empty()) return this;
+						else if(contract0.isNullable()) return new Or(new Dot(contract0.nderive(larg), contract1), contract1.nderive(larg));
+						else return new Dot(contract0.nderive(larg), contract1);
 
 				};
 				this.pderiv(l) {
 						// TODO
-						if (larg==new __Empty()) return this;
-						else if(contract0.isNullable()) return new __Alt(new __Dot(contract0.pderive(larg), contract1), contract1.pderive(larg));
-						else return new __Dot(contract0.pderive(larg), contract1);
+						if (larg==new Empty()) return this;
+						else if(contract0.isNullable()) return new Or(new Dot(contract0.pderive(larg), contract1), contract1.pderive(larg));
+						else return new Dot(contract0.pderive(larg), contract1);
 
 				};
 				//////////////////////////////////////////////////
@@ -1000,7 +998,7 @@
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
-						else if((arg==new __Empty()) && this.isNullable()) return true;
+						else if((arg==new Empty()) && this.isNullable()) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
 						else if(arg.isNullable() && !this.isNullable()) return false;
 						/** C <= C' |= true  | n(C) */
@@ -1011,7 +1009,7 @@
 						else if(this.isUniversal()) return true;
 
 						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new __CcExp(arg, this);
+						ccExp = new Exp(arg, this);
 						if(ctx.contains(ccExp)) return true;
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
@@ -1025,11 +1023,11 @@
 				this.reduce = function () {
 
 						/** (C.C') ~ {} | n(C) */
-						if(contract0.isEmpty()) return new __Null();
+						if(contract0.isEmpty()) return new Null();
 						/** (C.C') ~ {} | w(C) */
 						else if(contract0.isBlank()) return new __AtLiteral();
 						/** reduce C.C' ::= (reduce C).(reduce C') */
-						else return new __Dot(contract0.reduce(), contract1.reduce());
+						else return new Dot(contract0.reduce(), contract1.reduce());
 
 						return this;
 				};
@@ -1040,26 +1038,38 @@
 		}
 
 
+		//////////////////////////////////////////////////
+		// REGEX . AREG
+		//////////////////////////////////////////////////
+
+		SELF.Atom		= Atom;
+		SELF.Set		= Set;
+		SELF.Inv		= Inv;
+		SELF.QMark		= QMark;
+		SELF.Null		= Null;
+		SELF.Empty		= Empty;
+		SELF.Star		= Star;
+		SELF.Or			= Or;
+		SELF.And		= And;
+		SELF.Dor		= Dot;
+
 
 		//////////////////////////////////////////////////
 		// APC . Contract
 		//////////////////////////////////////////////////
 		APC.Contract = {};
 
-		APC.Contract.EmptySetLiteral	= __Null;
-		APC.Contract.EmptyLiteral		= __Empty;
+		APC.Contract.EmptySetLiteral	= Null;
+		APC.Contract.EmptyLiteral		= Empty;
 
-		APC.Contract.AtLiteral			= __AtLiteral;
-		APC.Contract.QMarkLiteral		= __QMark;
-		APC.Contract.NameLiteral		= __Atom;
-		APC.Contract.RegExLiteral		= __RegExLiteral;
+		APC.Contract.QMarkLiteral		= QMark;
+		APC.Contract.NameLiteral		= Atom;
 
-		APC.Contract.QMarkContract		= __QMarkContract;
-		APC.Contract.StarContract		= __Star;
-		APC.Contract.OrContract			= __Alt;
-		APC.Contract.AndContract		= __And;
-		APC.Contract.NegContract		= __Neg;
-		APC.Contract.ConcatContract		= __Dot;
+		APC.Contract.StarContract		= Star;
+		APC.Contract.OrContract			= Or;
+		APC.Contract.AndContract		= And;
+		APC.Contract.NegContract		= Neg;
+		APC.Contract.ConcatContract		= Dot;
 
 
 
@@ -1115,7 +1125,7 @@
 		/** Containment Calculus
 		 * Expression: C0 <= C1
 		 */
-		function __CcExp(contract0, contract1) {
+		function Exp(contract0, contract1) {
 				return {
 						/** To String
 						 * @return string
@@ -1129,7 +1139,7 @@
 		/** Containment Calculus
 		 * Context: {} | <Context, Expression>
 		 */
-		function __CcContext() {	
+		function Ctx() {	
 				// cache array
 				var context = new StringMap();
 
@@ -1145,7 +1155,7 @@
 						 */
 						bind: function(ccExp) {
 								// clone context
-								var newCtx = new __CcContext();
+								var newCtx = new Ctx();
 								context.foreach(function(k, v) {
 										newCtx.put(v);
 								});
@@ -1188,17 +1198,17 @@
 		//////////////////////////////////////////////////
 		// APC . Contract
 		//////////////////////////////////////////////////
-		APC.Contract.Containment = {};
-		APC.Contract.Containment.Expression = __CcExp;
-		APC.Contract.Containment.Context = __CcContext;
+		RegEx.Contract.Containment = {};
+		RegEx.Contract.Containment.Expression = Exp;
+		RegEx.Contract.Containment.Context = Ctx;
 
 
 
 
 
 		//////////////////////////////////////////////////
-		//  CONTRACT CACHE
-		//  cache for access permission contracts
+		//  REGEX CACHE
+		//  cache for regular expressions
 		//////////////////////////////////////////////////
 
 		/** Contract Cache 
@@ -1215,7 +1225,6 @@
 						 * @return access permission contract
 						 */
 						c: function(contract) {
-
 								var key = contract.toString();
 								var value = contract;
 
@@ -1224,14 +1233,7 @@
 								} else {
 										if(!reduced[key]) {
 												reduced[contract.toString()]=true;
-
-												//		var	tmp = RegEx.Statistics.currentCallStatistics;
-												//		RegEx.Statistics.currentCallStatistics=undefined;
-
 												contract = contract.reduce();
-
-												//		RegEx.Statistics.currentCallStatistics=tmp;
-
 												return this.c(contract);
 										} else 
 												return this.put(key, value);
@@ -1274,15 +1276,6 @@
 
 		// current path cache
 		var __cache = new __ContractCache();
-
-
-
-		//////////////////////////////////////////////////
-		// APC . Contract
-		//////////////////////////////////////////////////
-		APC.Contract.Cache = __cache;
-
-
 
 })(__APC);
 
