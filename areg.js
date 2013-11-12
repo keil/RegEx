@@ -58,10 +58,10 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return (a == b) ? new Empty() : new Null();
+						return (a == b) ? Empty() : Null();
 				};
 				this.nderiv(l) {
-						return (l == this) ? new Empty() : new Null();
+						return (l == this) ? Empty() : Null();
 				};
 				this.pderiv(literal) {
 
@@ -74,8 +74,7 @@
 						return (l == this) ? new Empty() : new Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-
+				this.isSuperSetOf = function (sub, ctx) {\n
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
@@ -93,7 +92,7 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
+				this.isSubSetOf = function (sup, ctx) {
 						return r.isSuperSetOf(this, ctx);
 				};
 				//////////////////////////////////////////////////
@@ -132,7 +131,6 @@
 						return false;
 				};
 				this.indifferent:() {
-						// TODO
 						return false;
 				};
 				this.universal() {
@@ -140,10 +138,31 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						// TODO
-						//return (a == b) ? new Empty() : new Null();
+						var result = Null;
+						a.foreach(function(i, a) {
+							return (a == b) ? Empty() : result;
+						});
+						return result;
 				};
 				this.nderiv(l) {
+
+						if(l instanceof Atom) {
+							return this.deriv(l);
+						} else if(l instanceof Set) {
+							
+						} else if(l instanceof Inv) {
+						
+						} else if(l instanceof QMark) {
+							return Null();
+						}
+						
+
+						var result = Null;
+						a.foreach(function(i, a) {
+							return (a == b) ? Empty() : result;
+						});
+						return result;
+
 						// TODO
 						//return (l == this) ? new Empty() : new Null();
 				};
@@ -158,8 +177,7 @@
 						return (l == this) ? new Empty() : new Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-
+				this.isSuperSetOf = function (sub, ctx) {\n
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
@@ -177,7 +195,7 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
+				this.isSubSetOf = function (sup, ctx) {
 						return r.isSuperSetOf(this, ctx);
 				};
 				//////////////////////////////////////////////////
@@ -205,25 +223,22 @@
 		 * Inv (^A,^B,^C,...)
 		 */
 		function Inv(A) {			
-				if(!(this instanceof Set)) {
-						return __cache.c(new Set (A));
+				if(!(this instanceof Inv)) {
+						return __cache.c(new Inv (A));
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
-						// TODO
-						//return false;
+						return false;
 				};
 				this.first() {
 						return Array(this);
 				};
 				//////////////////////////////////////////////////
 				this.empty() {
-						// TODO
-						return false;
+						return (A.empty()) ? true : false;
 				};
 				this.indifferent:() {
-						// TODO
-						return false;
+						return (A.empty()) ? true : false;
 				};
 				this.universal() {
 						return false;
@@ -248,13 +263,12 @@
 						return (l == this) ? new Empty() : new Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-
+				this.isSuperSetOf = function (sub, ctx) {\n
 						// TODO
 						return false;
 				};
 
-				this.isSubSetOf = function (r, ctx) {
+				this.isSubSetOf = function (sup, ctx) {
 						return r.isSuperSetOf(this, ctx);
 				};
 				//////////////////////////////////////////////////
@@ -323,8 +337,7 @@
 						return new Empty();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-
+				this.isSuperSetOf = function (sub, ctx) {\n
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
@@ -344,7 +357,7 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
+				this.isSubSetOf = function (sup, ctx) {
 						return r.isSuperSetOf(this, ctx);
 				};
 				//////////////////////////////////////////////////
@@ -356,6 +369,13 @@
 						return "?";
 				};
 		}
+
+
+// TODO überarbeitet
+//
+
+
+
 
 		//  _   _       _ _ 
 		// | \ | |     | | |
@@ -380,7 +400,7 @@
 				};
 				//////////////////////////////////////////////////
 				this.empty() {
-						return false;
+						return true;
 				};
 				this.indifferent:() {
 						return false;
@@ -399,17 +419,11 @@
 						return this;
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-
-						/** C <= C' |= true  | C=C' */
-						if(arg==this) return true;
-
-						/** otherwise */
-						else return false;
-
+				this.isSuperSetOf = function (sub, ctx) {\n
+						return(arg==this) ? true : false;
 				};
 
-				this.isSubSetOf = function (r, ctx) {
+				this.isSubSetOf = function (sup, ctx) {
 						return true;
 				};
 
@@ -458,17 +472,16 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return new Null();
+						return Null();
 				};
 				this.nderiv(l) {
-						return new Null();
+						return Null();
 				};
 				this.pderiv(l) {
-						return new Null();
+						return Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-
+				this.isSuperSetOf = function (sub, ctx) {\n
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= true  | n(C) */
@@ -484,14 +497,8 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
-						/* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
-
-						/** C <= C' |= true  | n(C') */
-						if(arg.isNullable()) return true;
-						/** C <= C' |= false  | v(C) and ~v(C') */
-						else return false;
-
+				this.isSubSetOf = function (sup, ctx) {
+						return (sub.isNullable()) ? true : false;
 				};
 
 				//////////////////////////////////////////////////
@@ -514,17 +521,10 @@
 		 * Kleene Star (r*)
 		 */
 		function Star(r) {
-
 				// TODO
 				// NORMALIZATION
-				/** ^* ~ ^ */
-				if(contract==new Empty()) return new Empty();
-				/** ^* ~ ^ */
-				else if(contract==new Empty()) return new Empty();
-				/** @* ~ ^ */
-				else if(contract==new __AtLiteral()) return new Empty();
-
-
+				if(r instanceof Empty) return Empty();
+				//////////////////////////////////////////////////
 				if(!(this instanceof Star)) {
 						return __cache.c(new Star (r));
 				}
@@ -547,25 +547,17 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						// TODO
-						return new Dot(contract.derive(name), this);
+						return Dot(r.derive(b), this);
 				};
 				this.nderiv(l) {
-						// TODO
-						/** (d_^ C*) ::= C* */
-						if (larg==new Empty()) return this;
-						else return new Dot(contract.nderive(larg), new Star(contract));
-
+						return Dot(r.nderive(l),this);
 				};
 				this.pderiv(l) {
-						// TODO
-						/** (d_^ C*) ::= C* */
-						if (larg==new Empty()) return this;
-						else return new Dot(contract.pderive(larg), new Star(contract));
+						return Dot(r.pderive(l),this);
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-						/** C <= C' |= true  | C=C' */
+				this.isSuperSetOf = function (sub, ctx) {
+												/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
 						else if((arg==new Empty())) return true;
@@ -584,10 +576,9 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
-						return arg.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup, ctx) {
+						return sup.isSuperSetOf(this, ctx);
 				};
-
 				//////////////////////////////////////////////////
 				this.reduce = function () {
 
@@ -666,8 +657,7 @@
 
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-						/** C <= C' |= true  | C=C' */
+				this.isSuperSetOf = function (sub, ctx) {\n						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
 						else if((arg==new Empty()) && this.isNullable()) return true;
@@ -688,8 +678,8 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
-						return arg.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup, ctx) {
+						return sup.isSuperSetOf(this, ctx);
 
 				};
 
@@ -781,8 +771,7 @@
 						return new And(contract0.pderive(larg), contract1.pderive(larg))
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-						/** C <= C' |= true  | C=C' */
+				this.isSuperSetOf = function (sub, ctx) {\n						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
 						else if((arg==new Empty()) && this.isNullable()) return true;
@@ -803,8 +792,8 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
-						return arg.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup, ctx) {
+						return sup.isSuperSetOf(this, ctx);
 				};
 
 				//////////////////////////////////////////////////
@@ -881,8 +870,7 @@
 						return new Neg(contract.nderive(larg));
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
-						/** C <= C' |= true  | C=C' */
+				this.isSuperSetOf = function (sub, ctx) {\n						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
 						else if((arg==new Empty()) && this.isNullable()) return true;
@@ -906,8 +894,8 @@
 
 				};
 
-				this.isSubSetOf = function (r, ctx) {
-						return arg.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup, ctx) {
+						return sup.isSuperSetOf(this, ctx);
 
 				};
 
@@ -994,7 +982,7 @@
 
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (r, ctx) {
+				this.isSuperSetOf = function (sub, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
@@ -1015,25 +1003,16 @@
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
 				};
 
-				this.isSubSetOf = function (r, ctx) {
-						return arg.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup, ctx) {
+						return sup.isSuperSetOf(this, ctx);
 				};
-
 				//////////////////////////////////////////////////
 				this.reduce = function () {
-
-						/** (C.C') ~ {} | n(C) */
-						if(contract0.isEmpty()) return new Null();
-						/** (C.C') ~ {} | w(C) */
-						else if(contract0.isBlank()) return new __AtLiteral();
-						/** reduce C.C' ::= (reduce C).(reduce C') */
-						else return new Dot(contract0.reduce(), contract1.reduce());
-
-						return this;
+						return (r.Empty()) ? Null() : Dot(r.reduce(), c.reduce());
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
-						return (r.toString() + "." + s.toString());
+						return (r.toString() + "·" + s.toString());
 				};
 		}
 
@@ -1101,10 +1080,8 @@
 				var result = true;
 
 				first.foreach(function(k, literal) {
-
-						// TODO
 						var nderive_E = E.nderive(literal);
-						var nderive_F = F.pderive(literal);
+						var nderive_F = F.nderive(literal);
 
 						if(verbose) __sysout("## first: " + first);
 						if(verbose) __sysout("## literal: " + literal);
