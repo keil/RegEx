@@ -115,9 +115,14 @@
 		/**
 		 * Set (A,B,C,...)
 		 */
-		function Set(A) {			
+		function Set(A) {
 				if(!(this instanceof Set)) {
 						return __cache.c(new Set (A));
+				}
+				if(A instanceof Array) {
+						A.foreach(function(i, a) {
+							A[i] = (a instanceof Atom) ? a : Atom(a);
+						});
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -138,43 +143,45 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						var result = Null;
-						a.foreach(function(i, a) {
-							return (a == b) ? Empty() : result;
+						var result = Null();
+						A.foreach(function(i, a) {
+							result = (a == b) ? Empty() : result;
 						});
 						return result;
 				};
 				this.nderiv(l) {
-
 						if(l instanceof Atom) {
 							return this.deriv(l);
 						} else if(l instanceof Set) {
-							
+								var result = Empty();
+								l.foreach(function(i, a) {
+									result = (result instanceof Null) ? result : this.deriv(a);
+								});
+								return result;
 						} else if(l instanceof Inv) {
-						
+								return Null(); // TODO, check
 						} else if(l instanceof QMark) {
-							return Null();
+								return Null();
 						}
-						
-
-						var result = Null;
-						a.foreach(function(i, a) {
-							return (a == b) ? Empty() : result;
-						});
-						return result;
-
-						// TODO
-						//return (l == this) ? new Empty() : new Null();
 				};
-				this.pderiv(literal) {
-
-						//	if(larg==this) return new Empty(); 
-						//	 else if (larg==new Empty()) return this;
-						//	 else if (larg==new QMark()) return new Empty();
-						//	 else return new Null();
-
-						// TODO: chech for character set
-						return (l == this) ? new Empty() : new Null();
+				this.pderiv(l) {
+						if(l instanceof Atom) {
+							return this.deriv(l);
+						} else if(l instanceof Set) {
+								var result = Null();
+								l.foreach(function(i, a) {
+									result = (result instanceof Empty) ? result : this.deriv(a);
+								});
+								return result;
+						} else if(l instanceof Inv) {
+									var result = Null();
+								A.foreach(function(i, a) {
+									result = (result instanceof Empty) ? result : l.deriv(a);
+								});
+								return result;
+						} else if(l instanceof QMark) {
+								return Empty();
+						}
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub, ctx) {\n
@@ -194,7 +201,6 @@
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
 
 				};
-
 				this.isSubSetOf = function (sup, ctx) {
 						return r.isSuperSetOf(this, ctx);
 				};
@@ -203,6 +209,23 @@
 						return this;
 				};
 				//////////////////////////////////////////////////
+				this.foreach = function(callback) {
+					A.foreach(callback);
+				};
+				this.contains = function (a) {
+						var contains = false;
+						if(a instanceof Atom) {
+								A.foreach(function(i,b) {
+										contains = (a==b) ? true : contains;
+								});
+						}
+						else if (a instanceof Array) {
+							a.foreach(function(i,b) {
+								contains = (thia.contains(b)) ? true : contains;
+							});
+						}
+						return contains;
+				};
 				this.toString = function () {
 						var str = "";
 						A.foreach(function(i,v) {
@@ -226,6 +249,11 @@
 				if(!(this instanceof Inv)) {
 						return __cache.c(new Inv (A));
 				}
+				if(A instanceof Array) {
+						A.foreach(function(i, a) {
+							A[i] = (a instanceof Atom) ? a : Atom(a);
+						});
+				}
 				//////////////////////////////////////////////////
 				this.nullable() {
 						return false;
@@ -245,22 +273,45 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						// TODO
-						//return (a == b) ? new Empty() : new Null();
+						var result = Empty();
+						A.foreach(function(i, a) {
+							result = (a == b) ? Null() : result;
+						});
+						return result;
 				};
 				this.nderiv(l) {
-						// TODO
-						//return (l == this) ? new Empty() : new Null();
+						if(l instanceof Atom) {
+							return this.deriv(l);
+						} else if(l instanceof Set) {
+								var result = Empty();
+								l.foreach(function(i, a) {
+									result = (result instanceof Null) ? result : this.deriv(a);
+								});
+								return result;
+						} else if(l instanceof Inv) {
+								return l.contains(A);
+						} else if(l instanceof QMark) {
+								return Null(); // TODO
+						}
 				};
 				this.pderiv(literal) {
-
-						//	if(larg==this) return new Empty(); 
-						//	 else if (larg==new Empty()) return this;
-						//	 else if (larg==new QMark()) return new Empty();
-						//	 else return new Null();
-
-						// TODO: chech for character set
-						return (l == this) ? new Empty() : new Null();
+						if(l instanceof Atom) {
+							return this.deriv(l);
+						} else if(l instanceof Set) {
+								var result = Null();
+								l.foreach(function(i, a) {
+									result = (result instanceof Empty) ? result : this.deriv(a);
+								});
+								return result;
+						} else if(l instanceof Inv) {
+								var result = Null();
+								A.foreach(function(i, a) {
+									result = (result instanceof Empty) ? result : (l.contains(a) ? Null() : Empty());
+								});
+								return result;
+						} else if(l instanceof QMark) {
+								return Null();
+						}
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub, ctx) {\n
@@ -276,6 +327,23 @@
 						return this;
 				};
 				//////////////////////////////////////////////////
+				this.foreach = function(callback) {
+					A.foreach(callback);
+				};
+				this.contains = function (a) {
+						var contains = false;
+						if(a instanceof Atom) {
+								A.foreach(function(i,b) {
+										contains = (a==b) ? true : contains;
+								});
+						}
+						else if (a instanceof Array) {
+							a.foreach(function(i,b) {
+								contains = (thia.contains(b)) ? true : contains;
+							});
+						}
+						return contains;
+				};
 				this.toString = function () {
 						var str = "";
 						A.foreach(function(i,v) {
