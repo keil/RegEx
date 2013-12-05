@@ -67,7 +67,7 @@
 
 						//	if(larg==this) return new Empty(); 
 						//	 else if (larg==new Empty()) return this;
-						//	 else if (larg==new QMark()) return new Empty();
+						//	 else if (larg==new Wildcard()) return new Empty();
 						//	 else return new Null();
 
 						// TODO: chech for character set
@@ -160,7 +160,7 @@
 								return result;
 						} else if(l instanceof Inv) {
 								return Null(); // TODO, check
-						} else if(l instanceof QMark) {
+						} else if(l instanceof Wildcard) {
 								return Null();
 						}
 				};
@@ -179,7 +179,7 @@
 									result = (result instanceof Empty) ? result : l.deriv(a);
 								});
 								return result;
-						} else if(l instanceof QMark) {
+						} else if(l instanceof Wildcard) {
 								return Empty();
 						}
 				};
@@ -290,7 +290,7 @@
 								return result;
 						} else if(l instanceof Inv) {
 								return l.contains(A);
-						} else if(l instanceof QMark) {
+						} else if(l instanceof Wildcard) {
 								return Null(); // TODO
 						}
 				};
@@ -309,7 +309,7 @@
 									result = (result instanceof Empty) ? result : (l.contains(a) ? Null() : Empty());
 								});
 								return result;
-						} else if(l instanceof QMark) {
+						} else if(l instanceof Wildcard) {
 								return Null();
 						}
 				};
@@ -364,9 +364,9 @@
 		/**
 		 * QMArk (?)
 		 */
-		function QMark() {			
-				if(!(this instanceof QMark)) {
-						return __cache.c(new QMark ());
+		function Wildcard() {			
+				if(!(this instanceof Wildcard)) {
+						return __cache.c(new Wildcard ());
 				}
 				//////////////////////////////////////////////////
 				this.nullable() {
@@ -398,7 +398,7 @@
 
 						//	if(larg==this) return new Empty(); 
 						//	 else if (larg==new Empty()) return this;
-						//	 else if (larg==new QMark()) return new Empty();
+						//	 else if (larg==new Wildcard()) return new Empty();
 						//	 else return new Null();
 
 						// TODO: chech for character set
@@ -974,7 +974,7 @@
 						/** SPECIAL: !(C) ~ @ | m(C) */
 						//	   else if(contract.isIndifferent()) return  new __AtLiteral();
 						/** SPECIAL: !(^) ~ ? | m(C) */
-						else if(contract==new Empty()) return new QMark();
+						else if(contract==new Empty()) return new Wildcard();
 						/** reduce !(C) ::= !(reduce C) */
 						else return new Neg(contract.reduce());
 
@@ -1092,7 +1092,7 @@
 		SELF.Atom		= Atom;
 		SELF.Set		= Set;
 		SELF.Inv		= Inv;
-		SELF.QMark		= QMark;
+		SELF.Wildcard		= Wildcard;
 		SELF.Null		= Null;
 		SELF.Empty		= Empty;
 		SELF.Star		= Star;
@@ -1109,7 +1109,7 @@
 		APC.Contract.EmptySetLiteral	= Null;
 		APC.Contract.EmptyLiteral		= Empty;
 
-		APC.Contract.QMarkLiteral		= QMark;
+		APC.Contract.WildcardLiteral	= Wildcard;
 		APC.Contract.NameLiteral		= Atom;
 
 		APC.Contract.StarContract		= Star;
