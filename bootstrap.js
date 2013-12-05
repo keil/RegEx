@@ -71,5 +71,10 @@ load("run.js");
 // Run
 //////////////////////////////////////////////////
 
-RegEx.run.run();
-quit();
+// run regex genearator
+//RegEx.run.run();
+//quit();
+//
+
+load("areg.js");
+

@@ -40,30 +40,30 @@
 						return __cache.c(new Atom (a));
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return false;
 				};
-				this.first() {
+				this.first = function() {
 						return Array(this);
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return false;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return false;
 				};
-				this.universal() {
+				this.universal = function() {
 						return false;
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						return (a == b) ? Empty() : Null();
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						return (l == this) ? Empty() : Null();
 				};
-				this.pderiv(literal) {
+				this.pderiv = function(l) {
 
 						//	if(larg==this) return new Empty(); 
 						//	 else if (larg==new Empty()) return this;
@@ -74,7 +74,7 @@
 						return (l == this) ? new Empty() : new Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n
+				this.isSuperSetOf = function (sub, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
@@ -125,31 +125,31 @@
 						});
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return false;
 				};
-				this.first() {
+				this.first = function() {
 						return Array(this);
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return false;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return false;
 				};
-				this.universal() {
+				this.universal = function() {
 						return false;
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						var result = Null();
 						A.foreach(function(i, a) {
 							result = (a == b) ? Empty() : result;
 						});
 						return result;
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						if(l instanceof Atom) {
 							return this.deriv(l);
 						} else if(l instanceof Set) {
@@ -164,7 +164,7 @@
 								return Null();
 						}
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						if(l instanceof Atom) {
 							return this.deriv(l);
 						} else if(l instanceof Set) {
@@ -184,7 +184,7 @@
 						}
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n
+				this.isSuperSetOf = function (sub, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
@@ -255,31 +255,31 @@
 						});
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return false;
 				};
-				this.first() {
+				this.first = function() {
 						return Array(this);
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return (A.empty()) ? true : false;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return (A.empty()) ? true : false;
 				};
-				this.universal() {
+				this.universal = function() {
 						return false;
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						var result = Empty();
 						A.foreach(function(i, a) {
 							result = (a == b) ? Null() : result;
 						});
 						return result;
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						if(l instanceof Atom) {
 							return this.deriv(l);
 						} else if(l instanceof Set) {
@@ -294,7 +294,7 @@
 								return Null(); // TODO
 						}
 				};
-				this.pderiv(literal) {
+				this.pderiv = function(l) {
 						if(l instanceof Atom) {
 							return this.deriv(l);
 						} else if(l instanceof Set) {
@@ -314,7 +314,7 @@
 						}
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n
+				this.isSuperSetOf = function (sub, ctx) {
 						// TODO
 						return false;
 				};
@@ -369,43 +369,34 @@
 						return __cache.c(new Wildcard ());
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return false;
 				};
-				this.first() {
+				this.first = function() {
 						return Array(this);
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return false;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return true;
 				};
-				this.universal() {
+				this.universal = function() {
 						return false;
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
-						// TODO
-						return new Empty();
+				this.deriv = function(b) {
+						return Empty();
 				};
-				this.nderiv(l) {
-						// TODO
-						return new Empty();
+				this.nderiv = function(l) {
+						return Null();
 				};
-				this.pderiv(literal) {
-
-						//	if(larg==this) return new Empty(); 
-						//	 else if (larg==new Empty()) return this;
-						//	 else if (larg==new Wildcard()) return new Empty();
-						//	 else return new Null();
-
-						// TODO: chech for character set
-						return new Empty();
+				this.pderiv = function(l) {
+						return Empty();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n
+				this.isSuperSetOf = function (sub, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= false  | v(C) and ~v(C') */
@@ -460,34 +451,34 @@
 						return __cache.c(new Null ());
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return false;
 				};
-				this.first() {
+				this.first = function() {
 						return Array();
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return true;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return false;
 				};
-				this.universal() {
+				this.universal = function() {
 						return false;
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						return this;
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						return this;
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						return this;
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n
+				this.isSuperSetOf = function (sub, ctx) {
 						return(arg==this) ? true : false;
 				};
 
@@ -522,34 +513,34 @@
 						return __cache.c(new Empty ());
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return true;
 				};
-				this.first() {
+				this.first = function() {
 						return Array();
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return false;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return false;
 				};
-				this.universal() {
+				this.universal = function() {
 						return false;
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						return Null();
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						return Null();
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						return Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n
+				this.isSuperSetOf = function (sub, ctx) {
 						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** C <= C' |= true  | n(C) */
@@ -597,30 +588,30 @@
 						return __cache.c(new Star (r));
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return true;
 				};
-				this.first() {
+				this.first = function() {
 						return r.first();
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return false;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return r.indifferent();
 				};
-				this.universal() {
+				this.universal = function() {
 						return (r.indifferent() || r.universal());
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						return Dot(r.derive(b), this);
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						return Dot(r.nderive(l),this);
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						return Dot(r.pderive(l),this);
 				};
 				//////////////////////////////////////////////////
@@ -695,37 +686,38 @@
 						return __cache.c(new Or (r,s));
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return (r.nullable() || s.nullable());
 				};
-				this.first() {
+				this.first = function() {
 						return r.first().concat(s.first());
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return (contract0.empty() && contract1.empty());
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return (contract0.indifferent() || contract1.indifferent());
 				};
-				this.universal() {
+				this.universal = function() {
 						return (contract0.universal() || contract1.universal());
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						return new Or(r.derive(name), s.derive(name));
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						// TODO
 						return new Or(contract0.nderive(larg), contract1.nderive(larg))
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						// TODO
 						return new Or(contract0.pderive(larg), contract1.pderive(larg))
 
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n						/** C <= C' |= true  | C=C' */
+				this.isSuperSetOf = function (sub, ctx) {
+						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
 						else if((arg==new Empty()) && this.isNullable()) return true;
@@ -775,7 +767,7 @@
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
-						return  return "(" + r.toString() + "+" + s.toString() + ")";
+						return  "(" + r.toString() + "+" + s.toString() + ")";
 				};
 		}
 
@@ -811,35 +803,36 @@
 						return __cache.c(new And (r,s));
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return (r.nullable() && s.nullable());
 				};
-				this.first() {
+				this.first = function() {
 						// TODO
 						return r.first().concat(s.first());
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return (r.empty() && s.empty());
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return (r.indifferent() && s.indifferent());
 				};
-				this.universal() {
+				this.universal = function() {
 						return (r.universal() && s.universal());
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						return And(contract0.derive(name), contract1.derive(name));
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						return And(contract0.nderive(larg), contract1.nderive(larg));
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						return And(contract0.pderive(larg), contract1.pderive(larg))
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n						/** C <= C' |= true  | C=C' */
+				this.isSuperSetOf = function (sub, ctx) {
+						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
 						else if((arg==new Empty()) && this.isNullable()) return true;
@@ -907,38 +900,39 @@
 						return __cache.c(new Neg (r));
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return r.nullable() ? false : true;;
 				};
-				this.first() {
+				this.first = function() {
 						// TODO
 						return r.first();
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						// TODO
 						return r.universal() ? true : false;
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						// TODO
 						return (r.empty() || r.nullable()) ? true : false;
 				};
-				this.universal() {
+				this.universal = function() {
 						// TODO
 						return r.universal() ? true : false;;
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						return new Neg(contract.derive(name));
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						return new Neg(contract.pderive(larg));
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						return new Neg(contract.nderive(larg));
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {\n						/** C <= C' |= true  | C=C' */
+				this.isSuperSetOf = function (sub, ctx) {
+						/** C <= C' |= true  | C=C' */
 						if(arg==this) return true;
 						/** ^ <= C' |= true  | v(C') */
 						else if((arg==new Empty()) && this.isNullable()) return true;
@@ -1012,37 +1006,37 @@
 						return __cache.c(new Dot (s));
 				}
 				//////////////////////////////////////////////////
-				this.nullable() {
+				this.nullable = function() {
 						return (r.nullable() && s.nullable());	
 				};
-				this.first() {
+				this.first = function() {
 						return (r.nullable() ? r.first().concat(r.first()) : r.first());
 				};
 				//////////////////////////////////////////////////
-				this.empty() {
+				this.empty = function() {
 						return (r.empty() || s.empty());
 				};
-				this.indifferent:() {
+				this.indifferent = function() {
 						return (r.indifferent() || (r.nullable() && s.indifferent()));
 				};
-				this.universal() {
+				this.universal = function() {
 						return ((r.universal() && s.nullable()) || (r.nullable() && s.universal()) || (r.universal() && s.universal()));
 				};
 				//////////////////////////////////////////////////
-				this.deriv(b) {
+				this.deriv = function(b) {
 						if(contract0.isNullable()) return new Or(Dot(contract0.derive(name), contract1), contract1.derive(name));
 						else return new Dot(contract0.derive(name), contract1);
 
 						// TODO
 				};
-				this.nderiv(l) {
+				this.nderiv = function(l) {
 						// TODO
 						if (larg==new Empty()) return this;
 						else if(contract0.isNullable()) return new Or(new Dot(contract0.nderive(larg), contract1), contract1.nderive(larg));
 						else return new Dot(contract0.nderive(larg), contract1);
 
 				};
-				this.pderiv(l) {
+				this.pderiv = function(l) {
 						// TODO
 						if (larg==new Empty()) return this;
 						else if(contract0.isNullable()) return new Or(new Dot(contract0.pderive(larg), contract1), contract1.pderive(larg));
@@ -1104,19 +1098,19 @@
 		//////////////////////////////////////////////////
 		// APC . Contract
 		//////////////////////////////////////////////////
-		APC.Contract = {};
+//		APC.Contract = {};
 
-		APC.Contract.EmptySetLiteral	= Null;
-		APC.Contract.EmptyLiteral		= Empty;
+//		APC.Contract.EmptySetLiteral	= Null;
+//		APC.Contract.EmptyLiteral		= Empty;
 
-		APC.Contract.WildcardLiteral	= Wildcard;
-		APC.Contract.NameLiteral		= Atom;
+//		APC.Contract.WildcardLiteral	= Wildcard;
+//		APC.Contract.NameLiteral		= Atom;
 
-		APC.Contract.StarContract		= Star;
-		APC.Contract.OrContract			= Or;
-		APC.Contract.AndContract		= And;
-		APC.Contract.NegContract		= Neg;
-		APC.Contract.ConcatContract		= Dot;
+//		APC.Contract.StarContract		= Star;
+//		APC.Contract.OrContract			= Or;
+//		APC.Contract.AndContract		= And;
+//		APC.Contract.NegContract		= Neg;
+//		APC.Contract.ConcatContract		= Dot;
 
 
 
