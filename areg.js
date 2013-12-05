@@ -762,13 +762,13 @@
 				};
 				//////////////////////////////////////////////////
 				this.deriv(b) {
-						return new And(contract0.derive(name), contract1.derive(name));
+						return And(contract0.derive(name), contract1.derive(name));
 				};
 				this.nderiv(l) {
-						return new And(contract0.nderive(larg), contract1.nderive(larg));
+						return And(contract0.nderive(larg), contract1.nderive(larg));
 				};
 				this.pderiv(l) {
-						return new And(contract0.pderive(larg), contract1.pderive(larg))
+						return And(contract0.pderive(larg), contract1.pderive(larg))
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub, ctx) {\n						/** C <= C' |= true  | C=C' */
@@ -1002,12 +1002,12 @@
 						/** otherwise */
 						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
 				};
-
 				this.isSubSetOf = function (sup, ctx) {
 						return sup.isSuperSetOf(this, ctx);
 				};
 				//////////////////////////////////////////////////
 				this.reduce = function () {
+						// TODO second null?
 						return (r.Empty()) ? Null() : Dot(r.reduce(), c.reduce());
 				};
 				//////////////////////////////////////////////////
