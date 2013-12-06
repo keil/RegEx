@@ -926,7 +926,7 @@ __RegEx.Expression = (function() {
 //						else return new Or(r.reduce(), s.reduce());
 //
 //						return this;
-				};
+//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return  "(" + r.toString() + "+" + s.toString() + ")";
@@ -1047,7 +1047,7 @@ __RegEx.Expression = (function() {
 //						else return new And(r.reduce(), s.reduce());
 //
 //						return this;
-				};
+//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return "(" + r.toString() + "&" + s.toString() + ")";
@@ -1282,6 +1282,7 @@ __RegEx.Expression = (function() {
 		SELF.Star		= Star;
 		SELF.Or			= Or;
 		SELF.And		= And;
+		SELF.Neg		= Neg;
 		SELF.Dot		= Dot;
 
 
