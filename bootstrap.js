@@ -78,9 +78,15 @@ load("run.js");
 
 //load("areg.js");
 
-load("Regex/literal.js");
+//load("Regex/literal.js");
 load("Regex/expression.js");
+
+__sysout(__RegEx.Expression);
+
+
+
+
 load("Regex/parser.js");
 
 
-//load("Test/Regex/constructor.js");
+load("Test/Regex/constructor.js");

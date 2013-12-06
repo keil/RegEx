@@ -1,28 +1,33 @@
+function testRegEx(string) {
+		var r = mkRegEx(string);
+		__sysout(string + ": " + r.toString());
+}
+
 __sysout("\n# CONSTRUCORS TEST #");
 
 // Literals
 
-mkRegEx("a");
-mkRegEx("b");
-mkRegEx("c");
-mkRegEx("1");
-mkRegEx("2");
-mkRegEx("3");
+testRegEx("a");
+testRegEx("b");
+testRegEx("c");
+testRegEx("1");
+testRegEx("2");
+testRegEx("3");
 
-mkRegEx("[ab]");
-mkRegEx("[abc]");
-mkRegEx("[123]");
+testRegEx("[ab]");
+testRegEx("[abc]");
+testRegEx("[123]");
 
-mkRegEx("[^ab]");
-mkRegEx("[^abc]");
-mkRegEx("[^123]");
+testRegEx("[^ab]");
+testRegEx("[^abc]");
+testRegEx("[^123]");
 
-mkRegEx("[digit]");
-mkRegEx("[char]");
-mkRegEx("[lchar]");
-mkRegEx("[uchar]");
-mkRegEx("[alpha]");
-mkRegEx("?");
+testRegEx("[digit]");
+testRegEx("[char]");
+testRegEx("[lchar]");
+testRegEx("[uchar]");
+testRegEx("[alpha]");
+testRegEx("?");
 
 // Expressions
 

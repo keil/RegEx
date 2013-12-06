@@ -24,7 +24,20 @@ function mkRegEx(string) {
 
 __RegEx.Parser = (function(){
 
-		var Atom		= __RegEx.Literal.Atom;
+		var Atom		= __RegEx.Expression.Atom;
+		var Set			= __RegEx.Expression.Set;
+		var Inv			= __RegEx.Expression.Inv;
+		
+		var Digit		= __RegEx.Expression.Digit;
+		var Char		= __RegEx.Expression.Char;
+		var LowerChar	= __RegEx.Expression.LowerChar;
+		var UpperChar	= __RegEx.Expression.UpperChar;
+		var Alpha		= __RegEx.Expression.Alpha;
+		var Wildcard	= __RegEx.Expression.Wildcard;
+
+		/*
+		 *
+		 * 		var Atom		= __RegEx.Literal.Atom;
 		var Set			= __RegEx.Literal.Set;
 		var Inv			= __RegEx.Literal.Inv;
 		
@@ -34,6 +47,9 @@ __RegEx.Parser = (function(){
 		var UpperChar	= __RegEx.Literal.UpperChar;
 		var Alpha		= __RegEx.Literal.Alpha;
 		var Wildcard	= __RegEx.Literal.Wilcard;
+		*/
+
+
 
 		var Empty	= __RegEx.Expression.Empty;
 		var Null	= __RegEx.Expression.Null;
@@ -549,7 +565,7 @@ __RegEx.Parser = (function(){
 														pos0 = pos;
 														result0 = parse_UpperChar();
 														if (result0 !== null) {
-																result0 = (function(offset, l) { return UCHar(l); })(pos0, result0);
+																result0 = (function(offset, l) { return UpperChar(l); })(pos0, result0);
 														}
 														if (result0 === null) {
 																pos = pos0;
@@ -558,7 +574,7 @@ __RegEx.Parser = (function(){
 																pos0 = pos;
 																result0 = parse_LowerChar();
 																if (result0 !== null) {
-																		result0 = (function(offset, l) { return lCHar(l); })(pos0, result0);
+																		result0 = (function(offset, l) { return LowerChar(l); })(pos0, result0);
 																}
 																if (result0 === null) {
 																		pos = pos0;
