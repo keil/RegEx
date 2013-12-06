@@ -22,6 +22,12 @@ __RegEx.Parser = (function(){
 		var Atom		= __RegEx.Literal.Atom;
 		var Set			= __RegEx.Literal.Set;
 		var Inv			= __RegEx.Literal.Inv;
+		
+		var Digit			= __RegEx.Literal.Digit;
+		var Char			= __RegEx.Literal.Char;
+		var LowerChar		= __RegEx.Literal.LowerChar;
+		var UpperChar		= __RegEx.Literal.UpperChar;
+		var Alpha			= __RegEx.Literal.Alpha;
 		var Wildcard	= __RegEx.Literal.Wilcard;
 
 		var Empty	= __RegEx.Expression.Empty;
@@ -81,16 +87,16 @@ __RegEx.Parser = (function(){
 								"Character": parse_Character,
 								"csDigit": parse_csDigit,
 								"csChar": parse_csChar,
-								"csUChar": parse_csUChar,
-								"csLChar": parse_csLChar,
+								"csUpperChar": parse_csUpperChar,
+								"csLowerChar": parse_csLowerChar,
 								"csAlpha": parse_csAlpha,
 								"csWildcard": parse_csWildcard,
 								"Set": parse_Set,
 								"Inv": parse_Inv,
 								"Digit": parse_Digit,
 								"Char": parse_Char,
-								"UChar": parse_UChar,
-								"LChar": parse_LChar,
+								"UpperChar": parse_UpperChar,
+								"LowerChar": parse_LowerChar,
 								"Alpha": parse_Alpha,
 								"Wildcard": parse_Wildcard
 						};
@@ -536,7 +542,7 @@ __RegEx.Parser = (function(){
 												}
 												if (result0 === null) {
 														pos0 = pos;
-														result0 = parse_UChar();
+														result0 = parse_UpperChar();
 														if (result0 !== null) {
 																result0 = (function(offset, l) { return UCHar(l); })(pos0, result0);
 														}
@@ -545,7 +551,7 @@ __RegEx.Parser = (function(){
 														}
 														if (result0 === null) {
 																pos0 = pos;
-																result0 = parse_LChar();
+																result0 = parse_LowerChar();
 																if (result0 !== null) {
 																		result0 = (function(offset, l) { return lCHar(l); })(pos0, result0);
 																}
@@ -654,7 +660,7 @@ __RegEx.Parser = (function(){
 								return result0;
 						}
 
-						function parse_csUChar() {
+						function parse_csUpperChar() {
 								var result0;
 
 								if (input.substr(pos, 7) === "[uchar]") {
@@ -669,7 +675,7 @@ __RegEx.Parser = (function(){
 								return result0;
 						}
 
-						function parse_csLChar() {
+						function parse_csLowerChar() {
 								var result0;
 
 								if (input.substr(pos, 7) === "[lchar]") {
@@ -862,12 +868,12 @@ __RegEx.Parser = (function(){
 								return result0;
 						}
 
-						function parse_UChar() {
+						function parse_UpperChar() {
 								var result0;
 								var pos0;
 
 								pos0 = pos;
-								result0 = parse_csUChar();
+								result0 = parse_csUpperChar();
 								if (result0 !== null) {
 										result0 = (function(offset, c) {
 												return c;
@@ -879,12 +885,12 @@ __RegEx.Parser = (function(){
 								return result0;
 						}
 
-						function parse_LChar() {
+						function parse_LowerChar() {
 								var result0;
 								var pos0;
 
 								pos0 = pos;
-								result0 = parse_csLChar();
+								result0 = parse_csLowerChar();
 								if (result0 !== null) {
 										result0 = (function(offset, c) {
 												return c;
