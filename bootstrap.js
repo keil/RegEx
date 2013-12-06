@@ -78,21 +78,9 @@ load("run.js");
 
 //load("areg.js");
 
+load("Regex/literal.js");
+load("Regex/expression.js");
+load("Regex/parser.js");
 
 
-function test() {
- this.state = "o|o";
-}
-
-function chacha() {
- this.state = "<3";
- //return new test();
-}
-chacha.prototype = new test();
-
-var c = new chacha(); 
-
-__sysout(c instanceof chacha);
-__sysout(c instanceof test);
-
-__sysout(c.state);
+load("Test/Regex/constructor.js");
