@@ -13,7 +13,7 @@
  * $Rev: 23389 $
  */
 
-__RegEx.Expression (function() {
+__RegEx.Expression = (function() {
 
 		//////////////////////////////////////////////////
 		// Advanced Regular Expressions

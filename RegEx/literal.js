@@ -13,10 +13,7 @@
  * $Rev: 23389 $
  */
 
-(function(RegEx) {
-
-		SELF = {};
-		RegEx.AReg = SELF;
+__RegEx.Literal = (function() {
 
 		//////////////////////////////////////////////////
 		// Advanced Regular Expressions
@@ -25,14 +22,9 @@
 		// Expression        r,s = Ø | ϵ | l | r* | r+s | r&s | !r | r·s 
 		//////////////////////////////////////////////////
 
-		// regular expressions
-		var Empty	= __RegEx.Expression.Empty;
-		var Null	= __RegEx.Expression.Null;
-		var Star	= __RegEx.Expression.Star;
-		var Or		= __RegEx.Expression.Or;
-		var And		= __RegEx.Expression.And;
-		var Neg		= __RegEx.Expression.Neg;
-		var Dot		= __RegEx.Expression.Dot;
+			// current path cache
+		var __cache = new __ContractCache();
+
 
 		//          _                  
 		//     /\  | |                 
@@ -508,6 +500,17 @@
 		// REGEX . AREG
 		//////////////////////////////////////////////////
 
+				// regular expressions
+		var Empty	= __RegEx.Expression.Empty;
+		var Null	= __RegEx.Expression.Null;
+		var Star	= __RegEx.Expression.Star;
+		var Or		= __RegEx.Expression.Or;
+		var And		= __RegEx.Expression.And;
+		var Neg		= __RegEx.Expression.Neg;
+		var Dot		= __RegEx.Expression.Dot;
+
+
+
 		this.Atom		= Atom;
 		this.Set		= Set;
 		this.Inv		= Inv;
@@ -538,6 +541,11 @@
 						 * @return access permission contract
 						 */
 						c: function(contract) {
+
+								// TODO, enable chache
+								return contract;
+
+
 								var key = contract.toString();
 								var value = contract;
 
@@ -587,8 +595,5 @@
 				}
 		}
 
-		// current path cache
-		var __cache = new __ContractCache();
-
-})(__APC);
-
+	
+})();

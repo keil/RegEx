@@ -83,4 +83,4 @@ load("Regex/expression.js");
 load("Regex/parser.js");
 
 
-load("Test/Regex/constructor.js");
+//load("Test/Regex/constructor.js");
