@@ -30,5 +30,12 @@ testRegEx("[alpha]");
 testRegEx("?");
 
 // Expressions
+// TODO, normalization
 
-
+testRegEx("a.b");
+testRegEx("[ab].b");
+testRegEx("[^ab].b");
+testRegEx("a*.b");
+testRegEx("(a+b).b");
+testRegEx("(a&b).b");
+testRegEx("!(a).b");

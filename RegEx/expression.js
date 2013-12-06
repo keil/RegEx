@@ -1100,19 +1100,20 @@ __RegEx.Expression = (function() {
 		 * Concatenation (r·s)
 		 */
 		function Dot(r, s) {
+__sysout(s);
 
 				// TODO
 				// NORMALIZATION
 				/** (^.C) ~ C */
-				if(contract0 == new Empty()) return contract1;
+				if(r == Empty()) return s;
 				/** ({}.C) ~ C */
-				if(contract0 == new Null()) return new Null();
+				if(r == Null()) return Null();
 				/** (@.C) ~ C */
-				if(contract0 == new __AtLiteral()) return new __AtLiteral();
+				//if(r == new __AtLiteral()) return new __AtLiteral();
 
 
 				if(!(this instanceof Dot)) {
-						return __cache.c(new Dot (s));
+						return __cache.c(new Dot (r, s));
 				}
 				//////////////////////////////////////////////////
 				this.nullable = function() {
@@ -1200,7 +1201,7 @@ __RegEx.Expression = (function() {
 		SELF.Star		= Star;
 		SELF.Or			= Or;
 		SELF.And		= And;
-		SELF.Dor		= Dot;
+		SELF.Dot		= Dot;
 
 
 
