@@ -17,17 +17,22 @@
  * Powered by: http://pegjs.majda.cz/online
  */
 
+// TODO
+function mkRegEx(string) {
+		return __RegEx.Parser.parse(string);
+}
+
 __RegEx.Parser = (function(){
 
 		var Atom		= __RegEx.Literal.Atom;
 		var Set			= __RegEx.Literal.Set;
 		var Inv			= __RegEx.Literal.Inv;
 		
-		var Digit			= __RegEx.Literal.Digit;
-		var Char			= __RegEx.Literal.Char;
-		var LowerChar		= __RegEx.Literal.LowerChar;
-		var UpperChar		= __RegEx.Literal.UpperChar;
-		var Alpha			= __RegEx.Literal.Alpha;
+		var Digit		= __RegEx.Literal.Digit;
+		var Char		= __RegEx.Literal.Char;
+		var LowerChar	= __RegEx.Literal.LowerChar;
+		var UpperChar	= __RegEx.Literal.UpperChar;
+		var Alpha		= __RegEx.Literal.Alpha;
 		var Wildcard	= __RegEx.Literal.Wilcard;
 
 		var Empty	= __RegEx.Expression.Empty;

@@ -76,5 +76,23 @@ load("run.js");
 //quit();
 //
 
-load("areg.js");
+//load("areg.js");
 
+
+
+function test() {
+ this.state = "o|o";
+}
+
+function chacha() {
+ this.state = "<3";
+ //return new test();
+}
+chacha.prototype = new test();
+
+var c = new chacha(); 
+
+__sysout(c instanceof chacha);
+__sysout(c instanceof test);
+
+__sysout(c.state);
