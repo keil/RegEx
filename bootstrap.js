@@ -90,3 +90,5 @@ load("Regex/parser.js");
 
 
 load("Test/Regex/constructor.js");
+
+quit();
