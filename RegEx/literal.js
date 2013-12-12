@@ -32,7 +32,7 @@ __RegEx.Literal = (function() {
 		SELF.UpperChar	= UpperChar;
 		SELF.Alpha		= Alpha;
 		SELF.Wildcard	= Wildcard;
-	
+
 		//////////////////////////////////////////////////
 		// Advanced Regular Expressions
 		//
@@ -184,7 +184,7 @@ __RegEx.Literal = (function() {
 								return __RegEx.Expression.Empty();
 						}
 				};
-								//////////////////////////////////////////////////
+				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
 						return _RegEx.Containment.solve(sub, this);
@@ -220,7 +220,7 @@ __RegEx.Literal = (function() {
 				};
 		}
 
-// TODO, implement invertet set as negated set 
+		// TODO, implement invertet set as negated set 
 
 		//  _____                     _           _    _____      _   
 		// |_   _|                   | |         | |  / ____|    | |  
@@ -397,6 +397,12 @@ __RegEx.Literal = (function() {
 				};
 		}
 
+		//   _____ _                          _                   _                         
+		//  / ____| |                        | |                 | |                        
+		// | |    | |__   __ _ _ __ __ _  ___| |_ ___ _ __    ___| | __ _ ___ ___  ___  ___ 
+		// | |    | '_ \ / _` | '__/ _` |/ __| __/ _ \ '__|  / __| |/ _` / __/ __|/ _ \/ __|
+		// | |____| | | | (_| | | | (_| | (__| ||  __/ |    | (__| | (_| \__ \__ \  __/\__ \
+		//  \_____|_| |_|\__,_|_|  \__,_|\___|\__\___|_|     \___|_|\__,_|___/___/\___||___/
 
 
 		var digit = Array(0,1,2,3,4,5,6,7,8,9);
@@ -404,6 +410,15 @@ __RegEx.Literal = (function() {
 		var uchar = Array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 		var char = lchar.concat(uchar);
 		var alpha = char.concat(digit);
+
+		//  _____  _       _ _   
+		// |  __ \(_)     (_) |  
+		// | |  | |_  __ _ _| |_ 
+		// | |  | | |/ _` | | __|
+		// | |__| | | (_| | | |_ 
+		// |_____/|_|\__, |_|\__|
+		//            __/ |      
+		//           |___/       
 
 		function Digit() {
 				if(!(this instanceof Digit)) {
@@ -415,6 +430,13 @@ __RegEx.Literal = (function() {
 				};
 		}
 		Digit.prototype = new Set(digit);
+
+		//   _____ _                
+		//  / ____| |               
+		// | |    | |__   __ _ _ __ 
+		// | |    | '_ \ / _` | '__|
+		// | |____| | | | (_| | |   
+		//  \_____|_| |_|\__,_|_|   
 
 		function Char() {
 				if(!(this instanceof Char)) {
@@ -428,6 +450,13 @@ __RegEx.Literal = (function() {
 		}
 		Char.prototype = new Set(char);
 
+		//  _                               _____ _                
+		// | |                             / ____| |               
+		// | |     _____      _____ _ __  | |    | |__   __ _ _ __ 
+		// | |    / _ \ \ /\ / / _ \ '__| | |    | '_ \ / _` | '__|
+		// | |___| (_) \ V  V /  __/ |    | |____| | | | (_| | |   
+		// |______\___/ \_/\_/ \___|_|     \_____|_| |_|\__,_|_|   
+
 		function LowerChar() {
 				if(!(this instanceof LowerChar)) {
 						return cache.c(new LowerChar ());
@@ -439,6 +468,15 @@ __RegEx.Literal = (function() {
 
 		}
 		LowerChar.prototype = new Set(lchar);
+
+		//  _    _                          _____ _                
+		// | |  | |                        / ____| |               
+		// | |  | |_ __  _ __   ___ _ __  | |    | |__   __ _ _ __ 
+		// | |  | | '_ \| '_ \ / _ \ '__| | |    | '_ \ / _` | '__|
+		// | |__| | |_) | |_) |  __/ |    | |____| | | | (_| | |   
+		//  \____/| .__/| .__/ \___|_|     \_____|_| |_|\__,_|_|   
+		//        | |   | |                                        
+		//        |_|   |_|                                        
 
 		function UpperChar() {
 				if(!(this instanceof UpperChar)) {
@@ -452,6 +490,15 @@ __RegEx.Literal = (function() {
 		}
 		UpperChar.prototype = new Set(uchar);
 
+		//           _       _           
+		//     /\   | |     | |          
+		//    /  \  | |_ __ | |__   __ _ 
+		//   / /\ \ | | '_ \| '_ \ / _` |
+		//  / ____ \| | |_) | | | | (_| |
+		// /_/    \_\_| .__/|_| |_|\__,_|
+		//            | |                
+		//            |_|                
+
 		function Alpha() {
 				if(!(this instanceof Alpha)) {
 						return cache.c(new Alpha ());
@@ -462,6 +509,121 @@ __RegEx.Literal = (function() {
 				};
 		}
 		Alpha.prototype = new Set(alpha);
+
+
+// TODO, append und co an sets hängen .. ? mit flighweigth function
+
+
+		// TODO
+		// make test
+		function union(e, f) {
+				if(e instanceof Blank) {
+						return Blank();
+				} else if(e instanceof Atom) {
+						if(f instanceof Blank) return Blank();
+						if(f instanceof Atom) return (e==f) ? e : Blank();
+						else if(f instanceof Set) return f.contains(e) ? e : Blank();
+						else if(f instanceof Inv) return f.contains(e) ? e : Blank();
+						else if(f instanceof Wildcard) return e;
+				} else if(e instanceof Set) {
+						if(f instanceof Blank) return Blank();
+						if(f instanceof Atom) return e.contains(f) ? f : Blank();
+						else if(f instanceof Set) {
+								var result = Array();
+								e.foreach(function(i, a) {
+										if(f.contains(a)) reuslt.push(a);
+								});
+								return Set(result);
+						}
+						else if(f instanceof Inv) {
+								var result = Array();
+								e.foreach(function(i, a) {
+										if(!(f.contains(a))) reuslt.push(a);
+								});
+								return Set(result);
+						}
+						else if(f instanceof Wildcard) return e;
+				} else if(e instanceof Inv) {
+						if(f instanceof Blank) return Blank();
+						if(f instanceof Atom) return e.contains(f) ? f : Blank();
+						else if(f instanceof Set) {
+							var result = Array();
+								f.foreach(function(i, a) {
+										if(!(e.contains(a))) reuslt.push(a);
+								});
+								return Set(result);
+						}
+						else if(f instanceof Inv) {
+								var result = e.array().concat(f.array());
+								return Inv(reulst);
+						}
+						else if(f instanceof Wildcard) return e;
+				} else if(e instanceof Wildcard) {
+						return f;
+				}
+		}
+
+
+
+		// TODO
+		// make test
+		function invert(l) {
+				if(l instanceof Inv) return Set(l.array());
+				else if(l instanceof Set) return Inv(l.array());
+				else if(l instanceof Atom) return Inv(l);
+				else if(l instanceof Wildcard) return Set();
+		}
+
+			// TODO
+		// make test
+		function subset(e, f) {
+				if(e instanceof Blank) {
+						return true;
+				} else if(e instanceof Atom) {
+						if(f instanceof Blank) return false;
+						if(f instanceof Atom) return (e==f) ? true : false;
+						else if(f instanceof Set) return f.contains(e);
+						else if(f instanceof Inv) return !(f.contains(e));
+						else if(f instanceof Wildcard) return true;
+				} else if(e instanceof Set) {
+						if(f instanceof Blank) return false; // TODOm check if set is emnpot
+						if(f instanceof Atom) {
+								// TODO, check if e is a set with only one element
+						}
+						else if(f instanceof Set) {
+							// check sets
+						}
+						else if(f instanceof Inv) {
+							// check sets
+						}
+						else if(f instanceof Wildcard) return true;
+				} else if(e instanceof Inv) {
+						if(f instanceof Blank) return false; // TODO, roght
+						if(f instanceof Atom) {
+								// TODO, check if e is a set with only one element
+						}
+						else if(f instanceof Set) {
+							// check sets
+						}
+						else if(f instanceof Inv) {
+							// check sets
+						}
+						else if(f instanceof Wildcard) return true;
+
+				} else if(e instanceof Wildcard) {
+						return f;
+				}
+
+		}
+
+
+
+
+
+
+
+
+
 
 		return SELF;
 })();
