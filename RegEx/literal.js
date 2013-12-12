@@ -22,7 +22,7 @@ __RegEx.Literal = (function() {
 		// Expression        r,s = Ø | ϵ | l | r* | r+s | r&s | !r | r·s 
 		//////////////////////////////////////////////////
 
-			// current path cache
+		// current path cache
 		var __cache = new __ContractCache();
 
 
