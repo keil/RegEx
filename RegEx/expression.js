@@ -479,7 +479,7 @@ __RegEx.Expression = (function() {
 
 				//////////////////////////////////////////////////
 				if(!(this instanceof Dot)) {
-						return cache.c(new Dot (r, s));
+						return cache.c(Dot (r, s));
 				}
 				//////////////////////////////////////////////////
 				this.nullable = function() {
