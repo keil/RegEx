@@ -21,4 +21,5 @@ __RegEx.Config = (function() {
 
 		SELF.CachingEnabled = true;
 
+		return SELF;
 })();

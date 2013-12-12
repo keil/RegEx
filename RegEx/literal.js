@@ -13,18 +13,32 @@
  * $Rev: 23389 $
  */
 
+// TODO revisit, rework, check implementation 
+
 __RegEx.Literal = (function() {
 
+		SELF = new Object();
+
+		SELF.Atom		= Atom;
+		SELF.Set		= Set;
+		SELF.Inv		= Inv;
+
+		SELF.Digit		= Digit;
+		SELF.Char		= Char;
+		SELF.LowerChar	= LowerChar;
+		SELF.UpperChar	= UpperChar;
+		SELF.Alpha		= Alpha;
+		SELF.Wildcard	= Wildcard;
+	
 		//////////////////////////////////////////////////
 		// Advanced Regular Expressions
 		//
-		// Literal           l   = a | A | ^A (| ?)
+		// Literal           l   = a | A | ^A (| ? | [digit] | [char] | [lchar] | [uchar] | [alpha])
 		// Expression        r,s = Ø | ϵ | l | r* | r+s | r&s | !r | r·s 
 		//////////////////////////////////////////////////
 
-		// current path cache
-		var __cache = new __ContractCache();
-
+		// literal cache
+		var cache = __RegEx.Cache.Literals;
 
 		//          _                  
 		//     /\  | |                 
@@ -38,7 +52,7 @@ __RegEx.Literal = (function() {
 		 */
 		function Atom(a) {			
 				if(!(this instanceof Atom)) {
-						return __cache.c(new Atom (a));
+						return cache.c(new Atom (a));
 				}
 				//////////////////////////////////////////////////
 				this.nullable = function() {
@@ -59,20 +73,20 @@ __RegEx.Literal = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return (a == b) ? Empty() : Null();
+						return (a == b) ? __RegEx.Expression.Empty() : __RegEx.Expression.Null();
 				};
 				this.nderiv = function(l) {
-						return (l == this) ? Empty() : Null();
+						return (l == this) ? __RegEx.Expression.Empty() : __RegEx.Expression.Null();
 				};
 				this.pderiv = function(l) {
 
-						//	if(larg==this) return new Empty(); 
-						//	 else if (larg==new Empty()) return this;
-						//	 else if (larg==new Wildcard()) return new Empty();
-						//	 else return new Null();
+						//	if(larg==this) return new __RegEx.Expression.Empty(); 
+						//	 else if (larg==new __RegEx.Expression.Empty()) return this;
+						//	 else if (larg==new Wildcard()) return new __RegEx.Expression.Empty();
+						//	 else return new __RegEx.Expression.Null();
 
 						// TODO: chech for character set
-						return (l == this) ? new Empty() : new Null();
+						return (l == this) ? new __RegEx.Expression.Empty() : new __RegEx.Expression.Null();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub, ctx) {
@@ -81,7 +95,7 @@ __RegEx.Literal = (function() {
 						/** C <= C' |= false  | v(C) and ~v(C') */
 						else if(arg.isNullable()) return false;
 						/** C <= C' |= true  | n(C) */
-						else if (arg.isEmpty()) return true;
+						else if (arg.is__RegEx.Expression.Empty()) return true;
 						/** C <= C' |= true  | w(C) & !n(C') */
 						else if(arg.isBlank()) return true;
 
@@ -102,7 +116,7 @@ __RegEx.Literal = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
-						return a;
+						return a.toString();
 				};
 		}
 
@@ -118,7 +132,7 @@ __RegEx.Literal = (function() {
 		 */
 		function Set(A) {
 				if(!(this instanceof Set)) {
-						return __cache.c(new Set (A));
+						return cache.c(new Set (A));
 				}
 				if(A instanceof Array) {
 						A.foreach(function(i, a) {
@@ -144,9 +158,9 @@ __RegEx.Literal = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						var result = Null();
+						var result = __RegEx.Expression.Null();
 						A.foreach(function(i, a) {
-								result = (a == b) ? Empty() : result;
+								result = (a == b) ? __RegEx.Expression.Empty() : result;
 						});
 						return result;
 				};
@@ -154,34 +168,34 @@ __RegEx.Literal = (function() {
 						if(l instanceof Atom) {
 								return this.deriv(l);
 						} else if(l instanceof Set) {
-								var result = Empty();
+								var result = __RegEx.Expression.Empty();
 								l.foreach(function(i, a) {
 										result = (result instanceof Null) ? result : this.deriv(a);
 								});
 								return result;
 						} else if(l instanceof Inv) {
-								return Null(); // TODO, check
+								return __RegEx.Expression.Null(); // TODO, check
 						} else if(l instanceof Wildcard) {
-								return Null();
+								return __RegEx.Expression.Null();
 						}
 				};
 				this.pderiv = function(l) {
 						if(l instanceof Atom) {
 								return this.deriv(l);
 						} else if(l instanceof Set) {
-								var result = Null();
+								var result = __RegEx.Expression.Null();
 								l.foreach(function(i, a) {
 										result = (result instanceof Empty) ? result : this.deriv(a);
 								});
 								return result;
 						} else if(l instanceof Inv) {
-								var result = Null();
+								var result = __RegEx.Expression.Null();
 								A.foreach(function(i, a) {
 										result = (result instanceof Empty) ? result : l.deriv(a);
 								});
 								return result;
 						} else if(l instanceof Wildcard) {
-								return Empty();
+								return __RegEx.Expression.Empty();
 						}
 				};
 				//////////////////////////////////////////////////
@@ -191,7 +205,7 @@ __RegEx.Literal = (function() {
 						/** C <= C' |= false  | v(C) and ~v(C') */
 						else if(arg.isNullable()) return false;
 						/** C <= C' |= true  | n(C) */
-						else if (arg.isEmpty()) return true;
+						else if (arg.is__RegEx.Expression.Empty()) return true;
 						/** C <= C' |= true  | w(C) & !n(C') */
 						else if(arg.isBlank()) return true;
 
@@ -230,11 +244,13 @@ __RegEx.Literal = (function() {
 				this.toString = function () {
 						var str = "";
 						A.foreach(function(i,v) {
-								str += v;
+								str += v.toString();
 						});
 						return "[" + str + "]";
 				};
 		}
+
+// TODO, implement invertet set as negated set 
 
 		//  _____                     _           _    _____      _   
 		// |_   _|                   | |         | |  / ____|    | |  
@@ -248,7 +264,7 @@ __RegEx.Literal = (function() {
 		 */
 		function Inv(A) {			
 				if(!(this instanceof Inv)) {
-						return __cache.c(new Inv (A));
+						return cache.c(new Inv (A));
 				}
 				if(A instanceof Array) {
 						A.foreach(function(i, a) {
@@ -274,9 +290,9 @@ __RegEx.Literal = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						var result = Empty();
+						var result = __RegEx.Expression.Empty();
 						A.foreach(function(i, a) {
-								result = (a == b) ? Null() : result;
+								result = (a == b) ? __RegEx.Expression.Null() : result;
 						});
 						return result;
 				};
@@ -284,7 +300,7 @@ __RegEx.Literal = (function() {
 						if(l instanceof Atom) {
 								return this.deriv(l);
 						} else if(l instanceof Set) {
-								var result = Empty();
+								var result = __RegEx.Expression.Empty();
 								l.foreach(function(i, a) {
 										result = (result instanceof Null) ? result : this.deriv(a);
 								});
@@ -292,26 +308,26 @@ __RegEx.Literal = (function() {
 						} else if(l instanceof Inv) {
 								return l.contains(A);
 						} else if(l instanceof Wildcard) {
-								return Null(); // TODO
+								return __RegEx.Expression.Null(); // TODO
 						}
 				};
 				this.pderiv = function(l) {
 						if(l instanceof Atom) {
 								return this.deriv(l);
 						} else if(l instanceof Set) {
-								var result = Null();
+								var result = __RegEx.Expression.Null();
 								l.foreach(function(i, a) {
 										result = (result instanceof Empty) ? result : this.deriv(a);
 								});
 								return result;
 						} else if(l instanceof Inv) {
-								var result = Null();
+								var result = __RegEx.Expression.Null();
 								A.foreach(function(i, a) {
-										result = (result instanceof Empty) ? result : (l.contains(a) ? Null() : Empty());
+										result = (result instanceof Empty) ? result : (l.contains(a) ? __RegEx.Expression.Null() : __RegEx.Expression.Empty());
 								});
 								return result;
 						} else if(l instanceof Wildcard) {
-								return Null();
+								return __RegEx.Expression.Null();
 						}
 				};
 				//////////////////////////////////////////////////
@@ -367,7 +383,7 @@ __RegEx.Literal = (function() {
 		 */
 		function Wildcard() {			
 				if(!(this instanceof Wildcard)) {
-						return __cache.c(new Wildcard ());
+						return cache.c(new Wildcard ());
 				}
 				//////////////////////////////////////////////////
 				this.nullable = function() {
@@ -388,13 +404,13 @@ __RegEx.Literal = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return Empty();
+						return __RegEx.Expression.Empty();
 				};
 				this.nderiv = function(l) {
-						return Null();
+						return __RegEx.Expression.Null();
 				};
 				this.pderiv = function(l) {
-						return Empty();
+						return __RegEx.Expression.Empty();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub, ctx) {
@@ -403,7 +419,7 @@ __RegEx.Literal = (function() {
 						/** C <= C' |= false  | v(C) and ~v(C') */
 						else if(arg.isNullable()) return false;
 						/** C <= C' |= true  | n(C) */
-						else if (arg.isEmpty()) return true;
+						else if (arg.is__RegEx.Expression.Empty()) return true;
 						/** C <= C' |= true  | w(C) & !n(C') */
 						else if(arg.isBlank()) return true;
 						/** C <= C' |= false  | m(C) and !m(C') */
@@ -440,7 +456,7 @@ __RegEx.Literal = (function() {
 
 		function Digit() {
 				if(!(this instanceof Digit)) {
-						return __cache.c(new Digit ());
+						return cache.c(new Digit ());
 				}
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -451,7 +467,7 @@ __RegEx.Literal = (function() {
 
 		function Char() {
 				if(!(this instanceof Char)) {
-						return __cache.c(new Char ());
+						return cache.c(new Char ());
 				}
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -463,7 +479,7 @@ __RegEx.Literal = (function() {
 
 		function LowerChar() {
 				if(!(this instanceof LowerChar)) {
-						return __cache.c(new LowerChar ());
+						return cache.c(new LowerChar ());
 				}
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -475,7 +491,7 @@ __RegEx.Literal = (function() {
 
 		function UpperChar() {
 				if(!(this instanceof UpperChar)) {
-						return __cache.c(new UpperChar ());
+						return cache.c(new UpperChar ());
 				}
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -487,7 +503,7 @@ __RegEx.Literal = (function() {
 
 		function Alpha() {
 				if(!(this instanceof Alpha)) {
-						return __cache.c(new Alpha ());
+						return cache.c(new Alpha ());
 				}
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -496,104 +512,5 @@ __RegEx.Literal = (function() {
 		}
 		Alpha.prototype = new Set(alpha);
 
-		//////////////////////////////////////////////////
-		// REGEX . AREG
-		//////////////////////////////////////////////////
-
-				// regular expressions
-		var Empty	= __RegEx.Expression.Empty;
-		var Null	= __RegEx.Expression.Null;
-		var Star	= __RegEx.Expression.Star;
-		var Or		= __RegEx.Expression.Or;
-		var And		= __RegEx.Expression.And;
-		var Neg		= __RegEx.Expression.Neg;
-		var Dot		= __RegEx.Expression.Dot;
-
-
-
-		this.Atom		= Atom;
-		this.Set		= Set;
-		this.Inv		= Inv;
-
-		this.Digit		= Digit;
-		this.Char		= Char;
-		this.LowerChar	= LowerChar;
-		this.UpperChar	= UpperChar;
-		this.Alpha		= Alpha;
-		this.Wildcard	= Wildcard;
-
-		//////////////////////////////////////////////////
-		//  LITERAL CACHE
-		//  cache for regular expressions literals
-		//////////////////////////////////////////////////
-
-		/** Contract Cache 
-		*/
-		function __ContractCache() {
-				// cache array
-				var cache = new StringMap();
-				var reduced = new Array();
-
-				return {
-
-						/* cache function
-						 * @param contract access permission contract
-						 * @return access permission contract
-						 */
-						c: function(contract) {
-
-								// TODO, enable chache
-								return contract;
-
-
-								var key = contract.toString();
-								var value = contract;
-
-								if(this.contains(key)) {
-										return this.get(key);
-								} else {
-										if(!reduced[key]) {
-												reduced[contract.toString()]=true;
-												contract = contract.reduce();
-												return this.c(contract);
-										} else 
-												return this.put(key, value);
-								}
-						},
-
-								/* put
-								 * @param key cache key
-								 * @param value cahe value
-								 * $return value
-								 */
-								put: function(key, value) {
-										cache.set(key, value);
-										return value;
-								},
-
-								/* get
-								 * @param key cache key
-								 * $return value
-								 */
-								get: function(key) {
-										return cache.get(key);
-								},
-
-								/* contains
-								 * @param key cache key
-								 * $return true, if key in cache, false otherwise
-								 */
-								contains: function(key) {
-										return cache.has(key);
-								},
-
-								/* clear cache
-								*/
-								clear: function() {
-										cache = new StringMap();
-								}
-				}
-		}
-
-	
+		return SELF;
 })();

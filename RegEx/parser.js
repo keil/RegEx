@@ -19,33 +19,33 @@
 
 __RegEx.Parser = (function(){
 
-		var Atom		= __RegEx.Expression.Atom;
-		var Set			= __RegEx.Expression.Set;
-		var Inv			= __RegEx.Expression.Inv;
-		
-		var Digit		= __RegEx.Expression.Digit;
-		var Char		= __RegEx.Expression.Char;
-		var LowerChar	= __RegEx.Expression.LowerChar;
-		var UpperChar	= __RegEx.Expression.UpperChar;
-		var Alpha		= __RegEx.Expression.Alpha;
-		var Wildcard	= __RegEx.Expression.Wildcard;
-
 		/*
-		 *
-		 * 		var Atom		= __RegEx.Literal.Atom;
+		   var Atom		= __RegEx.Expression.Atom;
+		   var Set			= __RegEx.Expression.Set;
+		   var Inv			= __RegEx.Expression.Inv;
+
+		   var Digit		= __RegEx.Expression.Digit;
+		   var Char		= __RegEx.Expression.Char;
+		   var LowerChar	= __RegEx.Expression.LowerChar;
+		   var UpperChar	= __RegEx.Expression.UpperChar;
+		   var Alpha		= __RegEx.Expression.Alpha;
+		   var Wildcard	= __RegEx.Expression.Wildcard;
+		   */
+
+		// basic literals
+		var Atom		= __RegEx.Literal.Atom;
 		var Set			= __RegEx.Literal.Set;
 		var Inv			= __RegEx.Literal.Inv;
 		
+		// predefined character classes
 		var Digit		= __RegEx.Literal.Digit;
 		var Char		= __RegEx.Literal.Char;
 		var LowerChar	= __RegEx.Literal.LowerChar;
 		var UpperChar	= __RegEx.Literal.UpperChar;
 		var Alpha		= __RegEx.Literal.Alpha;
-		var Wildcard	= __RegEx.Literal.Wilcard;
-		*/
+		var Wildcard	= __RegEx.Literal.Wildcard;
 
-
-
+		// expressions
 		var Empty	= __RegEx.Expression.Empty;
 		var Null	= __RegEx.Expression.Null;
 		var Star	= __RegEx.Expression.Star;

@@ -15,12 +15,10 @@
 
 __RegEx.Cache = (function() {
 
-		SELF = new Object();
+		SELF = Cache;
 
-		SELF.Cache = Cache;
-
-		SELF.Cache.Literals		= new Cache();
-		SELF.Cache.Expressions	= new Cache();
+		SELF.Literals		= new Cache();
+		SELF.Expressions	= new Cache();
 
 		//////////////////////////////////////////////////
 		//  CACHE
@@ -82,4 +80,6 @@ __RegEx.Cache = (function() {
 						cache = new StringMap();
 				};
 		}
+
+		return SELF;
 })();
