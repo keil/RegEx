@@ -13,9 +13,6 @@
  * $Rev: 23389 $
  */
 
-//TODO, normalization
-//TODO, check uses of new
-
 __RegEx.Expression = (function() {
 
 		SELF = new Object();
@@ -233,8 +230,6 @@ __RegEx.Expression = (function() {
 				};
 		}
 
-
-
 		//           _ _                        _   _           
 		//     /\   | | |                      | | (_)          
 		//    /  \  | | |_ ___ _ __ _ __   __ _| |_ ___   _____ 
@@ -306,16 +301,12 @@ __RegEx.Expression = (function() {
 				};
 		}
 
-
-
-
 		//  _____       _                          _   _             
 		// |_   _|     | |                        | | (_)            
 		//   | |  _ __ | |_ ___ _ __ ___  ___  ___| |_ _  ___  _ __  
 		//   | | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __| |/ _ \| '_ \ 
 		//  _| |_| | | | ||  __/ |  \__ \  __/ (__| |_| | (_) | | | |
 		// |_____|_| |_|\__\___|_|  |___/\___|\___|\__|_|\___/|_| |_|
-
 
 		/**
 		 * Intersection (r&s)
@@ -343,8 +334,7 @@ __RegEx.Expression = (function() {
 						return (r.nullable() && s.nullable());
 				};
 				this.first = function() {
-						// TODO
-						return r.first().concat(s.first());
+						return __RegEx.Literal.union(r.first(), s.first()); 
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
@@ -381,8 +371,6 @@ __RegEx.Expression = (function() {
 				};
 		}
 
-
-
 		//  _   _                  _   _             
 		// | \ | |                | | (_)            
 		// |  \| | ___  __ _  __ _| |_ _  ___  _ __  
@@ -391,7 +379,6 @@ __RegEx.Expression = (function() {
 		// |_| \_|\___|\__, |\__,_|\__|_|\___/|_| |_|
 		//              __/ |                        
 		//             |___/                         
-
 
 		/**
 		 * Negation !(r)
@@ -415,20 +402,22 @@ __RegEx.Expression = (function() {
 				};
 				this.first = function() {
 						// TODO
-						return r.first();
+						// by the definition of first
+						// first(!r) = first(r) \cup {^l | l \in first(r)} \  {l | l \in first(r), \nderiv_{l} r = \Sigma* }
+						// -- but --
+						// first(!r) = first(r) \cup {^l | l \in first(r)}
+						// is implementet.
+						return r.first().concat(__RegEx.Literal.invert(r.first())); 
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
-						// TODO
 						return r.universal() ? true : false;
 				};
 				this.indifferent = function() {
-						// TODO
 						return (r.empty() || r.nullable()) ? true : false;
 				};
 				this.universal = function() {
-						// TODO
-						return r.universal() ? true : false;;
+						return r.empty() ? true : false;
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
@@ -473,13 +462,13 @@ __RegEx.Expression = (function() {
 
 				// NORMALIZATION
 				// ϵ·s ~ s
-				if(r instanceof Empty) return s;
+				if(r instanceof Empty) return s;	
 				// Ø·s ~ Ø
 				else if(r instanceof Null) return Null();
 
 				//////////////////////////////////////////////////
 				if(!(this instanceof Dot)) {
-						return cache.c(Dot (r, s));
+						return cache.c(new Dot (r, s));
 				}
 				//////////////////////////////////////////////////
 				this.nullable = function() {

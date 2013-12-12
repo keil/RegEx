@@ -53,6 +53,22 @@ __RegEx.Containment = (function() {
 })();
 
 
+	/** C <= C' |= true  | C=C' */
+						//						if(arg==this) return true;
+						//						/** ^ <= C' |= true  | v(C') */
+						//						else if((arg==new Empty())) return true;
+						//						/** C <= C' |= true  | n(C) */
+						//						else if(arg.isEmpty()) return true;
+						//						/** C <= C' |= true  | w(C) & !n(C') */
+						//						else if(arg.isBlank()) return true;
+						//						/** C <= C' |= true  | m(C') */
+						//						else if(this.isUniversal()) return true;
+						//
+						//						/** C <= C' |= true  | ctx(C <= C') */
+						//						ccExp = new Exp(arg, this);
+						//						if(ctx.contains(ccExp)) return true;
+						//						/** otherwise */
+						//						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
 
 
 
