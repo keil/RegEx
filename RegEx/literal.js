@@ -15,6 +15,9 @@
 
 // TODO revisit, rework, check implementation 
 
+//TODO, normalization
+//TODO, check uses of new
+
 __RegEx.Literal = (function() {
 
 		SELF = new Object();

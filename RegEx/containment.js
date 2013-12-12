@@ -1,4 +1,62 @@
-		//////////////////////////////////////////////////
+/*
+ * Efficient Solving of Regular Expression Inequalities 
+ *  Regular Expression Generator
+ *
+ * Copyright (c) 2013, Proglang, University of Freiburg.
+ *  http://proglang.informatik.uni-freiburg.de/
+ * All rights reserved.
+ *
+ * Author Matthias Keil
+ *  http://www.informatik.uni-freiburg.de/~keilr/
+ *
+ * $Date: 2013-07-23 15:59:13 +0200 (Tue, 23 Jul 2013) $
+ * $Rev: 23389 $
+ */
+
+// TODO add comments
+
+__RegEx.Containment = (function() {
+
+		SELF = new Object();
+
+		// todo, use fresh solve for new solve from r and s
+		// and a special solve with boundet ctx
+		SELF.solve = solve;
+
+		// TODO, add ctx and exp
+
+
+
+		// r <= s
+		function solve(r, s, ctx) {
+	
+
+
+			/** DISPROVE */
+						if(sub.nullable() && !(this.nullable())) return false;
+
+						/** DELETE */
+						ccExp = new Exp(arg, this);
+						if(ctx.contains(ccExp)) return true;
+
+						/** UNFOLD */
+						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
+	
+		}
+
+
+
+
+
+
+		return SELF;
+})();
+
+
+
+
+
+//////////////////////////////////////////////////
 		//  CONTAINMENT CALCULUS
 		//  context and expressions
 		//////////////////////////////////////////////////

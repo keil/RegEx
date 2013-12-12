@@ -13,6 +13,9 @@
  * $Rev: 23389 $
  */
 
+//TODO, normalization
+//TODO, check uses of new
+
 __RegEx.Expression = (function() {
 
 		SELF = new Object();
@@ -24,7 +27,6 @@ __RegEx.Expression = (function() {
 		SELF.And		= And;
 		SELF.Neg		= Neg;
 		SELF.Dot		= Dot;
-
 
 		//////////////////////////////////////////////////
 		// Advanced Regular Expressions
@@ -46,13 +48,8 @@ __RegEx.Expression = (function() {
 		var Alpha		= __RegEx.Literal.Alpha;
 		var Wildcard	= __RegEx.Literal.Wilcard;
 
-
 		// literal cache
 		var cache = __RegEx.Cache.Expressions;
-
-
-
-	
 
 		//  _   _       _ _ 
 		// | \ | |     | | |
@@ -96,31 +93,14 @@ __RegEx.Expression = (function() {
 						return this;
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						return(arg==this) ? true : false;
-
-
-
-						/** DISPROVE */
-						// TODO
-
-						/** DELETE */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-
-						/** UNFOLD */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return true;
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
-
-				//////////////////////////////////////////////////
-				//				this.reduce = function () {
-				//						return this;
-				//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return "Ø";
@@ -171,45 +151,14 @@ __RegEx.Expression = (function() {
 						return Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						//						/** C <= C' |= true  | C=C' */
-						//						if(arg==this) return true;
-						//						/** C <= C' |= true  | n(C) */
-						//						else if (arg.isEmpty()) return true;
-						//						/** C <= C' |= true  | w(C) */
-						//						else if(arg.isBlank()) return true;
-
-						//						/** C <= C' |= true  | ctx(C <= C') */
-						//						ccExp = new Exp(arg, this);
-						//						if(ctx.contains(ccExp)) return true;
-						//						/** otherwise */
-						//						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-
-
-						/** DISPROVE */
-						// TODO
-
-						/** DELETE */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-
-						/** UNFOLD */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return (sub.isNullable()) ? true : false;
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
-
-				//////////////////////////////////////////////////
-				//				this.reduce = function () {
-				//						return this;
-				//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return "ϵ";
@@ -261,55 +210,14 @@ __RegEx.Expression = (function() {
 						return Dot(r.pderive(l),this);
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						/** C <= C' |= true  | C=C' */
-						//						if(arg==this) return true;
-						//						/** ^ <= C' |= true  | v(C') */
-						//						else if((arg==new Empty())) return true;
-						//						/** C <= C' |= true  | n(C) */
-						//						else if(arg.isEmpty()) return true;
-						//						/** C <= C' |= true  | w(C) & !n(C') */
-						//						else if(arg.isBlank()) return true;
-						//						/** C <= C' |= true  | m(C') */
-						//						else if(this.isUniversal()) return true;
-						//
-						//						/** C <= C' |= true  | ctx(C <= C') */
-						//						ccExp = new Exp(arg, this);
-						//						if(ctx.contains(ccExp)) return true;
-						//						/** otherwise */
-						//						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-						/** DISPROVE */
-						// TODO
-
-						/** DELETE */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-
-						/** UNFOLD */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return sup.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
-				//////////////////////////////////////////////////
-				//				this.reduce = function () {
-				//
-				//						// TODO
-				//						/** C* ~ ^ | n(C) */
-				//						if(contract.isEmpty()) return new Empty();
-				//						/** C* ~ ^ | w(C) */
-				//						else if(contract.isBlank()) return new Empty();
-				//						/** reduce C* ::= (reduce C)* */
-				//						else return new Star(contract.reduce());
-				//
-				//						return this;
-				//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return (r.toString()+"*");
@@ -363,79 +271,24 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return new Or(r.derive(b), s.derive(b));
+						return Or(r.derive(b), s.derive(b));
 				};
 				this.nderiv = function(l) {
-						return new Or(r.nderive(l), s.nderive(l))
+						return Or(r.nderive(l), s.nderive(l))
 				};
 				this.pderiv = function(l) {
-						return new Or(r.pderive(l), s.pderive(l))
+						return Or(r.pderive(l), s.pderive(l))
 
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						//						/** C <= C' |= true  | C=C' */
-						//						if(arg==this) return true;
-						//						/** ^ <= C' |= true  | v(C') */
-						//						else if((arg==new Empty()) && this.isNullable()) return true;
-						//						/** C <= C' |= false  | v(C) and ~v(C') */
-						//						else if(arg.isNullable() && !this.isNullable()) return false;
-						//						/** C <= C' |= true  | n(C) */
-						//						else if(arg.isEmpty()) return true;
-						//						/** C <= C' |= true  | w(C) & !n(C') */
-						//						else if(arg.isBlank()) return true;
-						//						/** C <= C' |= true  | m(C') */
-						//						else if(this.isUniversal()) return true;
-
-						//						/** C <= C' |= true  | ctx(C <= C') */
-						//						ccExp = new Exp(arg, this);
-						//						if(ctx.contains(ccExp)) return true;
-						//						/** otherwise */
-						//						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-
-						/** DISPROVE */
-						// TODO
-
-						/** DELETE */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-
-						/** UNFOLD */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return sup.isSuperSetOf(this, ctx);
-
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
-
-				//////////////////////////////////////////////////
-				//				this.reduce = function () {
-				//
-				//						/** (C+C') ~ {} | n(C)&n(C') */
-				//						if(r.isEmpty()&&s.isEmpty()) return new Null();
-				//						/** (C+C') ~ {} | w(C)&w(C') */
-				//						else if(r.isBlank()&&s.isBlank()) return new __AtLiteral();
-				//						/** (C+C') ~ C/C' | n(C)/n(C') */
-				//						else if(r.isEmpty()) return s.reduce();
-				//						else if(s.isEmpty()) return r.reduce();
-				//						/** (C+C') ~ C/C' | w(C)/w(C') */
-				//						else if(r.isBlank()) return s.reduce();
-				//						else if(s.isBlank()) return r.reduce();
-				//						/** (C+C') ~ C | C >= C' */
-				//						else if(r.isSuperSetOf(s, new Ctx())) return r.reduce();
-				//						/** (C+C') ~ C' | C <= C' */
-				//						else if(s.isSuperSetOf(r, new Ctx())) return s.reduce();
-				//						/** reduce C+C' ::= (reduce C)+(reduce C') */
-				//						else return new Or(r.reduce(), s.reduce());
-				//
-				//						return this;
-				//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return  "(" + r.toString() + "+" + s.toString() + ")";
@@ -502,61 +355,14 @@ __RegEx.Expression = (function() {
 						return And(r.pderive(l), s.pderive(l))
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						//						/** C <= C' |= true  | C=C' */
-						//						if(arg==this) return true;
-						//						/** ^ <= C' |= true  | v(C') */
-						//						else if((arg==new Empty()) && this.isNullable()) return true;
-						//						/** C <= C' |= false  | v(C) and ~v(C') */
-						//						else if(arg.isNullable() && !this.isNullable()) return false;
-						//						/** C <= C' |= true  | n(C) */
-						//						else if (arg.isEmpty()) return true;
-						//						/** C <= C' |= true  | w(C) & !n(C') */
-						//						else if(arg.isBlank()) return true;
-						//						/** C <= C' |= true  | m(C') */
-						//						else if(this.isUniversal()) return true;
-						//
-						//						/** C <= C' |= true  | ctx(C <= C') */
-						//						ccExp = new Exp(arg, this);
-						//						if(ctx.contains(ccExp)) return true;
-						//						/** otherwise */
-						//						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-						/** DISPROVE */
-						// TODO
-
-						/** DELETE */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-
-						/** UNFOLD */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return sup.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
-
-				//////////////////////////////////////////////////
-				//				this.reduce = function () {
-				//						/** (C&C') ~ C/C' | n(C)/n(C') */
-				//						if(r.isEmpty()) return new Null();
-				//						else if(s.isEmpty()) return new Null();
-				//						/** (C&C') ~ C/C' | w(C)/w(C') */
-				//						else if(r.isBlank()) return new __AtLiteral();
-				//						else if(s.isBlank()) return new __AtLiteral();
-				//						/** (C&C') ~ C' | C >= C' */
-				//						else if(r.isSubSetOf(s, new Ctx())) return r.reduce();
-				//						/** (C&C') ~ C | C <= C' */
-				//						else if(s.isSubSetOf(r, new Ctx())) return s.reduce();
-				//						/** reduce C&C' ::= (reduce C)&(reduce C') */
-				//						else return new And(r.reduce(), s.reduce());
-				//
-				//						return this;
-				//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return "(" + r.toString() + "&" + s.toString() + ")";
@@ -605,68 +411,23 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return new Neg(contract.derive(b));
+						return Neg(contract.derive(b));
 				};
 				this.nderiv = function(l) {
-						return new Neg(contract.pderive(l));
+						return Neg(contract.pderive(l));
 				};
 				this.pderiv = function(l) {
-						return new Neg(contract.nderive(l));
+						return Neg(contract.nderive(l));
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						//						/** C <= C' |= true  | C=C' */
-						//						if(arg==this) return true;
-						//						/** ^ <= C' |= true  | v(C') */
-						//						else if((arg==new Empty()) && this.isNullable()) return true;
-						//						/** C <= C' |= false  | v(C) and ~v(C') */
-						//						else if(arg.isNullable() && !this.isNullable()) return false;
-						//						/** C <= C' |= true  | n(C) */
-						//						else if(arg.isEmpty()) return true;
-						//						/** C <= C' |= true  | w(C) & !n(C') */
-						//						else if(arg.isBlank()) return true;
-						//						/** C <= C' |= true  | m(C') */
-						//						else if(this.isUniversal()) return true;
-						//						/** C <= C' |= false  | m(C) and !m(C') */
-						//
-						//						/** C <= C' |= true  | ctx(C <= C') */
-						//						var ccExp = new Exp(arg, this);
-						//						if(ctx.contains(ccExp)) return true;
-						//						/** otherwise */
-						//						//else return unfold(this, arg, contract.first(), ctx.bind(ccExp)) && unfold(this, arg, arg.first(), ctx.bind(ccExp));
-						//						// TODO
-						//						else return /*unfold(this, arg, contract.first(), ctx.bind(ccExp)) &&*/ unfold(this, arg, arg.first(), ctx.bind(ccExp));
-						//
-						//
-						/** DISPROVE */
-						// TODO
-
-						/** DELETE */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-
-						/** UNFOLD */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return sup.isSuperSetOf(this, ctx);
-
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
-
-				//////////////////////////////////////////////////
-				//				this.reduce = function () {
-				//
-				//						if(contract.isUniversal()) return new __AtLiteral();
-				//						/** SPECIAL: !(C) ~ @ | m(C) */
-				//						//	   else if(contract.isIndifferent()) return  new __AtLiteral();
-				//						/** SPECIAL: !(^) ~ ? | m(C) */
-				//						else if(contract==new Empty()) return new Wildcard();
-				//						/** reduce !(C) ::= !(reduce C) */
-				//						else return new Neg(contract.reduce());
-				//
-				//						return this;
-				//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return "!(" + r.toString() + ")";
@@ -717,71 +478,32 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						if(r.isNullable()) return new Or(Dot(r.derive(name), s), s.derive(b));
-						else return new Dot(r.derive(name), s);
+						if(r.isNullable()) return Or(Dot(r.derive(name), s), s.derive(b));
+						else return Dot(r.derive(name), s);
 				};
 				this.nderiv = function(l) {
-						if(r.isNullable()) return new Or(new Dot(r.nderive(l), s), s.nderive(l));
-						else return new Dot(r.nderive(l), s);
+						if(r.isNullable()) return Or(Dot(r.nderive(l), s), s.nderive(l));
+						else return Dot(r.nderive(l), s);
 				};
 				this.pderiv = function(l) {
-						if(r.isNullable()) return new Or(new Dot(r.pderive(l), s), s.pderive(l));
-						else return new Dot(r.pderive(larg), s);
+						if(r.isNullable()) return Or(Dot(r.pderive(l), s), s.pderive(l));
+						else return Dot(r.pderive(larg), s);
 
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						//						/** C <= C' |= true  | C=C' */
-						//						if(arg==this) return true;
-						//						/** ^ <= C' |= true  | v(C') */
-						//						else if((arg==new Empty()) && this.isNullable()) return true;
-						//						/** C <= C' |= false  | v(C) and ~v(C') */
-						//						else if(arg.isNullable() && !this.isNullable()) return false;
-						//						/** C <= C' |= true  | n(C) */
-						//						else if(arg.isEmpty()) return true;
-						//						/** C <= C' |= true  | w(C) & !n(C') */
-						//						else if(arg.isBlank()) return true;
-						//						/** C <= C' |= true  | m(C') */
-						//						else if(this.isUniversal()) return true;
-
-
-						/** DISPROVE */
-						// TODO
-
-						/** DELETE */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-
-						/** UNFOLD */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-				this.isSubSetOf = function (sup, ctx) {
-						return sup.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
-				//////////////////////////////////////////////////
-				//				this.reduce = function () {
-				//						// TODO second null?
-				//						return (r.Empty()) ? Null() : Dot(r.reduce(), c.reduce());
-				//				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
 						return (r.toString() + "·" + s.toString());
 				};
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-	return SELF;
-
+		return SELF;
 })();
-

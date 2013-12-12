@@ -15,7 +15,7 @@
 
 function testRegEx(string) {
 		__sysout("* " + string);
-		__sysout("** " + mkRegEx(string).toString() + "\n");
+		__sysout("** " + $(string).toString() + "\n");
 }
 
 __sysout("\n# CONSTRUCORS TEST #");

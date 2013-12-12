@@ -42,6 +42,8 @@ load("contract.js");
 // RegEx
 //////////////////////////////////////////////////
 
+
+/**
 //  interface
 load("regex.js");
 // configuration
@@ -66,7 +68,7 @@ load("evaluation.js");
 
 // Main Application
 load("run.js");
-
+*/
 //////////////////////////////////////////////////
 // Run
 //////////////////////////////////////////////////
@@ -79,9 +81,18 @@ load("run.js");
 //load("areg.js");
 
 //load("Regex/literal.js");
+
+
+// The Global Object
+load("RegEx/global.js");
+load("RegEx/config.js");
+
+load("RegEx/cache.js");
+load("Regex/literal.js");
 load("Regex/expression.js");
 
-__sysout(__RegEx.Expression);
+
+
 
 
 
@@ -90,5 +101,6 @@ load("Regex/parser.js");
 
 
 load("Test/Regex/constructor.js");
+
 
 quit();
