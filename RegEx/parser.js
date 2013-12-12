@@ -22,6 +22,10 @@ function mkRegEx(string) {
 		return __RegEx.Parser.parse(string);
 }
 
+//__RegEx = function (string) {
+//	return __RegEx.Parser.parse(string);
+//}
+
 __RegEx.Parser = (function(){
 
 		var Atom		= __RegEx.Expression.Atom;
