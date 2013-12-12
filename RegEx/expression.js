@@ -175,9 +175,18 @@ __RegEx.Expression = (function() {
 		 * Kleene Star (r*)
 		 */
 		function Star(r) {
-				// TODO
+
+				// THIS
+				this.sub = r;
+
 				// NORMALIZATION
-				if(r instanceof Empty) return Empty();
+				// Ø* ~ Ø
+				if(r instanceof Null) return Null();
+				// ϵ* ~ ϵ
+				else if(r instanceof Empty) return Empty();
+				// r** ~ r
+				else if(r instanceof Star) return r;
+				
 				//////////////////////////////////////////////////
 				if(!(this instanceof Star)) {
 						return cache.c(new Star (r));
@@ -238,17 +247,19 @@ __RegEx.Expression = (function() {
 		 */
 		function Or(r, s) {
 
-				// TODO
-				// NORMALIZATION
-				/** (C+C) ~ C */
-				//				if(r==s) return r;
-				/** ({}+C) ~ C */
-				//				else if(r==new Null()) return s;
-				//				else if(s==new Null()) return r;
-				/** (@+C) ~ C */
-				//				else if(r==new __AtLiteral()) return s;
-				//				else if(s==new __AtLiteral()) return r;
+				// THIS
+				this.left = r;
+				this.right = s;
 
+				// NORMALIZATION
+				// r + r ~ r
+				if(r === s) return r;
+				// Ø + s ~ s
+				else if(r instanceof Null) return s;
+				// r + Ø ~ r
+				else if(s instanceof Null) return r;
+				
+				//////////////////////////////////////////////////
 				if(!(this instanceof Or)) {
 						return cache.c(new Or (r,s));
 				}
@@ -310,19 +321,20 @@ __RegEx.Expression = (function() {
 		 * Intersection (r&s)
 		 */
 		function And(r, s) {
-				// TODO
+				
+				// THIS
+				this.left = r;
+				this.right = s;
+
 				// NORMALIZATION
-				//				/** (C&C) ~ C */
-				//				if(r==s) return r;
-				//				/** ({}&C) ~ {} */
-				//				else if(r==new Null()) return new Null();
-				//				else if(s==new Null()) return new Null();
-				//				/** (@&C) ~ @ */
-				//				else if(r==new __AtLiteral()) return new __AtLiteral();
-				//				else if(s==new __AtLiteral()) return new __AtLiteral();
-
-
-
+				// r & r ~ r
+				if(r === s) return r;
+				// Ø + s ~ Ø
+				else if(r instanceof Null) return Null();
+				// r + Ø ~ Ø
+				else if(s instanceof Null) return Null();
+				
+				//////////////////////////////////////////////////
 				if(!(this instanceof And)) {
 						return cache.c(new And (r,s));
 				}
@@ -385,6 +397,15 @@ __RegEx.Expression = (function() {
 		 * Negation !(r)
 		 */
 		function Neg(r) {
+
+				// THIS
+				this.sub = r;
+
+				// NORMALIZATION
+				// !!r  ~ r
+				if(r instanceof Neg) return r.sub;
+				
+				//////////////////////////////////////////////////
 				if(!(this instanceof Neg)) {
 						return cache.c(new Neg (r));
 				}
@@ -446,16 +467,17 @@ __RegEx.Expression = (function() {
 		 */
 		function Dot(r, s) {
 
-				// TODO
+				// THIS
+				this.left = r;
+				this.right = s;
+
 				// NORMALIZATION
-				/** (^.C) ~ C */
-				//if(r == Empty()) return s;
-				/** ({}.C) ~ C */
-				//if(r == Null()) return Null();
-				/** (@.C) ~ C */
-				//if(r == new __AtLiteral()) return new __AtLiteral();
+				// ϵ·s ~ s
+				if(r instanceof Empty) return s;
+				// Ø·s ~ Ø
+				else if(r instanceof Null) return Null();
 
-
+				//////////////////////////////////////////////////
 				if(!(this instanceof Dot)) {
 						return cache.c(new Dot (r, s));
 				}

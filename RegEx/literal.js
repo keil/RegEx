@@ -92,30 +92,13 @@ __RegEx.Literal = (function() {
 						return (l == this) ? new __RegEx.Expression.Empty() : new __RegEx.Expression.Null();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						/** C <= C' |= true  | C=C' */
-						if(arg==this) return true;
-						/** C <= C' |= false  | v(C) and ~v(C') */
-						else if(arg.isNullable()) return false;
-						/** C <= C' |= true  | n(C) */
-						else if (arg.is__RegEx.Expression.Empty()) return true;
-						/** C <= C' |= true  | w(C) & !n(C') */
-						else if(arg.isBlank()) return true;
-
-						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-						/** otherwise */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return r.isSuperSetOf(this, ctx);
-				};
-				//////////////////////////////////////////////////
-				this.reduce = function () {
-						return this;
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -201,30 +184,14 @@ __RegEx.Literal = (function() {
 								return __RegEx.Expression.Empty();
 						}
 				};
-				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						/** C <= C' |= true  | C=C' */
-						if(arg==this) return true;
-						/** C <= C' |= false  | v(C) and ~v(C') */
-						else if(arg.isNullable()) return false;
-						/** C <= C' |= true  | n(C) */
-						else if (arg.is__RegEx.Expression.Empty()) return true;
-						/** C <= C' |= true  | w(C) & !n(C') */
-						else if(arg.isBlank()) return true;
-
-						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-						/** otherwise */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
+								//////////////////////////////////////////////////
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-				this.isSubSetOf = function (sup, ctx) {
-						return r.isSuperSetOf(this, ctx);
-				};
-				//////////////////////////////////////////////////
-				this.reduce = function () {
-						return this;
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.foreach = function(callback) {
@@ -416,32 +383,13 @@ __RegEx.Literal = (function() {
 						return __RegEx.Expression.Empty();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						/** C <= C' |= true  | C=C' */
-						if(arg==this) return true;
-						/** C <= C' |= false  | v(C) and ~v(C') */
-						else if(arg.isNullable()) return false;
-						/** C <= C' |= true  | n(C) */
-						else if (arg.is__RegEx.Expression.Empty()) return true;
-						/** C <= C' |= true  | w(C) & !n(C') */
-						else if(arg.isBlank()) return true;
-						/** C <= C' |= false  | m(C) and !m(C') */
-						else if(arg.isUniversal()) return false;
-
-						/** C <= C' |= true  | ctx(C <= C') */
-						ccExp = new Exp(arg, this);
-						if(ctx.contains(ccExp)) return true;
-						/** otherwise */
-						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return r.isSuperSetOf(this, ctx);
-				};
-				//////////////////////////////////////////////////
-				this.reduce = function () {
-						return this;
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
