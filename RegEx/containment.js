@@ -25,7 +25,11 @@ __RegEx.Containment = (function() {
 
 		// TODO, add ctx and exp
 
-
+function first() {
+if(r instanceof __RegEx.Containmet.Expression) {
+						return intersection(r.left, r.right);
+				} else 
+}
 
 		// r <= s
 		function solve(r, s, ctx) {
