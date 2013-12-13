@@ -21,5 +21,12 @@ __RegEx.Config = (function() {
 
 		SELF.CachingEnabled = true;
 
+
+	SEFL.Verbose = false;
+	
+	SELF.ProveAxioms = false;
+
+	SELF.DisproveAxioms = false;
+
 		return SELF;
 })();

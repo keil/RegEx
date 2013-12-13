@@ -19,140 +19,149 @@ __RegEx.Containment = (function() {
 
 		SELF = new Object();
 
-		// todo, use fresh solve for new solve from r and s
-		// and a special solve with boundet ctx
-		SELF.solve = solve;
+		SELF.solve = init;
 
-		// TODO, add ctx and exp
+		/** FIRST
+		 * @param s super-regular expression
+		 * @param r sub-regular expression
+		 * @return Array of literals
+		 */
+		function first(r, s) {
+			return __RegEx.First.intersection(r.first(), __RegEx.First.negation(s.first()));
+		}
 
-function first() {
-if(r instanceof __RegEx.Containmet.Expression) {
-						return intersection(r.left, r.right);
-				} else 
-}
+		/** INIT
+		 * @param s super-regular expression
+		 * @param r sub-regular expression
+		 * @return true|false
+		 */
+		function init(r, s) {
+				return solve(r, s, new Context());
+		}
 
-		// r <= s
-		function solve(r, s, ctx) {
-
-
-
+		/** SOLVE
+		 * @param s super-regular expression
+		 * @param r sub-regular expression
+		 * @param context context
+		 * @return true|false
+		 */
+		function solve(r, s, context) {
 				/** DISPROVE */
-				if(sub.nullable() && !(this.nullable())) return false;
+				if(r.nullable() && !(s.nullable())) return false;
+
+				/** PROVE AXIOMS */
+				if(__RegEx.Config.ProveAxioms) prove(r, s);
+				
+				/** DISPROVE AXIOMS */
+				if(__RegEx.Config.DispoveAxioms) disprove(r, s);
 
 				/** DELETE */
-				ccExp = new Exp(arg, this);
-				if(ctx.contains(ccExp)) return true;
+				var e = new Expression(r, s);
+				if(context.contains(e)) return true;
 
 				/** UNFOLD */
-				else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
+				else return unfold(r, s, context);
+		}
 
+		/** UNFOLD (s >= r)
+		 * @param s super-regular expression
+		 * @param r sub-regular expression
+		 * @param context containment context 
+		 * @return true|false
+		 */
+		function unfold(r, s, context) {
+
+				var e = new Expression(r, s);
+				var context = context.bind(e);
+
+				// verbose - true, print output: false, do not print the output
+				var verbose  = false || __RegEx.Congif.verbos;
+				if(verbose) __sysout("\n\n\n##################################################");
+				if(verbose) __sysout("## isSuperSetOf: " + s + ">=" + r);
+
+				var result = true;
+				first.foreach(function(i, l) {
+						var derivR = r.nderive(l);
+						var derivS = s.pderive(l);
+
+						if(verbose) __sysout("## first: " + first);
+						if(verbose) __sysout("## literal: " + l);
+						if(verbose) __sysout("## N _{" + l + "} r: " + deriveR);
+						if(verbose) __sysout("## P _{" + l + "} s: " + deriveS);
+
+						result = result && deriveS.isSuperSetOf(deriveR, context);
+
+						if(verbose) __sysout("## result: " + result);
+
+						if(!result) return result; // break
+				});
+				return result;
 		}
 
 
+		/** PROVE AXIOMS (s >= r)
+		 * @param s super-regular expression
+		 * @param r sub-regular expression
+		 * @return true|false
+		 */
+		function prove(r, s) {
+				// TODO, extend prove axioms
 
+				// CC-IDENTITY
+				if(r===s) return true;
+				// CC-PROOF-EDGE
+				else if(r.empty()) return true;
+				// CC-PROOF-EDGE
+				else if(s.universal()) return true;
+				// CC-NULLABLE
+				else if((r instanceof __RegEx.Expression.Empty) && s.nullable()) return true;
+		}
+		
 
+		/** DISPROVE AXIOMS (s >= r)
+		 * @param s super-regular expression
+		 * @param r sub-regular expression
+		 * @return true|false
+		 */
+		function disprove(r, s) {
+				// TODO, extend disprove axiom
 
+				// CC=EMPTY
+				if(r.indifferent() && s.empty()) return false;
+				// CC-EMPTY
+				else if(r.universal() && s.empty()) return false;
+		}
 
-		return SELF;
-})();
-
-
-/** C <= C' |= true  | C=C' */
-//						if(arg==this) return true;
-//						/** ^ <= C' |= true  | v(C') */
-//						else if((arg==new Empty())) return true;
-//						/** C <= C' |= true  | n(C) */
-//						else if(arg.isEmpty()) return true;
-//						/** C <= C' |= true  | w(C) & !n(C') */
-//						else if(arg.isBlank()) return true;
-//						/** C <= C' |= true  | m(C') */
-//						else if(this.isUniversal()) return true;
-//
-//						/** C <= C' |= true  | ctx(C <= C') */
-//						ccExp = new Exp(arg, this);
-//						if(ctx.contains(ccExp)) return true;
-//						/** otherwise */
-//						else return unfold(this, arg, arg.first(), ctx.bind(ccExp));
-
-
-
-//////////////////////////////////////////////////
-//  CONTAINMENT CALCULUS
-//  context and expressions
-//////////////////////////////////////////////////
-
-
-/** UNFOLD
- * @param
- * E >= F ::= nderive_{c \in firstc(E)} (E>=F)
- * {e>=f | e \in nderive_{c}(E), e \in nderive_{c}(F)}
- * @param E super-contract
- * @param F sub-contract
- * @param first set of first literals
- * @param ctx containment context 
- * @return true|false
- */
-function unfold(E, F, first, ctx) {
-
-		// verbose - true, print output: false, do not print the output
-		var verbose  = false || APC.RegEx.config.verbose;
-		if(verbose) __sysout("\n\n\n##################################################");
-		if(verbose) __sysout("## isSuperSetOf: " + E + ">=" + F);
-
-		var result = true;
-
-		first.foreach(function(k, literal) {
-				var nderive_E = E.nderive(literal);
-				var nderive_F = F.nderive(literal);
-
-				if(verbose) __sysout("## first: " + first);
-				if(verbose) __sysout("## literal: " + literal);
-				if(verbose) __sysout("## nderive_E: " + nderive_E);
-				if(verbose) __sysout("## nderive_F: " + nderive_F);
-
-				result = result && nderive_E.isSuperSetOf(nderive_F, ctx);
-
-				if(verbose) __sysout("## result: " + result);
-
-				if(!result) return result; // break
-		});
-		return result;
-}
-
-
-
-/** Containment Calculus
- * Expression: C0 <= C1
- */
-function Exp(r, s) {
-		return {
+		/**
+		 * Containment Calculus
+		 * Expression: phi,psi,pi ::= r <= s
+		 */
+		function Expression(r, s) {
 				/** To String
 				 * @return string
 				 */
-				toString: function() {
+				this.toString = function() {
 						return r.toString() + "<=" + s.toString();
 				}
 		}
-}
 
-/** Containment Calculus
- * Context: {} | <Context, Expression>
- */
-function Ctx() {	
-		// cache array
-		var context = new StringMap();
+		/**
+		 * Containment Calculus
+		 * Context: {} | <Context, Expression>
+		 */
+		function Context() {	
+				// cache array
+				var context = new StringMap();
 
-		var key = function(v) {
-				return ("\"" + v + "\"");		
-		}
-
-		return {
+				var key = function(v) {
+						return ("\"" + v + "\"");		
+				};
 
 				/* bind function
 				 * @param CC Expression
 				 * @return <CC Context, CC Expression>
 				 */
-				bind: function(ccExp) {
+				this.bind = function(ccExp) {
 						// clone context
 						var newCtx = new Ctx();
 						context.foreach(function(k, v) {
@@ -163,42 +172,33 @@ function Ctx() {
 								newCtx.put(ccExp);
 						}
 						return newCtx;
-				},
+				};
 
-						/* put
-						 * @param ccExp CC Expression
-						 * $return CC Expression
-						 */
-						put: function(ccExp) {
-								context.set(ccExp.toString(), ccExp);
-								return ccExp;
-						},
+				/* put
+				 * @param ccExp CC Expression
+				 * $return CC Expression
+				 */
+				this.put = function(ccExp) {
+						context.set(ccExp.toString(), ccExp);
+						return ccExp;
+				};
 
-						/* get
-						 * @param ccExp CC Expression
-						 * $return CC Expression
-						 */
-						get: function(ccExp) {
-								return context.get(ccExp.toString());
-						},
+				/* get
+				 * @param ccExp CC Expression
+				 * $return CC Expression
+				 */
+				this.get = function(ccExp) {
+						return context.get(ccExp.toString());
+				};
 
-						/* contains
-						 * @param ccExp CC Expression
-						 * $return true, if ccExp in cache, false otherwise
-						 */
-						contains: function(ccExp) {
-								return context.has(ccExp.toString());
-						}
-		}
-};
+				/* contains
+				 * @param ccExp CC Expression
+				 * $return true, if ccExp in cache, false otherwise
+				 */
+				this.contains = function(ccExp) {
+						return context.has(ccExp.toString());
+				};
+		};
 
-
-
-
-//////////////////////////////////////////////////
-// APC . Contract
-//////////////////////////////////////////////////
-//		RegEx.Contract.Containment = {};
-//		RegEx.Contract.Containment.Expression = Exp;
-//		RegEx.Contract.Containment.Context = Ctx;
-
+		return SELF;
+})();

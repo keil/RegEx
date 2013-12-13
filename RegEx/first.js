@@ -34,13 +34,10 @@ __RegEx.First = (function() {
 		 * @param s regular expression
 		 * @return Array of literals
 		 */
-		function ofIntersection(r, s) {
-				var firstR = r.first();
-				var firstS = s.first();
-
+		function intersection(lsR lsS) {
 				var first = Array();
-				firstR.foreach(function(i, lR) {
-						firstS.foreach(function(j, lS) {
+				lsR.foreach(function(i, lR) {
+						lsS.foreach(function(j, lS) {
 								var l = __RegEx.Literal.union(lR, lS);
 								first.push(l.toString(), l);
 						});
@@ -49,20 +46,18 @@ __RegEx.First = (function() {
 		}
 
 		/* first(!r) = first(r) \cup {^l | l \in first(r)} \ {l | l \in first(r), \nderiv_{l} r = \Sigma* }
-		 * @param r regular expression
+		 * @param ls Array of literals
 		 * @return Array of literals
 		 */
-		function negation(r) {
-				var firstR = r.first();
-
+		function negation(ls) {
 				var first = Array();
-				firstR.foreach(function(i, lR) {
-						var l = __RegEx.Literal.invert(lR);
-						first.push(l.toString(), l);
+				ls.foreach(function(i, l) {
+						var lprime = __RegEx.Literal.invert(l);
+						first.push(lprime.toString(), lprime);
 				});
 
 				// TODO, remove all literals with \nderiv{l} r = \Sigma*
-				return firstR.concat(first);
+				return ls.concat(first);
 		}
 
 		return SELF;
