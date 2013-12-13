@@ -22,7 +22,7 @@ __RegEx.First = (function() {
 		 * @return Array of literals
 		 */
 		SELF = function(r) {
-				 if(r instanceof __RegEx.Expression.And) {
+				if(r instanceof __RegEx.Expression.And) {
 						return intersection(r.left, r.right);
 				} else 	if(r instanceof __RegEx.Expression.Neg) {
 						return negation(r.sub);
@@ -64,5 +64,6 @@ __RegEx.First = (function() {
 				// TODO, remove all literals with \nderiv{l} r = \Sigma*
 				return firstR.concat(first);
 		}
+
 		return SELF;
 })();
