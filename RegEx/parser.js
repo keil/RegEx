@@ -19,19 +19,6 @@
 
 __RegEx.Parser = (function(){
 
-		/*
-		   var Atom		= __RegEx.Expression.Atom;
-		   var Set			= __RegEx.Expression.Set;
-		   var Inv			= __RegEx.Expression.Inv;
-
-		   var Digit		= __RegEx.Expression.Digit;
-		   var Char		= __RegEx.Expression.Char;
-		   var LowerChar	= __RegEx.Expression.LowerChar;
-		   var UpperChar	= __RegEx.Expression.UpperChar;
-		   var Alpha		= __RegEx.Expression.Alpha;
-		   var Wildcard	= __RegEx.Expression.Wildcard;
-		   */
-
 		// basic literals
 		var Atom		= __RegEx.Literal.Atom;
 		var Set			= __RegEx.Literal.Set;

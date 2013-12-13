@@ -13,20 +13,33 @@
  * $Rev: 23389 $
  */
 
-// TODO add comments
-
 __RegEx.Config = (function() {
 
-		SELF = new Object();
+		CONFIG = new Object();
 
-		SELF.CachingEnabled = true;
+		/* enables expression caching
+		 * enables: true, disabled: false
+		 * default: true
+		 */
+		CONFIG.CachingEnabled = true;
 
+		/* enables verbose output
+		 * enables: true, disabled: false
+		 * default: false
+		 */
+		CONFIG.Verbose = false;
 
-	SEFL.Verbose = false;
-	
-	SELF.ProveAxioms = false;
+		/* Use Containment Calculus PROVE AXIOMS
+		 * enables: true, disabled: false
+		 * default: true
+		 */
+		CONFIG.ProveAxioms = false;
 
-	SELF.DisproveAxioms = false;
+		/* Use Containment Calculus DISPROVE AXIOMS
+		 * enables: true, disabled: false
+		 * default: true
+		 */
+		CONFIG.DisproveAxioms = false;
 
-		return SELF;
+		return CONFIG;
 })();
