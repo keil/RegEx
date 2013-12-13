@@ -88,19 +88,20 @@ load("RegEx/global.js");
 load("RegEx/config.js");
 
 load("RegEx/cache.js");
-load("Regex/literal.js");
-load("Regex/expression.js");
+load("RegEx/literal.js");
+load("RegEx/expression.js");
 
-
-
-
-
-
+load("RegEx/first.js");
+load("RegEx/containment.js");
 
 load("Regex/parser.js");
 
 
 load("Test/Regex/constructor.js");
+//load("Test/Regex/normalization.js");
+//load("Test/Regex/first.js");
+//load("Test/Regex/derivatives.js");
+//load("Test/Regex/subset.js");
 
 
 quit();

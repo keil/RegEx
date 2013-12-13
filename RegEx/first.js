@@ -34,7 +34,7 @@ __RegEx.First = (function() {
 		 * @param s regular expression
 		 * @return Array of literals
 		 */
-		function intersection(lsR lsS) {
+		function intersection(lsR, lsS) {
 				var first = Array();
 				lsR.foreach(function(i, lR) {
 						lsS.foreach(function(j, lS) {
