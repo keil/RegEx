@@ -15,7 +15,8 @@
 
 function testRegEx(string) {
 		__sysout("* " + string);
-		__sysout("** " + $(string).toString() + "\n");
+		__sysout("** " + $(string).toString());
+		__sysout("** " + $typeof($(string)) + "\n");
 }
 
 __sysout("\n# CONSTRUCORS TEST #");

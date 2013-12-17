@@ -336,7 +336,7 @@ __RegEx.Literal = (function() {
 						A.foreach(function(i,v) {
 								str += v;
 						});
-						return "[" + str + "]";
+						return "[^" + str + "]";
 				};
 		}
 
@@ -513,6 +513,13 @@ __RegEx.Literal = (function() {
 
 // TODO, append und co an sets hängen .. ? mit flighweigth function
 
+
+
+		SELF.union		= union;
+		SELF.invert		= invert;
+		SELF.subset		= subset;
+
+		function Blank() {}
 
 		// TODO
 		// make test
