@@ -207,13 +207,13 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return Dot(r.derive(b), this);
+						return Dot(r.deriv(b), this);
 				};
 				this.nderiv = function(l) {
-						return Dot(r.nderive(l),this);
+						return Dot(r.nderiv(l),this);
 				};
 				this.pderiv = function(l) {
-						return Dot(r.pderive(l),this);
+						return Dot(r.pderiv(l),this);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -277,13 +277,13 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return Or(r.derive(b), s.derive(b));
+						return Or(r.deriv(b), s.deriv(b));
 				};
 				this.nderiv = function(l) {
-						return Or(r.nderive(l), s.nderive(l))
+						return Or(r.nderiv(l), s.nderiv(l))
 				};
 				this.pderiv = function(l) {
-						return Or(r.pderive(l), s.pderive(l))
+						return Or(r.pderiv(l), s.pderiv(l))
 
 				};
 				//////////////////////////////////////////////////
@@ -348,13 +348,13 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return And(r.derive(name), s.derive(name));
+						return And(r.deriv(b), s.deriv(b));
 				};
 				this.nderiv = function(l) {
-						return And(r.nderive(l), s.nderive(l));
+						return And(r.nderiv(l), s.nderiv(l));
 				};
 				this.pderiv = function(l) {
-						return And(r.pderive(l), s.pderive(l))
+						return And(r.pderiv(l), s.pderiv(l))
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -401,6 +401,22 @@ __RegEx.Expression = (function() {
 						return r.nullable() ? false : true;;
 				};
 				this.first = function() {
+
+						__sysout("r:" + r);
+						__sysout("typeof r: " + $typeof(r));
+						__sysout("function: " + r.first);
+
+						// TODO
+						var firstr = r.first();
+						__sysout("first(r): " + firstr);
+						var inv = __RegEx.Literal.invert(firstr);
+						__sysout("^first(r): " + inv);
+						
+						var tmp = firstr.concat(inv);
+
+						__sysout("first(!r): " + tmp);
+						return tmp;
+
 						// TODO
 						// by the definition of first
 						// first(!r) = first(r) \cup {^l | l \in first(r)} \  {l | l \in first(r), \nderiv_{l} r = \Sigma* }
@@ -421,13 +437,13 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						return Neg(contract.derive(b));
+						return Neg(r.deriv(b));
 				};
 				this.nderiv = function(l) {
-						return Neg(contract.pderive(l));
+						return Neg(r.pderiv(l));
 				};
 				this.pderiv = function(l) {
-						return Neg(contract.nderive(l));
+						return Neg(r.nderiv(l));
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -489,16 +505,16 @@ __RegEx.Expression = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.deriv = function(b) {
-						if(r.isNullable()) return Or(Dot(r.derive(name), s), s.derive(b));
-						else return Dot(r.derive(name), s);
+						if(r.nullable()) return Or(Dot(r.deriv(b), s), s.deriv(b));
+						else return Dot(r.deriv(b), s);
 				};
 				this.nderiv = function(l) {
-						if(r.isNullable()) return Or(Dot(r.nderive(l), s), s.nderive(l));
-						else return Dot(r.nderive(l), s);
+						if(r.nullable()) return Or(Dot(r.nderiv(l), s), s.nderiv(l));
+						else return Dot(r.nderiv(l), s);
 				};
 				this.pderiv = function(l) {
-						if(r.isNullable()) return Or(Dot(r.pderive(l), s), s.pderive(l));
-						else return Dot(r.pderive(larg), s);
+						if(r.nullable()) return Or(Dot(r.pderiv(l), s), s.pderiv(l));
+						else return Dot(r.pderiv(larg), s);
 
 				};
 				//////////////////////////////////////////////////

@@ -93,4 +93,5 @@ testRegEx("(a&(!b)).a");
 testRegEx("(a+(!b)).a");
 testRegEx("(!(a)&(!b)).a");
 testRegEx("(!(a)+(!b)).a");
-
+testRegEx("((!a)&(!b)).a");
+testRegEx("((!a)+(!b)).a");
