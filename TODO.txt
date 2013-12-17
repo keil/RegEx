@@ -1,3 +1,11 @@
+* Chache für die first Literale
+** if(fst==undefined) fst = // calculate first ser; return fst;
+
+
+
+
+// REGESX GENERATOR
+
 * RegEx Struktur
 ** Assoziation zu Contracts (Alias) 
 

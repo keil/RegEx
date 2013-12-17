@@ -15,48 +15,25 @@
 
 function testRegEx(string) {
 		__sysout("* " + string);
-		__sysout("** " + mkRegEx(string).toString() + "\n");
+		__sysout("** " + $(string).toString() + "\n");
 }
 
 __sysout("\n# NORMALIZATION TEST #");
-// TODO .. 
 
 testRegEx("(a)");
-testRegEx("(a)*");
-testRegEx("(a+b)");
+testRegEx("((a)*)*");
+testRegEx("(a+a)");
 testRegEx("(a&b)");
-testRegEx("!(b)");
-testRegEx("(a.b)");
-testRegEx("(a&(!b))");
-testRegEx("(a+(!b))");
-testRegEx("(!(a)&(!b))");
-testRegEx("(!(a)+(!b))");
+testRegEx("(a&a)");
+testRegEx("!(!(b))");
 
-testRegEx("(a*)");
-testRegEx("(a)*");
-testRegEx("(a+b)*");
-testRegEx("(a&b)");
-testRegEx("!(b)*");
-testRegEx("(a.b)*");
-testRegEx("(a&(!b))*");
-testRegEx("(a+(!b))*");
-testRegEx("(!(a)&(!b))*");
-testRegEx("(!(a)+(!b))*");
+testRegEx("((a))");
+testRegEx("(((a)*)*)*");
+testRegEx("(a+(a+a))");
+testRegEx("(a&(a&b))");
+testRegEx("(a&(a&a))");
+testRegEx("!(!(!(b)))");
 
-testRegEx("[ab].b");
-testRegEx("[^ab].b");
-testRegEx("a*.b");
-testRegEx("(a+b).b");
-testRegEx("(a&b).b");
-testRegEx("!(a).b");
-
-testRegEx("(a).a");
-testRegEx("((a)*).a");
-testRegEx("(a+b).a");
-testRegEx("(a&b).a");
-testRegEx("!(b).a");
-testRegEx("(a.b).a");
-testRegEx("(a&(!b)).a");
-testRegEx("(a+(!b)).a");
-testRegEx("(!(a)&(!b)).a");
-testRegEx("(!(a)+(!b)).a");
+testRegEx("((a+a)+(a+a))");
+testRegEx("((a&b)&(a&b))");
+testRegEx("((a&a)&(a&a))");
