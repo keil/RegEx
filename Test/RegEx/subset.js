@@ -1,31 +1,63 @@
-function isTrue(r, b, name2) {
-		contract = __APC.Parser.parse(string);
-		assertTrue(contract.isReadable(name1));
-		__sysout("[" + contract.toString() + "] " + name1 + ": " + contract.isReadable(name1) + "/ " + contract.derive(name1).toString());
-		assertTrue(contract.derive(name1).isReadable(name2));
-		__sysout("[" + contract.derive(name1).toString() + "] " + name2 + ": " + contract.derive(name1).isReadable(name2) + "/ " + contract.derive(name1).derive(name2).toString());
+/*
+ * Efficient Solving of Regular Expression Inequalities 
+ *  Regular Expression Generator
+ *
+ * Copyright (c) 2013, Proglang, University of Freiburg.
+ *  http://proglang.informatik.uni-freiburg.de/
+ * All rights reserved.
+ *
+ * Author Matthias Keil
+ *  http://www.informatik.uni-freiburg.de/~keilr/
+ *
+ * $Date: 2013-07-23 15:59:13 +0200 (Tue, 23 Jul 2013) $
+ * $Rev: 23389 $
+ */
+
+var res = Array();
+
+function makeRegEx(string) {
+		res.push($(string));
 }
 
-function testRN(string, name1, name2) {
-		contract = __APC.Parser.parse(string);
-		assertTrue(contract.isReadable(name1));
-		__sysout("[" + contract.toString() + "] " + name1 + ": " + contract.isReadable(name1) + "/ " + contract.derive(name1).toString());
-		assertFalse(contract.derive(name1).isReadable(name2));
-		__sysout("[" + contract.derive(name1).toString() + "] " + name2 + ": " + contract.derive(name1).isReadable(name2) + "/ " + contract.derive(name1).derive(name2).toString());
-}
+__sysout("\n# SUBSET TEST #");
 
-function testN(string, name1, name2) {
-		contract = __APC.Parser.parse(string);
-		assertFalse(contract.isReadable(name1));
-		__sysout("[" + contract.toString() + "] " + name1 + ": " + contract.isReadable(name1) + "/ " + contract.derive(name1).toString());
-		assertFalse(contract.derive(name1).isReadable(name2));
-		__sysout("[" + contract.derive(name1).toString() + "] " + name2 + ": " + contract.derive(name1).isReadable(name2) + "/ " + contract.derive(name1).derive(name2).toString());
-}
+// Literals
 
+makeRegEx("a");
+makeRegEx("b");
+makeRegEx("c");
+makeRegEx("1");
+makeRegEx("2");
+makeRegEx("3");
 
+makeRegEx("[ab]");
+makeRegEx("[abc]");
+makeRegEx("[123]");
 
+makeRegEx("[^ab]");
+makeRegEx("[^abc]");
+makeRegEx("[^123]");
 
-__sysout("\n# TEST 1 #");
-testN("@.b.c", "a", "b");
-testN("@.b*.c", "b", "b");
-testN("@", "a", "");
+makeRegEx("[digit]");
+makeRegEx("[char]");
+makeRegEx("[lchar]");
+makeRegEx("[uchar]");
+makeRegEx("[alpha]");
+makeRegEx("?");
+
+(function() {
+		res.foreach(function(i, e) {
+				res.foreach(function(i, f) {
+						__sysout("* SBSET OF: " + e + "  <= " + f);
+						var lef = __RegEx.Literal.subset(e,f);
+						__sysout("** " + l)ef;
+						__sysout("\n");
+
+						__sysout("* SBSET OF: " + f + "  <= " + e);
+						var lfe = __RegEx.Literal.subset(f,e);
+						__sysout("** " + lfe);
+						__sysout("\n");
+				});
+		});
+})();
+
