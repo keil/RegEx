@@ -529,12 +529,31 @@ __RegEx.Literal = (function() {
 
 		// TODO, move common rules to the top
 
+
+		//  ____                        _                    
+		// |  _ \                      | |                   
+		// | |_) | __ _ ___  ___ ______| |_ _   _ _ __   ___ 
+		// |  _ < / _` / __|/ _ \______| __| | | | '_ \ / _ \
+		// | |_) | (_| \__ \  __/      | |_| |_| | |_) |  __/
+		// |____/ \__,_|___/\___|       \__|\__, | .__/ \___|
+		//                                   __/ | |         
+		//                                  |___/|_|         
+		//  _      _ _                 _    ____                       _                 
+		// | |    (_) |               | |  / __ \                     | |                
+		// | |     _| |_ ___ _ __ __ _| | | |  | |_ __   ___ _ __ __ _| |_ ___  _ __ ___ 
+		// | |    | | __/ _ \ '__/ _` | | | |  | | '_ \ / _ \ '__/ _` | __/ _ \| '__/ __|
+		// | |____| | ||  __/ | | (_| | | | |__| | |_) |  __/ | | (_| | || (_) | |  \__ \
+		// |______|_|\__\___|_|  \__,_|_|  \____/| .__/ \___|_|  \__,_|\__\___/|_|  |___/
+		//                                       | |                                     
+		//                                       |_|                                     
+
 		/** UNION
 		 * @param e literal
 		 * @param f literal
 		 * @return literal
 		 */
 		function union(e, f) {
+
 				// GENERAL RULES
 
 				// ? ∏ e
@@ -555,7 +574,7 @@ __RegEx.Literal = (function() {
 						// a ∏ [^ab]
 						else if(f instanceof Inv)
 								return f.has(e) ? Set() : e;		
-				// [ab]
+						// [ab]
 				} else if(e instanceof Set) {
 						// [ab] ∏ a
 						if(f instanceof Atom)
@@ -576,7 +595,7 @@ __RegEx.Literal = (function() {
 								});
 								return Set(result);
 						}
-				// [^ab]
+						// [^ab]
 				} else if(e instanceof Inv) {
 						// [^ab] ∏ a
 						if(f instanceof Atom) return e.has(f) ? Set() : f;
@@ -600,6 +619,12 @@ __RegEx.Literal = (function() {
 
 		// TODO
 		// make test
+
+
+		/** INVERT
+		 * @param e literal
+		 * @return literal
+		 */
 		function invert(l) {
 				if(l instanceof Inv) return Set(l.array());
 				else if(l instanceof Set) return Inv(l.array());
@@ -609,54 +634,81 @@ __RegEx.Literal = (function() {
 
 		// TODO
 		// make test
+		//
+
+		/** SUBSET e <= f
+		 * @param e left literal
+		 * @param f right literal
+		 * @return literal
+		 */
 		function subset(e, f) {
-				if(e instanceof Blank) {
-						return true;
-				} else if(e instanceof Atom) {
-						if(f instanceof Blank) return false;
-						if(f instanceof Atom) return (e==f) ? true : false;
-						else if(f instanceof Set) return f.contains(e);
-						else if(f instanceof Inv) return !(f.contains(e));
-						else if(f instanceof Wildcard) return true;
+
+				// GENERAL RULES
+
+				// e:Atom <= f:Wildcard
+				if(f instanceof Wildcard) return true;
+
+				// MATRIX
+
+				// e:Atom
+				if(e instanceof Atom) {
+						// e:Atom <= f:Atom
+						if(f instanceof Atom)
+								return (e==f) ? true : false;
+						// e:Atom <= f:Set
+						else if(f instanceof Set)
+								return f.contains(e);
+						// e:Atom <= f:Inv
+						else if(f instanceof Inv)
+								return !(f.contains(e));
+						// e:Set
 				} else if(e instanceof Set) {
-						if(f instanceof Blank) return false; // TODOm check if set is emnpot
-						if(f instanceof Atom) {
-								// TODO, check if e is a set with only one element
-						}
+						// e:Set <= f:Atom
+						if(f instanceof Atom)
+								return (e.size()==1 && e.has(f)) ? true : false; 
+						// e:Set <= f:Set
 						else if(f instanceof Set) {
-								// check sets
+								var result = true;
+								e.foreach(function(i, a) {
+										result = (f.has(a)) ? result : false;
+								});
+								return result;
 						}
+						// e:Set <= f:Inv
 						else if(f instanceof Inv) {
-								// check sets
+								var result = true;
+								e.foreach(function(i, a) {
+										result = (f.has(a)) ? result : false;
+								});
+								return result;
 						}
-						else if(f instanceof Wildcard) return true;
+						// e:Inv
 				} else if(e instanceof Inv) {
-						if(f instanceof Blank) return false; // TODO, roght
+						// e:Inv <= f:Atom
 						if(f instanceof Atom) {
-								// TODO, check if e is a set with only one element
+								// NOTE: Alphabet-dependent
+								return false;
 						}
+						// e:Inv <= f:Set
 						else if(f instanceof Set) {
-								// check sets
+								// NOTE: Alphabet-dependent
+								return false;
 						}
+						// e:Inv <= f:Inv
 						else if(f instanceof Inv) {
-								// check sets
+								var result = true;
+								f.foreach(function(i, a) {
+										result = (e.has(a)) ? result : false;
+								});
+								return result;
 						}
-						else if(f instanceof Wildcard) return true;
-
+						// e:Wildcard
 				} else if(e instanceof Wildcard) {
-						return f;
+						// e:Wildcard <= f:Wildcard
+						// NOTE: Alphabet-dependent
+						return (f instanceof Wildcard) ? true : false; 
 				}
-
 		}
-
-
-
-
-
-
-
-
-
 
 		return SELF;
 })();

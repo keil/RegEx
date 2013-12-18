@@ -100,11 +100,20 @@ load("Regex/parser.js");
 // OK
 //load("Test/Regex/constructor.js");
 //load("Test/Regex/normalization.js");
+//load("Test/Regex/derivatives.js"); 
+
 
 //load("Test/Regex/first.js"); // not OK -- implement inv first
 
-load("Test/Regex/derivatives.js"); 
+
 //load("Test/Regex/subset.js");
+
+
+// test 
+// Literal subset
+// Literal first
+// literal union
+// literal invert
 
 
 quit();
