@@ -99,12 +99,21 @@ load("RegEx/containment.js");
 load("Regex/parser.js");
 
 
-// OK
+// ##### OK
 //load("Test/Regex/constructor.js");
 //load("Test/Regex/normalization.js");
 //load("Test/Regex/derivatives.js"); 
 
 
+
+
+load("Test/Regex/union.js"); 
+
+
+// ##### OPEN
+
+//
+//
 //load("Test/Regex/first.js"); // not OK -- implement inv first
 
 
@@ -132,6 +141,11 @@ load("Regex/parser.js");
 		__sysout(y);
 })(7);
 
+x = Array(1,2,3,5);
+__sysout(x.length);
+y = Array().concat(x);
+__sysout(y.length);
+__sysout(x==y);
 
 
 quit();

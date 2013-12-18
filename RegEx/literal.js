@@ -117,7 +117,7 @@ __RegEx.Literal = (function() {
 						A.foreach(function(i, a) {
 								A[i] = (a instanceof Atom) ? a : Atom(a);
 						});
-				} else if (A instanceof undefined) {
+				} else if (A == undefined) {
 						A = Array();
 				}
 				//////////////////////////////////////////////////
@@ -177,7 +177,7 @@ __RegEx.Literal = (function() {
 						return A.length;
 				};
 				this.array = function () {
-						return A;
+						return Array.concat(A);
 				};
 				this.toString = function () {
 						var str = "";
@@ -264,7 +264,7 @@ __RegEx.Literal = (function() {
 						return A.length;
 				};
 				this.array = function () {
-						return A;
+						return Array.concat(A);
 				};
 				this.toString = function () {
 						var str = "";
@@ -480,10 +480,10 @@ __RegEx.Literal = (function() {
 				if(e instanceof Atom) {
 						// e:Atom ∏ f:Atom
 						if(f instanceof Atom) 
-								return (e==f) ? e : Blank();
+								return (e==f) ? e : Set();
 						// e:Atom ∏ f:Set
 						else if(f instanceof Set)
-								return f.contains(e) ? e : Set();
+								return f.has(e) ? e : Set();
 						// e:Atom ∏ f:Inv
 						else if(f instanceof Inv)
 								return f.has(e) ? Set() : e;		
@@ -522,7 +522,16 @@ __RegEx.Literal = (function() {
 						}
 						// e:Inv ∏ f:Inv
 						else if(f instanceof Inv) {
-								var result = e.array().concat(f.array());
+								var result = e.array();
+								f.array().foreach(function(i, a) {
+									if(!(function() {
+											var contains = false;
+											result.foreach(function(j, b) {
+												contains = (a==b) ? true : contains;	
+											});
+											return contains;
+									})()) result.push(a);
+								});
 								return Inv(result);
 						}
 				}
@@ -564,10 +573,10 @@ __RegEx.Literal = (function() {
 								return (e==f) ? true : false;
 						// e:Atom <= f:Set
 						else if(f instanceof Set)
-								return f.contains(e);
+								return f.has(e);
 						// e:Atom <= f:Inv
 						else if(f instanceof Inv)
-								return !(f.contains(e));
+								return !(f.has(e));
 						// e:Set
 				} else if(e instanceof Set) {
 						// e:Set <= f:Atom
