@@ -13,11 +13,6 @@
  * $Rev: 23389 $
  */
 
-// TODO revisit, rework, check implementation 
-
-//TODO, normalization
-//TODO, check uses of new
-
 __RegEx.Literal = (function() {
 
 		SELF = new Object();
@@ -32,6 +27,11 @@ __RegEx.Literal = (function() {
 		SELF.UpperChar	= UpperChar;
 		SELF.Alpha		= Alpha;
 		SELF.Wildcard	= Wildcard;
+
+		SELF.union		= union;
+		SELF.invert		= invert;
+		SELF.subset		= subset;
+		SELF.disjoint		= disjoint;
 
 		//////////////////////////////////////////////////
 		// Advanced Regular Expressions
@@ -82,15 +82,7 @@ __RegEx.Literal = (function() {
 						return (l == this) ? __RegEx.Expression.Empty() : __RegEx.Expression.Null();
 				};
 				this.pderiv = function(l) {
-
-
-						//	if(larg==this) return new __RegEx.Expression.Empty(); 
-						//	 else if (larg==new __RegEx.Expression.Empty()) return this;
-						//	 else if (larg==new Wildcard()) return new __RegEx.Expression.Empty();
-						//	 else return new __RegEx.Expression.Null();
-
-						// TODO: chech for character set
-						return (l == this) ? new __RegEx.Expression.Empty() : new __RegEx.Expression.Null();
+						return (disjoint(l, this)) ? __RegEx.Expression.Null() : __RegEx.Expression.Empty();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -154,38 +146,10 @@ __RegEx.Literal = (function() {
 						return result;
 				};
 				this.nderiv = function(l) {
-						if(l instanceof Atom) {
-								return this.deriv(l);
-						} else if(l instanceof Set) {
-								var result = __RegEx.Expression.Empty();
-								l.foreach(function(i, a) {
-										result = (result instanceof Null) ? result : this.deriv(a);
-								});
-								return result;
-						} else if(l instanceof Inv) {
-								return __RegEx.Expression.Null(); // TODO, check
-						} else if(l instanceof Wildcard) {
-								return __RegEx.Expression.Null();
-						}
+						return (subset(l, this)) ? __RegEx.Expression.Empty() : __RegEx.Expression.Null()
 				};
 				this.pderiv = function(l) {
-						if(l instanceof Atom) {
-								return this.deriv(l);
-						} else if(l instanceof Set) {
-								var result = __RegEx.Expression.Null();
-								l.foreach(function(i, a) {
-										result = (result instanceof Empty) ? result : this.deriv(a);
-								});
-								return result;
-						} else if(l instanceof Inv) {
-								var result = __RegEx.Expression.Null();
-								A.foreach(function(i, a) {
-										result = (result instanceof Empty) ? result : l.deriv(a);
-								});
-								return result;
-						} else if(l instanceof Wildcard) {
-								return __RegEx.Expression.Empty();
-						}
+						return (disjoint(l, this)) ? __RegEx.Expression.Null() : __RegEx.Expression.Empty()
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -207,15 +171,13 @@ __RegEx.Literal = (function() {
 										contains = (a==b) ? true : contains;
 								});
 						}
-						else if (a instanceof Array) {
-								a.foreach(function(i,b) {
-										contains = (thia.contains(b)) ? true : contains;
-								});
-						}
 						return contains;
 				};
 				this.size = function () {
 						return A.length;
+				};
+				this.array = function () {
+						return A;
 				};
 				this.toString = function () {
 						var str = "";
@@ -274,56 +236,35 @@ __RegEx.Literal = (function() {
 						return (subset(l, this)) ? __RegEx.Expression.Empty() :  __RegEx.Expression.Null();
 				};
 				this.pderiv = function(l) {
-						return (union(l, this).) ? __RegEx.Expression.Empty() :  __RegEx.Expression.Null();
-
-						// implement this \ xx relation um pder iv zu implementieren
-
-						return (subset(l, this)) ? __RegEx.Expression.Empty() :  __RegEx.Expression.Null();
-
-						if(l instanceof Atom) {
-								return this.deriv(l);
-						} else if(l instanceof Set) {
-								var result = __RegEx.Expression.Null();
-								l.foreach(function(i, a) {
-										result = (result instanceof Empty) ? result : this.deriv(a);
-								});
-								return result;
-						} else if(l instanceof Inv) {
-								var result = __RegEx.Expression.Null();
-								A.foreach(function(i, a) {
-										result = (result instanceof Empty) ? result : (l.contains(a) ? __RegEx.Expression.Null() : __RegEx.Expression.Empty());
-								});
-								return result;
-						} else if(l instanceof Wildcard) {
-								return __RegEx.Expression.Null();
-						}
+						return (disjount(l, this)) ? __RegEx.Expression.Null() :  __RegEx.Expression.Empty();
 				};
 				//////////////////////////////////////////////////
-				this.isSuperSetOf = function (sub, ctx) {
-						// TODO
-						return false;
+				this.isSuperSetOf = function (sub) {
+						// sub <= this
+						return _RegEx.Containment.solve(sub, this);
 				};
-
-				this.isSubSetOf = function (sup, ctx) {
-						return r.isSuperSetOf(this, ctx);
+				this.isSubSetOf = function (sup) {
+						// sub <= this
+						return _RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.foreach = function(callback) {
 						A.foreach(callback);
 				};
-				this.contains = function (a) {
+				this.has = function (a) {
 						var contains = false;
 						if(a instanceof Atom) {
-								A.foreach(function(i,b) {
+								A.foreach(function(i, b) {
 										contains = (a==b) ? true : contains;
 								});
 						}
-						else if (a instanceof Array) {
-								a.foreach(function(i,b) {
-										contains = (thia.contains(b)) ? true : contains;
-								});
-						}
 						return contains;
+				};
+				this.size = function () {
+						return A.length;
+				};
+				this.array = function () {
+						return A;
 				};
 				this.toString = function () {
 						var str = "";
@@ -333,9 +274,6 @@ __RegEx.Literal = (function() {
 						return "[^" + str + "]";
 				};
 		}
-
-		//		Inv.prototype = new Set();
-
 
 		// __          ___ _     _                   _ 
 		// \ \        / (_) |   | |                 | |
@@ -399,7 +337,6 @@ __RegEx.Literal = (function() {
 		// | |    | '_ \ / _` | '__/ _` |/ __| __/ _ \ '__|  / __| |/ _` / __/ __|/ _ \/ __|
 		// | |____| | | | (_| | | | (_| | (__| ||  __/ |    | (__| | (_| \__ \__ \  __/\__ \
 		//  \_____|_| |_|\__,_|_|  \__,_|\___|\__\___|_|     \___|_|\__,_|___/___/\___||___/
-
 
 		var digit = Array(0,1,2,3,4,5,6,7,8,9);
 		var lchar = Array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
@@ -506,24 +443,6 @@ __RegEx.Literal = (function() {
 		}
 		Alpha.prototype = new Set(alpha);
 
-
-		// TODO, append und co an sets hängen .. ? mit flighweigth function
-
-
-
-		SELF.union		= union;
-		SELF.invert		= invert;
-		SELF.subset		= subset;
-
-		function Blank() {}
-
-		// TODO
-		// make test
-		//
-
-		// TODO, move common rules to the top
-
-
 		//  ____                        _                    
 		// |  _ \                      | |                   
 		// | |_) | __ _ ___  ___ ______| |_ _   _ _ __   ___ 
@@ -550,30 +469,30 @@ __RegEx.Literal = (function() {
 
 				// GENERAL RULES
 
-				// ? ∏ e
+				// e:Wildcard ∏ f:Literal
 				if(e instanceof Wildcard) return f;
-				// e ∏ ?
+				// e:Literal ∏ f:Wildcard
 				else if(f instanceof Wildcard) return e;
 
 				// MATRIX
 
-				// a
+				// e:Atom
 				if(e instanceof Atom) {
-						// a ∏ b
+						// e:Atom ∏ f:Atom
 						if(f instanceof Atom) 
 								return (e==f) ? e : Blank();
-						// a ∏ [ab]
+						// e:Atom ∏ f:Set
 						else if(f instanceof Set)
 								return f.contains(e) ? e : Set();
-						// a ∏ [^ab]
+						// e:Atom ∏ f:Inv
 						else if(f instanceof Inv)
 								return f.has(e) ? Set() : e;		
-						// [ab]
+						// e:Set
 				} else if(e instanceof Set) {
-						// [ab] ∏ a
+						// e:Set ∏ f:Atom
 						if(f instanceof Atom)
 								return e.has(f) ? f :Set();
-						// [ab] ∏ [bc]
+						// e:Set ∏ f:Set
 						else if(f instanceof Set) {
 								var result = Array();
 								e.foreach(function(i, a) {
@@ -581,7 +500,7 @@ __RegEx.Literal = (function() {
 								});
 								return Set(result);
 						}
-						// [ab] ∏ [^ab]
+						// e:Set ∏ f:Inv
 						else if(f instanceof Inv) {
 								var result = Array();
 								e.foreach(function(i, a) {
@@ -589,11 +508,11 @@ __RegEx.Literal = (function() {
 								});
 								return Set(result);
 						}
-						// [^ab]
+						// e:Inv
 				} else if(e instanceof Inv) {
-						// [^ab] ∏ a
+						// e:Inv ∏ f:Atom
 						if(f instanceof Atom) return e.has(f) ? Set() : f;
-						// [^ab] ∏ [ab]
+						// e:Inv ∏ f:Set
 						else if(f instanceof Set) {
 								var result = Array();
 								f.foreach(function(i, a) {
@@ -601,7 +520,7 @@ __RegEx.Literal = (function() {
 								});
 								return Set(result);
 						}
-						// [^ab] ∏ [^bc]
+						// e:Inv ∏ f:Inv
 						else if(f instanceof Inv) {
 								var result = e.array().concat(f.array());
 								return Inv(result);
@@ -609,26 +528,20 @@ __RegEx.Literal = (function() {
 				}
 		}
 
-
-
-		// TODO
-		// make test
-
-
 		/** INVERT
 		 * @param e literal
 		 * @return literal
 		 */
 		function invert(l) {
-				if(l instanceof Inv) return Set(l.array());
+				// l:Atom
+				if(l instanceof Atom) return Inv(l);
+				// l:Set 
 				else if(l instanceof Set) return Inv(l.array());
-				else if(l instanceof Atom) return Inv(l);
+				// l:Inv
+				else if(l instanceof Inv) return Set(l.array());
+				// l:Wildcard
 				else if(l instanceof Wildcard) return Set();
 		}
-
-		// TODO
-		// make test
-		//
 
 		/** SUBSET e <= f
 		 * @param e left literal
@@ -704,8 +617,6 @@ __RegEx.Literal = (function() {
 				}
 		}
 
-
-
 		/** DISJOINT e ∏ f = Ø
 		 * @param e left literal
 		 * @param f right literal
@@ -772,10 +683,7 @@ __RegEx.Literal = (function() {
 						// NOTE: Alphabet-dependent
 						return (f instanceof Wildcard) ? true : false; 
 				}
-
-
 		}
-
 
 		return SELF;
 })();

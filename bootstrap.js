@@ -116,9 +116,9 @@ load("Regex/parser.js");
 // Literal first
 // literal union
 // literal invert
+// TEST DISJPUNT
 
-
-
+// pderic nderiv
 
 
 // TEST
