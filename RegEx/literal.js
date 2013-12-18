@@ -535,6 +535,15 @@ __RegEx.Literal = (function() {
 		 * @return literal
 		 */
 		function union(e, f) {
+				// GENERAL RULES
+
+				// ? ∏ e
+				if(e instanceof Wildcard) return f;
+				// e ∏ ?
+				else if(f instanceof Wildcard) return e;
+
+				// MATRIX
+
 				// a
 				if(e instanceof Atom) {
 						// a ∏ b
@@ -545,9 +554,7 @@ __RegEx.Literal = (function() {
 								return f.contains(e) ? e : Set();
 						// a ∏ [^ab]
 						else if(f instanceof Inv)
-								return f.contains(e) ? e : Set();
-						// a ∏ ?
-						else if(f instanceof Wildcard) return  e;
+								return f.has(e) ? Set() : e;		
 				// [ab]
 				} else if(e instanceof Set) {
 						// [ab] ∏ a
@@ -569,8 +576,6 @@ __RegEx.Literal = (function() {
 								});
 								return Set(result);
 						}
-						// [ab] ∏ ?
-						else if(f instanceof Wildcard) return e;
 				// [^ab]
 				} else if(e instanceof Inv) {
 						// [^ab] ∏ a
@@ -588,12 +593,6 @@ __RegEx.Literal = (function() {
 								var result = e.array().concat(f.array());
 								return Inv(result);
 						}
-						// [^ab] ∏ ?
-						else if(f instanceof Wildcard) return e;
-				// ?
-				} else if(e instanceof Wildcard) {
-						// ? ∏ e
-						return f;
 				}
 		}
 
