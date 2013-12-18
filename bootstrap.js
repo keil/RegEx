@@ -83,6 +83,8 @@ load("run.js");
 //load("Regex/literal.js");
 
 
+
+
 // The Global Object
 load("RegEx/global.js");
 load("RegEx/config.js");
@@ -114,6 +116,22 @@ load("Regex/parser.js");
 // Literal first
 // literal union
 // literal invert
+
+
+
+
+
+// TEST
+(function(x) {
+		var y = 5;
+		(function() {
+			x=13;
+			y=11;
+		})();
+		__sysout(x);
+		__sysout(y);
+})(7);
+
 
 
 quit();

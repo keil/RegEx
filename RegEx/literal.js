@@ -83,6 +83,7 @@ __RegEx.Literal = (function() {
 				};
 				this.pderiv = function(l) {
 
+
 						//	if(larg==this) return new __RegEx.Expression.Empty(); 
 						//	 else if (larg==new __RegEx.Expression.Empty()) return this;
 						//	 else if (larg==new Wildcard()) return new __RegEx.Expression.Empty();
@@ -199,7 +200,7 @@ __RegEx.Literal = (function() {
 				this.foreach = function(callback) {
 						A.foreach(callback);
 				};
-				this.contains = function (a) {
+				this.has = function (a) {
 						var contains = false;
 						if(a instanceof Atom) {
 								A.foreach(function(i,b) {
@@ -213,6 +214,9 @@ __RegEx.Literal = (function() {
 						}
 						return contains;
 				};
+				this.size = function () {
+						return A.length;
+				};
 				this.toString = function () {
 						var str = "";
 						A.foreach(function(i,v) {
@@ -221,8 +225,6 @@ __RegEx.Literal = (function() {
 						return "[" + str + "]";
 				};
 		}
-
-		// TODO, implement invertet set as negated set 
 
 		//  _____                     _           _    _____      _   
 		// |_   _|                   | |         | |  / ____|    | |  
@@ -269,21 +271,15 @@ __RegEx.Literal = (function() {
 						return result;
 				};
 				this.nderiv = function(l) {
-						if(l instanceof Atom) {
-								return this.deriv(l);
-						} else if(l instanceof Set) {
-								var result = __RegEx.Expression.Empty();
-								l.foreach(function(i, a) {
-										result = (result instanceof Null) ? result : this.deriv(a);
-								});
-								return result;
-						} else if(l instanceof Inv) {
-								return l.contains(A);
-						} else if(l instanceof Wildcard) {
-								return __RegEx.Expression.Null(); // TODO
-						}
+						return (subset(l, this)) ? __RegEx.Expression.Empty() :  __RegEx.Expression.Null();
 				};
 				this.pderiv = function(l) {
+						return (union(l, this).) ? __RegEx.Expression.Empty() :  __RegEx.Expression.Null();
+
+						// implement this \ xx relation um pder iv zu implementieren
+
+						return (subset(l, this)) ? __RegEx.Expression.Empty() :  __RegEx.Expression.Null();
+
 						if(l instanceof Atom) {
 								return this.deriv(l);
 						} else if(l instanceof Set) {
@@ -312,10 +308,6 @@ __RegEx.Literal = (function() {
 						return r.isSuperSetOf(this, ctx);
 				};
 				//////////////////////////////////////////////////
-				this.reduce = function () {
-						return this;
-				};
-				//////////////////////////////////////////////////
 				this.foreach = function(callback) {
 						A.foreach(callback);
 				};
@@ -341,6 +333,8 @@ __RegEx.Literal = (function() {
 						return "[^" + str + "]";
 				};
 		}
+
+		//		Inv.prototype = new Set();
 
 
 		// __          ___ _     _                   _ 
@@ -709,6 +703,79 @@ __RegEx.Literal = (function() {
 						return (f instanceof Wildcard) ? true : false; 
 				}
 		}
+
+
+
+		/** DISJOINT e ∏ f = Ø
+		 * @param e left literal
+		 * @param f right literal
+		 * @return literal
+		 */
+		function disjoint(e, f) {
+
+				// MATRIX
+
+				// e:Atom
+				if(e instanceof Atom) {
+						// e:Atom <= f:Atom
+						if(f instanceof Atom)
+								return (e==f) ? false : true;
+						// e:Atom <= f:Set
+						else if(f instanceof Set)
+								return !(f.has(e));
+						// e:Atom <= f:Inv
+						else if(f instanceof Inv)
+								return f.has(e);
+						// e:Set
+				} else if(e instanceof Set) {
+						// e:Set <= f:Atom
+						if(f instanceof Atom)
+								return (e.size()==1 && e.has(f)) ? false : true; 
+						// e:Set <= f:Set
+						else if(f instanceof Set) {
+								var result = true;
+								e.foreach(function(i, a) {
+										result = (f.has(a)) ? false : reulst;
+								});
+								return result;
+						}
+						// e:Set <= f:Inv
+						else if(f instanceof Inv) {
+								var result = true;
+								e.foreach(function(i, a) {
+										result = (f.has(a)) ? false : result;
+								});
+								return result;
+						}
+						// e:Inv
+				} else if(e instanceof Inv) {
+						// e:Inv <= f:Atom
+						if(f instanceof Atom) {
+								return e.has(f);
+						}
+						// e:Inv <= f:Set
+						else if(f instanceof Set) {
+								var result = true;
+								f.foreach(function(i, a) {
+										result = (e.has(a)) ? false : result;
+								});
+								return result;
+						}
+						// e:Inv <= f:Inv
+						else if(f instanceof Inv) {
+								// NOTE: Alphabet-dependent
+								return false;
+						}
+						// e:Wildcard
+				} else if(e instanceof Wildcard) {
+						// e:Wildcard <= f:Wildcard
+						// NOTE: Alphabet-dependent
+						return (f instanceof Wildcard) ? true : false; 
+				}
+
+
+		}
+
 
 		return SELF;
 })();
