@@ -29,6 +29,9 @@ __RegEx.First = (function() {
 				}
 		}
 
+		// TODO, ist der weg wirklich OK
+
+
 		/* first(r & s) = {l \sqcap l' | l \in first(r),  l' \in first(r)} 
 		 * @param r regular expression
 		 * @param s regular expression

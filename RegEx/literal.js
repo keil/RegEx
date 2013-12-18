@@ -124,6 +124,8 @@ __RegEx.Literal = (function() {
 						A.foreach(function(i, a) {
 								A[i] = (a instanceof Atom) ? a : Atom(a);
 						});
+				} else if (A instanceof undefined) {
+						A = Array();
 				}
 				//////////////////////////////////////////////////
 				this.nullable = function() {
@@ -511,7 +513,7 @@ __RegEx.Literal = (function() {
 		Alpha.prototype = new Set(alpha);
 
 
-// TODO, append und co an sets hängen .. ? mit flighweigth function
+		// TODO, append und co an sets hängen .. ? mit flighweigth function
 
 
 
@@ -523,49 +525,74 @@ __RegEx.Literal = (function() {
 
 		// TODO
 		// make test
+		//
+
+		// TODO, move common rules to the top
+
+		/** UNION
+		 * @param e literal
+		 * @param f literal
+		 * @return literal
+		 */
 		function union(e, f) {
-				if(e instanceof Blank) {
-						return Blank();
-				} else if(e instanceof Atom) {
-						if(f instanceof Blank) return Blank();
-						if(f instanceof Atom) return (e==f) ? e : Blank();
-						else if(f instanceof Set) return f.contains(e) ? e : Blank();
-						else if(f instanceof Inv) return f.contains(e) ? e : Blank();
-						else if(f instanceof Wildcard) return e;
+				// a
+				if(e instanceof Atom) {
+						// a ∏ b
+						if(f instanceof Atom) 
+								return (e==f) ? e : Blank();
+						// a ∏ [ab]
+						else if(f instanceof Set)
+								return f.contains(e) ? e : Set();
+						// a ∏ [^ab]
+						else if(f instanceof Inv)
+								return f.contains(e) ? e : Set();
+						// a ∏ ?
+						else if(f instanceof Wildcard) return  e;
+				// [ab]
 				} else if(e instanceof Set) {
-						if(f instanceof Blank) return Blank();
-						if(f instanceof Atom) return e.contains(f) ? f : Blank();
+						// [ab] ∏ a
+						if(f instanceof Atom)
+								return e.has(f) ? f :Set();
+						// [ab] ∏ [bc]
 						else if(f instanceof Set) {
 								var result = Array();
 								e.foreach(function(i, a) {
-										if(f.contains(a)) reuslt.push(a);
+										if(f.has(a)) result.push(a);
 								});
 								return Set(result);
 						}
+						// [ab] ∏ [^ab]
 						else if(f instanceof Inv) {
 								var result = Array();
 								e.foreach(function(i, a) {
-										if(!(f.contains(a))) reuslt.push(a);
+										if(!(f.has(a))) result.push(a);
 								});
 								return Set(result);
 						}
+						// [ab] ∏ ?
 						else if(f instanceof Wildcard) return e;
+				// [^ab]
 				} else if(e instanceof Inv) {
-						if(f instanceof Blank) return Blank();
-						if(f instanceof Atom) return e.contains(f) ? f : Blank();
+						// [^ab] ∏ a
+						if(f instanceof Atom) return e.has(f) ? Set() : f;
+						// [^ab] ∏ [ab]
 						else if(f instanceof Set) {
-							var result = Array();
+								var result = Array();
 								f.foreach(function(i, a) {
-										if(!(e.contains(a))) reuslt.push(a);
+										if(!(e.has(a))) result.push(a);
 								});
 								return Set(result);
 						}
+						// [^ab] ∏ [^bc]
 						else if(f instanceof Inv) {
 								var result = e.array().concat(f.array());
-								return Inv(reulst);
+								return Inv(result);
 						}
+						// [^ab] ∏ ?
 						else if(f instanceof Wildcard) return e;
+				// ?
 				} else if(e instanceof Wildcard) {
+						// ? ∏ e
 						return f;
 				}
 		}
@@ -581,7 +608,7 @@ __RegEx.Literal = (function() {
 				else if(l instanceof Wildcard) return Set();
 		}
 
-			// TODO
+		// TODO
 		// make test
 		function subset(e, f) {
 				if(e instanceof Blank) {
@@ -598,10 +625,10 @@ __RegEx.Literal = (function() {
 								// TODO, check if e is a set with only one element
 						}
 						else if(f instanceof Set) {
-							// check sets
+								// check sets
 						}
 						else if(f instanceof Inv) {
-							// check sets
+								// check sets
 						}
 						else if(f instanceof Wildcard) return true;
 				} else if(e instanceof Inv) {
@@ -610,10 +637,10 @@ __RegEx.Literal = (function() {
 								// TODO, check if e is a set with only one element
 						}
 						else if(f instanceof Set) {
-							// check sets
+								// check sets
 						}
 						else if(f instanceof Inv) {
-							// check sets
+								// check sets
 						}
 						else if(f instanceof Wildcard) return true;
 
