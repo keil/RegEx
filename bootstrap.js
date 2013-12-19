@@ -98,25 +98,22 @@ load("RegEx/containment.js");
 
 load("Regex/parser.js");
 
+/** TESTCASES **/
 
-// ##### OPEN
-
-//
-//
-//load("Test/Regex/first.js"); // not OK -- implement inv first
+load("Test/Regex/first.js"); // not OK -- implement inv first
 
 
-//load("Test/Regex/subset.js");
 
 
-// test 
-// Literal subset
-// Literal first
-// literal union
-// literal invert
-// TEST DISJPUNT
+// OPEN TESTS
+// first
+// pderiv
+// nderiv
+// subset/containmetn calculus
 
-// pderic nderiv
+
+
+
 
 /*
 // TEST

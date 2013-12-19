@@ -13,24 +13,12 @@
  * $Rev: 23389 $
  */
 
-// TODO, FIX first(!r)
-
 __RegEx.First = (function() {
 
-		/* calculates the first literals 
-		 * @param r regular expression
-		 * @return Array of literals
-		 */
-		SELF = function(r) {
-				if(r instanceof __RegEx.Expression.And) {
-						return intersection(r.left, r.right);
-				} else 	if(r instanceof __RegEx.Expression.Neg) {
-						return negation(r.sub);
-				}
-		}
+		SELF = new Object();
 
-		// TODO, ist der weg wirklich OK
-
+		SELF.intersection	= intersection;
+		SELF.inversion		= inversion;
 
 		/* first(r & s) = {l \sqcap l' | l \in first(r),  l' \in first(r)} 
 		 * @param r regular expression
@@ -42,7 +30,7 @@ __RegEx.First = (function() {
 				lsR.foreach(function(i, lR) {
 						lsS.foreach(function(j, lS) {
 								var l = __RegEx.Literal.union(lR, lS);
-								first.push(l.toString(), l);
+								first.push(l);
 						});
 				});
 				return first;
@@ -52,15 +40,19 @@ __RegEx.First = (function() {
 		 * @param ls Array of literals
 		 * @return Array of literals
 		 */
-		function negation(ls) {
-				var first = Array();
+		function inversion(ls) {
+				var negated = Array();
 				ls.foreach(function(i, l) {
 						var lprime = __RegEx.Literal.invert(l);
-						first.push(lprime.toString(), lprime);
+						negated.push(lprime.toString(), lprime);
 				});
-
-				// TODO, remove all literals with \nderiv{l} r = \Sigma*
-				return ls.concat(first);
+				var first = __RegEx.Literal.Inv();
+				first.foreach(function(i, l) {
+						first = __RegEx.Literal.union(first, l);
+				});
+				// NOTE, remove all literals with \nderiv{l} r = \Sigma*
+				// is not required
+				return ls.concat(Array(first));
 		}
 
 		return SELF;

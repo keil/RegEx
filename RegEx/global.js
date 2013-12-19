@@ -39,7 +39,5 @@ this["$typeof"] = function(r) {
 		else if(r instanceof __RegEx.Expression.And) return "And";
 		else if(r instanceof __RegEx.Expression.Neg) return "Neg";
 		else if(r instanceof __RegEx.Expression.Dot) return "Dot";
-
-
+		else return "unknown";
 }
-

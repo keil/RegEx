@@ -183,7 +183,7 @@ __RegEx.Expression = (function() {
 				else if(r instanceof Empty) return Empty();
 				// r** ~ r
 				else if(r instanceof Star) return r;
-				
+
 				//////////////////////////////////////////////////
 				if(!(this instanceof Star)) {
 						return cache.c(new Star (r));
@@ -253,7 +253,7 @@ __RegEx.Expression = (function() {
 				else if(r instanceof Null) return s;
 				// r + Ø ~ r
 				else if(s instanceof Null) return r;
-				
+
 				//////////////////////////////////////////////////
 				if(!(this instanceof Or)) {
 						return cache.c(new Or (r,s));
@@ -312,7 +312,7 @@ __RegEx.Expression = (function() {
 		 * Intersection (r&s)
 		 */
 		function And(r, s) {
-				
+
 				// THIS
 				this.left = r;
 				this.right = s;
@@ -324,7 +324,7 @@ __RegEx.Expression = (function() {
 				else if(r instanceof Null) return Null();
 				// r + Ø ~ Ø
 				else if(s instanceof Null) return Null();
-				
+
 				//////////////////////////////////////////////////
 				if(!(this instanceof And)) {
 						return cache.c(new And (r,s));
@@ -334,7 +334,7 @@ __RegEx.Expression = (function() {
 						return (r.nullable() && s.nullable());
 				};
 				this.first = function() {
-						return __RegEx.Literal.union(r.first(), s.first()); 
+						return __RegEx.First.intersection(r.first(), s.first()); 
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
@@ -391,7 +391,7 @@ __RegEx.Expression = (function() {
 				// NORMALIZATION
 				// !!r  ~ r
 				if(r instanceof Neg) return r.sub;
-				
+
 				//////////////////////////////////////////////////
 				if(!(this instanceof Neg)) {
 						return cache.c(new Neg (r));
@@ -401,29 +401,7 @@ __RegEx.Expression = (function() {
 						return r.nullable() ? false : true;;
 				};
 				this.first = function() {
-
-						__sysout("r:" + r);
-						__sysout("typeof r: " + $typeof(r));
-						__sysout("function: " + r.first);
-
-						// TODO
-						var firstr = r.first();
-						__sysout("first(r): " + firstr);
-						var inv = __RegEx.Literal.invert(firstr);
-						__sysout("^first(r): " + inv);
-						
-						var tmp = firstr.concat(inv);
-
-						__sysout("first(!r): " + tmp);
-						return tmp;
-
-						// TODO
-						// by the definition of first
-						// first(!r) = first(r) \cup {^l | l \in first(r)} \  {l | l \in first(r), \nderiv_{l} r = \Sigma* }
-						// -- but --
-						// first(!r) = first(r) \cup {^l | l \in first(r)}
-						// is implementet.
-						return r.first().concat(__RegEx.Literal.invert(r.first())); 
+						return __RegEx.First.inversion(r.first()); 
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
