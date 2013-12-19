@@ -118,6 +118,8 @@ __RegEx.Literal = (function() {
 						A.foreach(function(i, a) {
 								A[i] = (a instanceof Atom) ? a : Atom(a);
 						});
+				} else if (A instanceof Atom) {
+						A = Array(A);
 				} else {
 						A = Array();
 				}
@@ -208,6 +210,8 @@ __RegEx.Literal = (function() {
 						A.foreach(function(i, a) {
 								A[i] = (a instanceof Atom) ? a : Atom(a);
 						});
+				} else if (A instanceof Atom) {
+						A = Array(A);
 				} else {
 						A = Array();
 				}
@@ -528,13 +532,13 @@ __RegEx.Literal = (function() {
 						else if(f instanceof Inv) {
 								var result = e.array();
 								f.array().foreach(function(i, a) {
-									if(!(function() {
-											var contains = false;
-											result.foreach(function(j, b) {
-												contains = (a==b) ? true : contains;	
-											});
-											return contains;
-									})()) result.push(a);
+										if(!(function() {
+												var contains = false;
+												result.foreach(function(j, b) {
+														contains = (a==b) ? true : contains;	
+												});
+												return contains;
+										})()) result.push(a);
 								});
 								return Inv(result);
 						}
