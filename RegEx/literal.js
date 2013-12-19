@@ -645,60 +645,84 @@ __RegEx.Literal = (function() {
 
 				// e:Atom
 				if(e instanceof Atom) {
-						// e:Atom <= f:Atom
+						// e:Atom ∏  f:Atom = Ø
 						if(f instanceof Atom)
 								return (e==f) ? false : true;
-						// e:Atom <= f:Set
+						// e:Atom ∏  f:Set = Ø
 						else if(f instanceof Set)
 								return !(f.has(e));
-						// e:Atom <= f:Inv
+						// e:Atom ∏  f:Inv = Ø
 						else if(f instanceof Inv)
 								return f.has(e);
+						// e:Atom ∏  f:Wildcard = Ø
+						else if(f instanceof Wildcard)
+								return false;
 						// e:Set
 				} else if(e instanceof Set) {
-						// e:Set <= f:Atom
+						// e:Set ∏  f:Atom = Ø
 						if(f instanceof Atom)
-								return (e.size()==1 && e.has(f)) ? false : true; 
-						// e:Set <= f:Set
+								return (e.has(f)) ? false : true; 
+						// e:Set ∏  f:Set = Ø
 						else if(f instanceof Set) {
-								var result = true;
-								e.foreach(function(i, a) {
-										result = (f.has(a)) ? false : reulst;
-								});
-								return result;
-						}
-						// e:Set <= f:Inv
-						else if(f instanceof Inv) {
 								var result = true;
 								e.foreach(function(i, a) {
 										result = (f.has(a)) ? false : result;
 								});
 								return result;
 						}
-						// e:Inv
-				} else if(e instanceof Inv) {
-						// e:Inv <= f:Atom
-						if(f instanceof Atom) {
-								return e.has(f);
-						}
-						// e:Inv <= f:Set
-						else if(f instanceof Set) {
+						// e:Set ∏  f:Inv = Ø
+						else if(f instanceof Inv) {
 								var result = true;
-								f.foreach(function(i, a) {
-										result = (e.has(a)) ? false : result;
+								e.foreach(function(i, a) {
+										result = (f.has(a)) ? result : false;
 								});
 								return result;
 						}
-						// e:Inv <= f:Inv
+						// e:Set ∏  f:Wildcard = Ø
+						else if(f instanceof Wildcard)
+								return (e.size()==0) ? true : false;
+
+						// e:Inv
+				} else if(e instanceof Inv) {
+						// e:Inv ∏  f:Atom = Ø
+						if(f instanceof Atom) {
+								return e.has(f);
+						}
+						// e:Inv ∏  f:Set = Ø
+						else if(f instanceof Set) {
+								var result = true;
+								f.foreach(function(i, a) {
+										result = (e.has(a)) ? result : false;
+								});
+								return result;
+						}
+						// e:Inv ∏  f:Inv = Ø
 						else if(f instanceof Inv) {
 								// NOTE: Alphabet-dependent
 								return false;
 						}
+						// e:Set ∏  f:Wildcard = Ø
+						else if(f instanceof Wildcard)
+								// NOTE: Alphabet-dependent
+								return false;
 						// e:Wildcard
 				} else if(e instanceof Wildcard) {
-						// e:Wildcard <= f:Wildcard
-						// NOTE: Alphabet-dependent
-						return (f instanceof Wildcard) ? true : false; 
+						// e:Wildcard ∏  f:Atom = Ø
+						if(f instanceof Atom) {
+								return false;
+						}
+						// e:Wildcard ∏  f:Set = Ø
+						else if(f instanceof Set) {
+								return (f.size()==0) ? true : false;
+						}
+						// e:Wildcard ∏  f:Inv = Ø
+						else if(f instanceof Inv) {
+								// NOTE: Alphabet-dependent
+								return false;
+						}
+						// e:Wildcard ∏  f:Wildcard = Ø
+						else if(f instanceof Wildcard)
+								return false;
 				}
 		}
 
