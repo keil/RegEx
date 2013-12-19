@@ -107,10 +107,12 @@ load("Regex/parser.js");
 
 
 
-load("Test/Regex/union.js"); 
+//load("Test/Regex/union.js"); 
+
+
 load("Test/Regex/invert.js"); 
-load("Test/Regex/disjoint.js"); 
-load("Test/Regex/subset.js");
+//load("Test/Regex/disjoint.js"); 
+//load("Test/Regex/subset.js");
 
 // ##### OPEN
 

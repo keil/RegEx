@@ -113,11 +113,12 @@ __RegEx.Literal = (function() {
 				if(!(this instanceof Set)) {
 						return cache.c(new Set (A));
 				}
+
 				if(A instanceof Array) {
 						A.foreach(function(i, a) {
 								A[i] = (a instanceof Atom) ? a : Atom(a);
 						});
-				} else if (A == undefined) {
+				} else {
 						A = Array();
 				}
 				//////////////////////////////////////////////////
@@ -202,10 +203,13 @@ __RegEx.Literal = (function() {
 				if(!(this instanceof Inv)) {
 						return cache.c(new Inv (A));
 				}
+
 				if(A instanceof Array) {
 						A.foreach(function(i, a) {
 								A[i] = (a instanceof Atom) ? a : Atom(a);
 						});
+				} else {
+						A = Array();
 				}
 				//////////////////////////////////////////////////
 				this.nullable = function() {
