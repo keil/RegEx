@@ -4,8 +4,6 @@ default:
 test:
 	../../js/src/shell/js -f bootstrap_test.js -i
 
-envjs:
-	../../js/src/shell/js -f bootstrap_envjs.js -i
+regtest:
+	../../js/src/shell/js -f bootstrap_regtest.js -i
 
-cs:
-	../../js/src/shell/js -f bootstrap_cases.js -i

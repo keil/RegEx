@@ -9,8 +9,8 @@
  * Author Matthias Keil
  *  http://www.informatik.uni-freiburg.de/~keilr/
  *
- * $Date$
- * $Rev$
+ * $Date: 2013-12-19 16:51:42 +0100 (Thu, 19 Dec 2013) $
+ * $Rev: 23616 $
  */
 
 // load hash set
@@ -69,19 +69,6 @@ load("evaluation.js");
 // Main Application
 load("run.js");
 */
-//////////////////////////////////////////////////
-// Run
-//////////////////////////////////////////////////
-
-// run regex genearator
-//RegEx.run.run();
-//quit();
-//
-
-//load("areg.js");
-
-//load("Regex/literal.js");
-
 
 
 
@@ -98,43 +85,36 @@ load("RegEx/containment.js");
 
 load("Regex/parser.js");
 
-
-// ##### OPEN
-
-//
-//
-//load("Test/Regex/first.js"); // not OK -- implement inv first
-
-
-//load("Test/Regex/subset.js");
-
-
-// test 
-// Literal subset
-// Literal first
-// literal union
-// literal invert
-// TEST DISJPUNT
-
-// pderic nderiv
-
-/*
+//////////////////////////////////////////////////
 // TEST
-(function(x) {
-		var y = 5;
-		(function() {
-			x=13;
-			y=11;
-		})();
-		__sysout(x);
-		__sysout(y);
-})(7);
+//////////////////////////////////////////////////
 
-x = Array(1,2,3,5);
-__sysout(x.length);
-y = Array().concat(x);
-__sysout(y.length);
-__sysout(x==y);
-*/
+var __start = new Date().getTime();
+
+/* Test: Regular Expression */
+load("Test/Regex/constructor.js");
+load("Test/Regex/normalization.js");
+load("Test/Regex/derivatives.js"); 
+
+/* Test: Lioteral Operations */
+load("Test/Regex/union.js"); 
+load("Test/Regex/invert.js"); 
+load("Test/Regex/disjoint.js"); 
+load("Test/Regex/subset.js");
+
+
+
+
+
+
+
+
+
+
+var __end = new Date().getTime();
+
+__sysout("%% START: " + __start);
+__sysout("%% END: " + __end);
+__sysout("%% TIME: " + (__end - __start));
 
 quit();
