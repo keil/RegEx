@@ -602,7 +602,7 @@ __RegEx.Literal = (function() {
 						else if(f instanceof Inv) {
 								var result = true;
 								e.foreach(function(i, a) {
-										result = (f.has(a)) ? result : false;
+										result = (f.has(a)) ? false : result;
 								});
 								return result;
 						}

@@ -50,7 +50,7 @@ makeRegEx("?");
 				res.foreach(function(i, f) {
 						__sysout("* SBSET OF: " + e + "  <= " + f);
 						var lef = __RegEx.Literal.subset(e,f);
-						__sysout("** " + l)ef;
+						__sysout("** " + lef);
 						__sysout("\n");
 
 						__sysout("* SBSET OF: " + f + "  <= " + e);
