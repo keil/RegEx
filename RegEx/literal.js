@@ -319,7 +319,7 @@ __RegEx.Literal = (function() {
 						return __RegEx.Expression.Empty();
 				};
 				this.nderiv = function(l) {
-						return __RegEx.Expression.Null();
+						return __RegEx.Expression.Empty();
 				};
 				this.pderiv = function(l) {
 						return __RegEx.Expression.Empty();

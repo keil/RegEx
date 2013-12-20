@@ -48,12 +48,12 @@ makeRegEx("?");
 (function() {
 		res.foreach(function(i, e) {
 				res.foreach(function(i, f) {
-						__sysout("* SBSET OF: " + e + "  <= " + f);
+						__sysout("* SUBSET OF: " + e + "  <= " + f);
 						var lef = __RegEx.Literal.subset(e,f);
 						__sysout("** " + lef);
 						__sysout("\n");
 
-						__sysout("* SBSET OF: " + f + "  <= " + e);
+						__sysout("* SUBSET OF: " + f + "  <= " + e);
 						var lfe = __RegEx.Literal.subset(f,e);
 						__sysout("** " + lfe);
 						__sysout("\n");

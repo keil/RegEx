@@ -100,9 +100,57 @@ load("Regex/parser.js");
 
 /** TESTCASES **/
 
-load("Test/Regex/constructor.js");
+/* Test: Regular Expression */
+//load("Test/Regex/constructor.js");
+//load("Test/Regex/normalization.js");
+//load("Test/Regex/derivatives.js"); 
+
+/* Test: Literal Operations */
+//load("Test/Regex/intersection.js"); 
+//load("Test/Regex/invert.js"); 
+//load("Test/Regex/disjoint.js"); 
+//load("Test/Regex/subset.js");
+
+/* Test: First Construction */
+//load("Test/Regex/first.js");
+
+/* Test: Positive and Negative Derivatives */
+//load("Test/Regex/pderiv.js");
+load("Test/Regex/nderiv.js");
+
+
+
+// OPEN
+
 
 //load("Test/Regex/containment.js");
 // TEST DISPOVE AND PROVE AXIOMS
+
+test($("?"), $("a*"));
+
+function test(r, s) {
+
+		CONFIG.Verbose = true;
+
+		__sysout("* isSubSetOf: " + r + " <= " + s);
+		var subRS = r.isSubSetOf(s);
+		__sysout("** " + subRS);
+		__sysout("* isSubSetOf: " + s + " <= " + r);
+		var subSR = s.isSubSetOf(r);
+		__sysout("** " + subSR);
+
+		__sysout("* isSupSetOf: " + r + " => " + s);
+		var supRS = r.isSuperSetOf(s);
+		__sysout("** " + supRS);
+		__sysout("* isSupSetOf: " + s + " => " + r);
+		var supSR = s.isSuperSetOf(r);
+		__sysout("** " + supSR);
+
+		__sysout("\n");
+
+
+}
+
+
 
 quit();

@@ -75,21 +75,21 @@ __RegEx.Containment = (function() {
 				var context = context.bind(e);
 
 				// verbose - true, print output: false, do not print the output
-				var verbose  = false || __RegEx.Config.verbos;
-				if(verbose) __sysout("\n\n\n##################################################");
-				if(verbose) __sysout("## isSuperSetOf: " + s + ">=" + r);
+				var verbose  = false || __RegEx.Config.Verbose;
+				if(verbose) __sysout("##################################################");
+				if(verbose) __sysout("## " + r + "<=" + s);
 
+				var ls = first(r, s);
 				var result = true;
-				first(r, s).foreach(function(i, l) {
+				ls.foreach(function(i, l) {
 						var derivR = r.nderiv(l);
 						var derivS = s.pderiv(l);
 
-						if(verbose) __sysout("## first: " + first);
+						if(verbose) __sysout("## first: " + ls);
 						if(verbose) __sysout("## literal: " + l);
 						if(verbose) __sysout("## N _{" + l + "} r: " + derivR);
 						if(verbose) __sysout("## P _{" + l + "} s: " + derivS);
 
-						//result = result && derivS.isSuperSetOf(derivR, context);
 						result = result && solve(derivR, derivS, context);
 
 						if(verbose) __sysout("## result: " + result);
