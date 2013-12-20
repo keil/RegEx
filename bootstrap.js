@@ -116,21 +116,41 @@ load("Regex/parser.js");
 
 /* Test: Positive and Negative Derivatives */
 //load("Test/Regex/pderiv.js");
-load("Test/Regex/nderiv.js");
+//load("Test/Regex/nderiv.js");
 
 
 
 // OPEN
 
 
-//load("Test/Regex/containment.js");
+
 // TEST DISPOVE AND PROVE AXIOMS
 
-test($("?"), $("a*"));
 
-function test(r, s) {
 
-		CONFIG.Verbose = true;
+
+
+
+
+
+(function() {
+		r = $("!(a).b");
+		s = $("(a&b)");
+
+		test($("!(a).b"), $("(a&b)"), true);
+});
+
+// TEST SUBSET RELATION
+function first(r, s) {
+		__sysout(r.first());
+		__sysout(s.first());
+		__sysout(__RegEx.First.inversion(s.first()));
+		__sysout(__RegEx.First.intersection(r.first(), __RegEx.First.inversion(s.first())));
+} 
+
+function test(r, s, verbose) {
+
+		CONFIG.Verbose = (verbose!=undefined) ? verbose : false;
 
 		__sysout("* isSubSetOf: " + r + " <= " + s);
 		var subRS = r.isSubSetOf(s);
@@ -147,10 +167,6 @@ function test(r, s) {
 		__sysout("** " + supSR);
 
 		__sysout("\n");
-
-
 }
-
-
 
 quit();

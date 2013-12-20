@@ -109,7 +109,8 @@ load("Test/Regex/first.js");
 load("Test/Regex/pderiv.js");
 load("Test/Regex/nderiv.js");
 
-
+/* Test: Containment Calculus */
+load("Test/Regex/containment.js");
 
 
 
