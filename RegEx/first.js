@@ -30,7 +30,7 @@ __RegEx.First = (function() {
 				lsR.foreach(function(i, lR) {
 						lsS.foreach(function(j, lS) {
 								var l = __RegEx.Literal.union(lR, lS);
-								first.push(l);
+								first.add(l);
 						});
 				});
 				return first;
@@ -44,7 +44,7 @@ __RegEx.First = (function() {
 				var negated = Array();
 				ls.foreach(function(i, l) {
 						var lprime = __RegEx.Literal.invert(l);
-						negated.push(lprime.toString(), lprime);
+						negated.add(lprime.toString(), lprime);
 				});
 				var first = __RegEx.Literal.Inv();
 				first.foreach(function(i, l) {

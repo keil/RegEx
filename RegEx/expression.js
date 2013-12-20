@@ -263,7 +263,7 @@ __RegEx.Expression = (function() {
 						return (r.nullable() || s.nullable());
 				};
 				this.first = function() {
-						return r.first().concat(s.first());
+						return r.first().addAll(s.first());
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
@@ -469,7 +469,7 @@ __RegEx.Expression = (function() {
 						return (r.nullable() && s.nullable());	
 				};
 				this.first = function() {
-						return (r.nullable() ? r.first().concat(r.first()) : r.first());
+						return (r.nullable() ? r.first().addAll(r.first()) : r.first());
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {

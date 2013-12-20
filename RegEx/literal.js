@@ -180,7 +180,7 @@ __RegEx.Literal = (function() {
 						return A.length;
 				};
 				this.array = function () {
-						return Array.concat(A);
+						return (Array).concat(A);
 				};
 				this.toString = function () {
 						var str = "";
@@ -272,7 +272,7 @@ __RegEx.Literal = (function() {
 						return A.length;
 				};
 				this.array = function () {
-						return Array.concat(A);
+						return (Array).concat(A);
 				};
 				this.toString = function () {
 						var str = "";
@@ -504,7 +504,7 @@ __RegEx.Literal = (function() {
 						else if(f instanceof Set) {
 								var result = Array();
 								e.foreach(function(i, a) {
-										if(f.has(a)) result.push(a);
+										if(f.has(a)) result.add(a);
 								});
 								return Set(result);
 						}
@@ -512,7 +512,7 @@ __RegEx.Literal = (function() {
 						else if(f instanceof Inv) {
 								var result = Array();
 								e.foreach(function(i, a) {
-										if(!(f.has(a))) result.push(a);
+										if(!(f.has(a))) result.add(a);
 								});
 								return Set(result);
 						}
@@ -524,7 +524,7 @@ __RegEx.Literal = (function() {
 						else if(f instanceof Set) {
 								var result = Array();
 								f.foreach(function(i, a) {
-										if(!(e.has(a))) result.push(a);
+										if(!(e.has(a))) result.add(a);
 								});
 								return Set(result);
 						}
@@ -538,7 +538,7 @@ __RegEx.Literal = (function() {
 														contains = (a==b) ? true : contains;	
 												});
 												return contains;
-										})()) result.push(a);
+										})()) result.add(a);
 								});
 								return Inv(result);
 						}

@@ -39,6 +39,27 @@ Array.prototype.remove = function(from, to) {
 		return this.push.apply(this, rest);
 };
 
+Array.prototype.has  = function(arg) {
+		var has = false;
+		Array.prototype.foreach.call(this, function(i, v) {
+				has = (arg==v) ? true : has;
+		});
+		return has;
+};
+
+Array.prototype.add  = function(arg) {
+		if(!Array.prototype.has.call(this, arg)) return this.push(arg);
+		else return (-1); 
+};
+
+Array.prototype.addAll  = function(arg) {
+		var global = this;
+		arg.foreach(function(i,v) {
+				Array.prototype.add.call(global, v);});
+		return this;
+};
+
+
 
 //////////////////////////////////////////////////
 // SYSOUT
@@ -171,9 +192,9 @@ function __testcase(file) {
 		__sysout("\n\n\n\n\n");
 		__sysout("##################################################");
 		__sysout("##")
-		__sysout("## " + file);
+				__sysout("## " + file);
 		__sysout("##")
-		__sysout("##################################################");
+				__sysout("##################################################");
 		__sysout("\n");
 
 		(function() {
