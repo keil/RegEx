@@ -129,7 +129,7 @@ load("Regex/parser.js");
 
 
 
-
+load("Test/Regex/containment_axioms.js");
 
 
 
