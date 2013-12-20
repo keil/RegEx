@@ -100,6 +100,7 @@ load("Regex/parser.js");
 
 /** TESTCASES **/
 
+load("Test/Regex/constructor.js");
 
 //load("Test/Regex/containment.js");
 // TEST DISPOVE AND PROVE AXIOMS

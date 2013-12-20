@@ -80,10 +80,10 @@ __RegEx.Parser = (function(){
 				parse: function(input, startRule) {
 						var parseFunctions = {
 								"Expression": parse_Expression,
+								"Or": parse_Or,
+								"And": parse_And,
 								"Dot": parse_Dot,
 								"Neg": parse_Neg,
-								"And": parse_And,
-								"Or": parse_Or,
 								"Star": parse_Star,
 								"Bracketing": parse_Bracketing,
 								"Literal": parse_Literal,
@@ -162,12 +162,116 @@ __RegEx.Parser = (function(){
 								var pos0;
 
 								pos0 = pos;
-								result0 = parse_Dot();
+								result0 = parse_Or();
 								if (result0 !== null) {
 										result0 = (function(offset, r) { return r; })(pos0, result0);
 								}
 								if (result0 === null) {
 										pos = pos0;
+								}
+								return result0;
+						}
+
+						function parse_Or() {
+								var result0, result1, result2;
+								var pos0, pos1;
+
+								pos0 = pos;
+								pos1 = pos;
+								result0 = parse_And();
+								if (result0 !== null) {
+										if (input.charCodeAt(pos) === 43) {
+												result1 = "+";
+												pos++;
+										} else {
+												result1 = null;
+												if (reportFailures === 0) {
+														matchFailed("\"+\"");
+												}
+										}
+										if (result1 !== null) {
+												result2 = parse_Or();
+												if (result2 !== null) {
+														result0 = [result0, result1, result2];
+												} else {
+														result0 = null;
+														pos = pos1;
+												}
+										} else {
+												result0 = null;
+												pos = pos1;
+										}
+								} else {
+										result0 = null;
+										pos = pos1;
+								}
+								if (result0 !== null) {
+										result0 = (function(offset, r, s) { return Or(r, s); })(pos0, result0[0], result0[2]);
+								}
+								if (result0 === null) {
+										pos = pos0;
+								}
+								if (result0 === null) {
+										pos0 = pos;
+										result0 = parse_And();
+										if (result0 !== null) {
+												result0 = (function(offset, r) { return r; })(pos0, result0);
+										}
+										if (result0 === null) {
+												pos = pos0;
+										}
+								}
+								return result0;
+						}
+
+						function parse_And() {
+								var result0, result1, result2;
+								var pos0, pos1;
+
+								pos0 = pos;
+								pos1 = pos;
+								result0 = parse_Dot();
+								if (result0 !== null) {
+										if (input.charCodeAt(pos) === 38) {
+												result1 = "&";
+												pos++;
+										} else {
+												result1 = null;
+												if (reportFailures === 0) {
+														matchFailed("\"&\"");
+												}
+										}
+										if (result1 !== null) {
+												result2 = parse_And();
+												if (result2 !== null) {
+														result0 = [result0, result1, result2];
+												} else {
+														result0 = null;
+														pos = pos1;
+												}
+										} else {
+												result0 = null;
+												pos = pos1;
+										}
+								} else {
+										result0 = null;
+										pos = pos1;
+								}
+								if (result0 !== null) {
+										result0 = (function(offset, r, s) { return And(r, s); })(pos0, result0[0], result0[2]);
+								}
+								if (result0 === null) {
+										pos = pos0;
+								}
+								if (result0 === null) {
+										pos0 = pos;
+										result0 = parse_Dot();
+										if (result0 !== null) {
+												result0 = (function(offset, r) { return r; })(pos0, result0);
+										}
+										if (result0 === null) {
+												pos = pos0;
+										}
 								}
 								return result0;
 						}
@@ -220,16 +324,6 @@ __RegEx.Parser = (function(){
 										if (result0 === null) {
 												pos = pos0;
 										}
-										if (result0 === null) {
-												pos0 = pos;
-												result0 = parse_Literal();
-												if (result0 !== null) {
-														result0 = (function(offset, l) {return l; })(pos0, result0);
-												}
-												if (result0 === null) {
-														pos = pos0;
-												}
-										}
 								}
 								return result0;
 						}
@@ -250,7 +344,7 @@ __RegEx.Parser = (function(){
 										}
 								}
 								if (result0 !== null) {
-										result1 = parse_And();
+										result1 = parse_Star();
 										if (result1 !== null) {
 												result0 = [result0, result1];
 										} else {
@@ -263,110 +357,6 @@ __RegEx.Parser = (function(){
 								}
 								if (result0 !== null) {
 										result0 = (function(offset, r) { return Neg(r); })(pos0, result0[1]);
-								}
-								if (result0 === null) {
-										pos = pos0;
-								}
-								if (result0 === null) {
-										pos0 = pos;
-										result0 = parse_And();
-										if (result0 !== null) {
-												result0 = (function(offset, r) { return r; })(pos0, result0);
-										}
-										if (result0 === null) {
-												pos = pos0;
-										}
-								}
-								return result0;
-						}
-
-						function parse_And() {
-								var result0, result1, result2;
-								var pos0, pos1;
-
-								pos0 = pos;
-								pos1 = pos;
-								result0 = parse_Or();
-								if (result0 !== null) {
-										if (input.charCodeAt(pos) === 38) {
-												result1 = "&";
-												pos++;
-										} else {
-												result1 = null;
-												if (reportFailures === 0) {
-														matchFailed("\"&\"");
-												}
-										}
-										if (result1 !== null) {
-												result2 = parse_And();
-												if (result2 !== null) {
-														result0 = [result0, result1, result2];
-												} else {
-														result0 = null;
-														pos = pos1;
-												}
-										} else {
-												result0 = null;
-												pos = pos1;
-										}
-								} else {
-										result0 = null;
-										pos = pos1;
-								}
-								if (result0 !== null) {
-										result0 = (function(offset, r, s) { return And(r, s); })(pos0, result0[0], result0[2]);
-								}
-								if (result0 === null) {
-										pos = pos0;
-								}
-								if (result0 === null) {
-										pos0 = pos;
-										result0 = parse_Or();
-										if (result0 !== null) {
-												result0 = (function(offset, r) { return r; })(pos0, result0);
-										}
-										if (result0 === null) {
-												pos = pos0;
-										}
-								}
-								return result0;
-						}
-
-						function parse_Or() {
-								var result0, result1, result2;
-								var pos0, pos1;
-
-								pos0 = pos;
-								pos1 = pos;
-								result0 = parse_Star();
-								if (result0 !== null) {
-										if (input.charCodeAt(pos) === 43) {
-												result1 = "+";
-												pos++;
-										} else {
-												result1 = null;
-												if (reportFailures === 0) {
-														matchFailed("\"+\"");
-												}
-										}
-										if (result1 !== null) {
-												result2 = parse_Or();
-												if (result2 !== null) {
-														result0 = [result0, result1, result2];
-												} else {
-														result0 = null;
-														pos = pos1;
-												}
-										} else {
-												result0 = null;
-												pos = pos1;
-										}
-								} else {
-										result0 = null;
-										pos = pos1;
-								}
-								if (result0 !== null) {
-										result0 = (function(offset, r, s) { return Or(r, s); })(pos0, result0[0], result0[2]);
 								}
 								if (result0 === null) {
 										pos = pos0;
@@ -446,7 +436,7 @@ __RegEx.Parser = (function(){
 										}
 								}
 								if (result0 !== null) {
-										result1 = parse_Dot();
+										result1 = parse_Or();
 										if (result1 !== null) {
 												if (input.charCodeAt(pos) === 41) {
 														result2 = ")";
