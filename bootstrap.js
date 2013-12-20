@@ -100,15 +100,10 @@ load("Regex/parser.js");
 
 /** TESTCASES **/
 
-load("Test/Regex/first.js"); // not OK -- implement inv first
-
-
-
+load("Test/Regex/pderiv.js");
+load("Test/Regex/nderiv.js");
 
 // OPEN TESTS
-// first
-// pderiv
-// nderiv
 // subset/containmetn calculus
 
 

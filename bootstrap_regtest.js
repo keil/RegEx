@@ -96,11 +96,15 @@ load("Test/Regex/constructor.js");
 load("Test/Regex/normalization.js");
 load("Test/Regex/derivatives.js"); 
 
-/* Test: Lioteral Operations */
+/* Test: Literal Operations */
 load("Test/Regex/union.js"); 
 load("Test/Regex/invert.js"); 
 load("Test/Regex/disjoint.js"); 
 load("Test/Regex/subset.js");
+
+/* Test: First Construction */
+load("Test/Regex/first.js");
+
 
 
 

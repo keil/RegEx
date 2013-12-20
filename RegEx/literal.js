@@ -244,7 +244,7 @@ __RegEx.Literal = (function() {
 						return (subset(l, this)) ? __RegEx.Expression.Empty() :  __RegEx.Expression.Null();
 				};
 				this.pderiv = function(l) {
-						return (disjount(l, this)) ? __RegEx.Expression.Null() :  __RegEx.Expression.Empty();
+						return (disjoint(l, this)) ? __RegEx.Expression.Null() :  __RegEx.Expression.Empty();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {

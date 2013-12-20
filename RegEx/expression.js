@@ -492,7 +492,7 @@ __RegEx.Expression = (function() {
 				};
 				this.pderiv = function(l) {
 						if(r.nullable()) return Or(Dot(r.pderiv(l), s), s.pderiv(l));
-						else return Dot(r.pderiv(larg), s);
+						else return Dot(r.pderiv(l), s);
 
 				};
 				//////////////////////////////////////////////////
