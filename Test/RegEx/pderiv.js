@@ -59,6 +59,28 @@ mkLiterals("?");
 
 // Expressions
 
+testRegEx("a");
+testRegEx("b");
+testRegEx("c");
+testRegEx("1");
+testRegEx("2");
+testRegEx("3");
+
+testRegEx("[ab]");
+testRegEx("[abc]");
+testRegEx("[123]");
+
+testRegEx("[^ab]");
+testRegEx("[^abc]");
+testRegEx("[^123]");
+
+testRegEx("[digit]");
+testRegEx("[char]");
+testRegEx("[lchar]");
+testRegEx("[uchar]");
+testRegEx("[alpha]");
+testRegEx("?");
+
 testRegEx("a*");
 testRegEx("a+b");
 testRegEx("a&b");

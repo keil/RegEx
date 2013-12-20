@@ -100,8 +100,15 @@ load("Regex/parser.js");
 
 /** TESTCASES **/
 
-load("Test/Regex/pderiv.js");
+//load("Test/Regex/pderiv.js");
+
+
 load("Test/Regex/nderiv.js");
+
+//load("Test/Regex/containment.js");
+
+// TEST DISPOVE AND PROVE AXIOMS
+
 
 // OPEN TESTS
 // subset/containmetn calculus

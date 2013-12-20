@@ -27,7 +27,7 @@ __RegEx.Containment = (function() {
 		 * @return Array of literals
 		 */
 		function first(r, s) {
-			return __RegEx.First.intersection(r.first(), __RegEx.First.negation(s.first()));
+			return __RegEx.First.intersection(r.first(), __RegEx.First.inversion(s.first()));
 		}
 
 		/** INIT
@@ -40,8 +40,8 @@ __RegEx.Containment = (function() {
 		}
 
 		/** SOLVE
-		 * @param s super-regular expression
 		 * @param r sub-regular expression
+		 * @param s super-regular expression
 		 * @param context context
 		 * @return true|false
 		 */
@@ -75,21 +75,22 @@ __RegEx.Containment = (function() {
 				var context = context.bind(e);
 
 				// verbose - true, print output: false, do not print the output
-				var verbose  = false || __RegEx.Congif.verbos;
+				var verbose  = false || __RegEx.Config.verbos;
 				if(verbose) __sysout("\n\n\n##################################################");
 				if(verbose) __sysout("## isSuperSetOf: " + s + ">=" + r);
 
 				var result = true;
-				first.foreach(function(i, l) {
-						var derivR = r.nderive(l);
-						var derivS = s.pderive(l);
+				first(r, s).foreach(function(i, l) {
+						var derivR = r.nderiv(l);
+						var derivS = s.pderiv(l);
 
 						if(verbose) __sysout("## first: " + first);
 						if(verbose) __sysout("## literal: " + l);
-						if(verbose) __sysout("## N _{" + l + "} r: " + deriveR);
-						if(verbose) __sysout("## P _{" + l + "} s: " + deriveS);
+						if(verbose) __sysout("## N _{" + l + "} r: " + derivR);
+						if(verbose) __sysout("## P _{" + l + "} s: " + derivS);
 
-						result = result && deriveS.isSuperSetOf(deriveR, context);
+						//result = result && derivS.isSuperSetOf(derivR, context);
+						result = result && solve(derivR, derivS, context);
 
 						if(verbose) __sysout("## result: " + result);
 
@@ -97,7 +98,6 @@ __RegEx.Containment = (function() {
 				});
 				return result;
 		}
-
 
 		/** PROVE AXIOMS (s >= r)
 		 * @param s super-regular expression
@@ -158,45 +158,45 @@ __RegEx.Containment = (function() {
 				};
 
 				/* bind function
-				 * @param CC Expression
+				 * @param expression CC Expression
 				 * @return <CC Context, CC Expression>
 				 */
-				this.bind = function(ccExp) {
+				this.bind = function(expression) {
 						// clone context
-						var newCtx = new Ctx();
+						var newContext = new Context();
 						context.foreach(function(k, v) {
-								newCtx.put(v);
+								newContext.put(v);
 						});
 						// bind new CC Expression
-						if(!newCtx.contains(ccExp)) {
-								newCtx.put(ccExp);
+						if(!newContext.contains(expression)) {
+								newContext.put(expression);
 						}
-						return newCtx;
+						return newContext;
 				};
 
 				/* put
-				 * @param ccExp CC Expression
+				 * @param expression CC Expression
 				 * $return CC Expression
 				 */
-				this.put = function(ccExp) {
-						context.set(ccExp.toString(), ccExp);
-						return ccExp;
+				this.put = function(expression) {
+						context.set(expression.toString(), expression);
+						return expression;
 				};
 
 				/* get
-				 * @param ccExp CC Expression
+				 * @param expression CC Expression
 				 * $return CC Expression
 				 */
-				this.get = function(ccExp) {
-						return context.get(ccExp.toString());
+				this.get = function(expression) {
+						return context.get(expression.toString());
 				};
 
 				/* contains
-				 * @param ccExp CC Expression
-				 * $return true, if ccExp in cache, false otherwise
+				 * @param expression CC Expression
+				 * $return true, if expression in cache, false otherwise
 				 */
-				this.contains = function(ccExp) {
-						return context.has(ccExp.toString());
+				this.contains = function(expression) {
+						return context.has(expression.toString());
 				};
 		};
 

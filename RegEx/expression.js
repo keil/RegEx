@@ -92,11 +92,11 @@ __RegEx.Expression = (function() {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
-						return _RegEx.Containment.solve(sub, this);
+						return __RegEx.Containment.solve(sub, this);
 				};
 				this.isSubSetOf = function (sup) {
 						// sub <= this
-						return _RegEx.Containment.solve(this, sup);
+						return __RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -150,11 +150,11 @@ __RegEx.Expression = (function() {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
-						return _RegEx.Containment.solve(sub, this);
+						return __RegEx.Containment.solve(sub, this);
 				};
 				this.isSubSetOf = function (sup) {
 						// sub <= this
-						return _RegEx.Containment.solve(this, sup);
+						return __RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -218,11 +218,11 @@ __RegEx.Expression = (function() {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
-						return _RegEx.Containment.solve(sub, this);
+						return __RegEx.Containment.solve(sub, this);
 				};
 				this.isSubSetOf = function (sup) {
 						// sub <= this
-						return _RegEx.Containment.solve(this, sup);
+						return __RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -289,11 +289,11 @@ __RegEx.Expression = (function() {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
-						return _RegEx.Containment.solve(sub, this);
+						return __RegEx.Containment.solve(sub, this);
 				};
 				this.isSubSetOf = function (sup) {
 						// sub <= this
-						return _RegEx.Containment.solve(this, sup);
+						return __RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -359,11 +359,11 @@ __RegEx.Expression = (function() {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
-						return _RegEx.Containment.solve(sub, this);
+						return __RegEx.Containment.solve(sub, this);
 				};
 				this.isSubSetOf = function (sup) {
 						// sub <= this
-						return _RegEx.Containment.solve(this, sup);
+						return __RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -426,11 +426,11 @@ __RegEx.Expression = (function() {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
-						return _RegEx.Containment.solve(sub, this);
+						return __RegEx.Containment.solve(sub, this);
 				};
 				this.isSubSetOf = function (sup) {
 						// sub <= this
-						return _RegEx.Containment.solve(this, sup);
+						return __RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
@@ -498,11 +498,11 @@ __RegEx.Expression = (function() {
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
 						// sub <= this
-						return _RegEx.Containment.solve(sub, this);
+						return __RegEx.Containment.solve(sub, this);
 				};
 				this.isSubSetOf = function (sup) {
 						// sub <= this
-						return _RegEx.Containment.solve(this, sup);
+						return __RegEx.Containment.solve(this, sup);
 				};
 				//////////////////////////////////////////////////
 				this.toString = function () {
