@@ -97,7 +97,7 @@ load("Test/Regex/normalization.js");
 load("Test/Regex/derivatives.js"); 
 
 /* Test: Literal Operations */
-load("Test/Regex/union.js"); 
+load("Test/Regex/intersection.js"); 
 load("Test/Regex/invert.js"); 
 load("Test/Regex/disjoint.js"); 
 load("Test/Regex/subset.js");
@@ -105,6 +105,9 @@ load("Test/Regex/subset.js");
 /* Test: First Construction */
 load("Test/Regex/first.js");
 
+/* Test: Positive and Negative Derivatives */
+load("Test/Regex/pderiv.js");
+load("Test/Regex/nderiv.js");
 
 
 

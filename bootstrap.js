@@ -100,40 +100,8 @@ load("Regex/parser.js");
 
 /** TESTCASES **/
 
-//load("Test/Regex/pderiv.js");
-
-
-load("Test/Regex/nderiv.js");
 
 //load("Test/Regex/containment.js");
-
 // TEST DISPOVE AND PROVE AXIOMS
-
-
-// OPEN TESTS
-// subset/containmetn calculus
-
-
-
-
-
-/*
-// TEST
-(function(x) {
-		var y = 5;
-		(function() {
-			x=13;
-			y=11;
-		})();
-		__sysout(x);
-		__sysout(y);
-})(7);
-
-x = Array(1,2,3,5);
-__sysout(x.length);
-y = Array().concat(x);
-__sysout(y.length);
-__sysout(x==y);
-*/
 
 quit();

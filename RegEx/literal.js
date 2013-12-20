@@ -28,9 +28,9 @@ __RegEx.Literal = (function() {
 		SELF.Alpha		= Alpha;
 		SELF.Wildcard	= Wildcard;
 
-		SELF.union		= union;
-		SELF.invert		= invert;
-		SELF.subset		= subset;
+		SELF.intersection 	= intersection;
+		SELF.invert			= invert;
+		SELF.subset			= subset;
 		SELF.disjoint		= disjoint;
 
 		//////////////////////////////////////////////////
@@ -468,12 +468,12 @@ __RegEx.Literal = (function() {
 		//                                       | |                                     
 		//                                       |_|                                     
 
-		/** UNION
+		/** INTERSECTION 
 		 * @param e literal
 		 * @param f literal
 		 * @return literal
 		 */
-		function union(e, f) {
+		function intersection(e, f) {
 
 				// GENERAL RULES
 

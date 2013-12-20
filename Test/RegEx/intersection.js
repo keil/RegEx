@@ -49,7 +49,7 @@ makeRegEx("?");
 		res.foreach(function(i, e) {
 				res.foreach(function(i, f) {
 						__sysout("* UNION OF: " + e + "  ∏ " + f);
-						var l = __RegEx.Literal.union(e,f);
+						var l = __RegEx.Literal.intersection(e,f);
 						__sysout("** " + l);
 						__sysout("\n");
 				});

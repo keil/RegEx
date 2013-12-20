@@ -29,7 +29,7 @@ __RegEx.First = (function() {
 				var first = Array();
 				lsR.foreach(function(i, lR) {
 						lsS.foreach(function(j, lS) {
-								first.add(__RegEx.Literal.union(lR, lS));
+								first.add(__RegEx.Literal.intersection(lR, lS));
 						});
 				});
 				return first;
@@ -46,7 +46,7 @@ __RegEx.First = (function() {
 				});
 				var first = __RegEx.Literal.Wildcard();
 				negated.foreach(function(i, l) {
-						first = __RegEx.Literal.union(first, l);
+						first = __RegEx.Literal.intersection(first, l);
 				});
 				// NOTE, remove all literals with \nderiv{l} r = \Sigma*
 				// is not required
