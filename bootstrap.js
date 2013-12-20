@@ -100,44 +100,20 @@ load("Regex/parser.js");
 
 /** TESTCASES **/
 
-/* Test: Regular Expression */
-//load("Test/Regex/constructor.js");
-//load("Test/Regex/normalization.js");
-//load("Test/Regex/derivatives.js"); 
-
-/* Test: Literal Operations */
-//load("Test/Regex/intersection.js"); 
-//load("Test/Regex/invert.js"); 
-//load("Test/Regex/disjoint.js"); 
-//load("Test/Regex/subset.js");
-
-/* Test: First Construction */
-//load("Test/Regex/first.js");
-
-/* Test: Positive and Negative Derivatives */
-//load("Test/Regex/pderiv.js");
-//load("Test/Regex/nderiv.js");
-
-
-
-// OPEN
-
-
-
-// TEST DISPOVE AND PROVE AXIOMS
 
 
 
 
-load("Test/Regex/containment_axioms.js");
 
 
 
 (function() {
-		r = $("!(a).b");
-		s = $("(a&b)");
+		r = $("(a+(!b))*");
+		s = $("!(b)");
 
-		test($("!(a).b"), $("(a&b)"), true);
+		first(r, s);
+
+		test(r, s, true);
 });
 
 // TEST SUBSET RELATION

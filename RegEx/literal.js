@@ -224,10 +224,10 @@ __RegEx.Literal = (function() {
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
-						return (A.empty()) ? true : false;
+						return false;
 				};
 				this.indifferent = function() {
-						return (A.empty()) ? true : false;
+						return false;
 				};
 				this.universal = function() {
 						return false;

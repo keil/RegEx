@@ -111,7 +111,7 @@ load("Test/Regex/nderiv.js");
 
 /* Test: Containment Calculus */
 load("Test/Regex/containment.js");
-
+load("Test/Regex/containment_axioms.js");
 
 
 

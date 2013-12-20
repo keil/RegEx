@@ -253,6 +253,10 @@ __RegEx.Expression = (function() {
 				else if(r instanceof Null) return s;
 				// r + Ø ~ r
 				else if(s instanceof Null) return r;
+				//!Ø + s ~ r
+				else if(r.universal()) return r;
+				// r + !Ø ~ r
+				else if(s.universal()) return s;
 
 				//////////////////////////////////////////////////
 				if(!(this instanceof Or)) {
@@ -320,10 +324,14 @@ __RegEx.Expression = (function() {
 				// NORMALIZATION
 				// r & r ~ r
 				if(r === s) return r;
-				// Ø + s ~ Ø
+				// Ø & s ~ Ø
 				else if(r instanceof Null) return Null();
-				// r + Ø ~ Ø
+				// r & Ø ~ Ø
 				else if(s instanceof Null) return Null();
+				// !Ø & s ~ s
+				else if(r.universal()) return s;
+				// r & !Ø ! r
+				else if(s.universal()) return r;
 
 				//////////////////////////////////////////////////
 				if(!(this instanceof And)) {

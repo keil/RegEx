@@ -66,12 +66,10 @@ mkRegEx("(a+b)*");
 mkRegEx("(a&b)");
 mkRegEx("!(b)*");
 mkRegEx("(a.b)*");
-//mkRegEx("(a&(!b))*");
-//mkRegEx("(a+(!b))*");
-//mkRegEx("(!(a)&(!b))*");
-//mkRegEx("(!(a)+(!b))*");
-
-// TODO, check recursion
+mkRegEx("(a&(!b))*");
+mkRegEx("(a+(!b))*");
+mkRegEx("(!(a)&(!b))*");
+mkRegEx("(!(a)+(!b))*");
 
 mkRegEx("[ab].b");
 mkRegEx("[^ab].b");
