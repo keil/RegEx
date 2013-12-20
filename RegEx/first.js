@@ -29,8 +29,7 @@ __RegEx.First = (function() {
 				var first = Array();
 				lsR.foreach(function(i, lR) {
 						lsS.foreach(function(j, lS) {
-								var l = __RegEx.Literal.union(lR, lS);
-								first.add(l);
+								first.add(__RegEx.Literal.union(lR, lS));
 						});
 				});
 				return first;
@@ -43,11 +42,10 @@ __RegEx.First = (function() {
 		function inversion(ls) {
 				var negated = Array();
 				ls.foreach(function(i, l) {
-						var lprime = __RegEx.Literal.invert(l);
-						negated.add(lprime.toString(), lprime);
+						negated.add(__RegEx.Literal.invert(l));
 				});
-				var first = __RegEx.Literal.Inv();
-				first.foreach(function(i, l) {
+				var first = __RegEx.Literal.Wildcard();
+				negated.foreach(function(i, l) {
 						first = __RegEx.Literal.union(first, l);
 				});
 				// NOTE, remove all literals with \nderiv{l} r = \Sigma*
