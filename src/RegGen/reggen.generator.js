@@ -206,21 +206,23 @@
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
 
+                        // NOTE: disabled, because (^a+b)
                         // ^A 
-						var pool =  new RegGen.Pool.Pool(pool);
-                        var dummy = pool.getInInv();
-						var rep = new RegGen.Replaceable.Replaceable(dummy);
-						var store = new RegGen.Replaceable.Store();
-						store.push(rep);
-						results.push(new Result(dummy, 1, pool, store));
+						//var pool =  new RegGen.Pool.Pool(pool);
+                        //var dummy = pool.getInInv();
+						//var rep = new RegGen.Replaceable.Replaceable(dummy);
+						//var store = new RegGen.Replaceable.Store();
+						//store.push(rep);
+						//results.push(new Result(dummy, 1, pool, store));
 
+                        // NOTE: disabled, because (?+b)
 						// ? 
-						var pool =  new RegGen.Pool.Pool(pool);
-                        var dummy = new RegGen.Dummy.WildcardDummy();
-						var rep = new RegGen.Replaceable.Replaceable(dummy);
-						var store = new RegGen.Replaceable.Store();
-						store.push(rep);
-						results.push(new Result(dummy, 1, pool, store));
+						//var pool =  new RegGen.Pool.Pool(pool);
+                        //var dummy = new RegGen.Dummy.WildcardDummy();
+						//var rep = new RegGen.Replaceable.Replaceable(dummy);
+						//var store = new RegGen.Replaceable.Store();
+						//store.push(rep);
+						//results.push(new Result(dummy, 1, pool, store));
 
 						// [difit]
 						var pool =  new RegGen.Pool.Pool(pool);

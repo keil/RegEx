@@ -56,15 +56,13 @@
 						// Literal Transformation
 						results.append(mkLiteralTransformation(result));
 						// Or Transformation
-					//	results.append(mkOrTransformation(result));
+						results.append(mkOrTransformation(result));
 						// And Transformation
-					//	results.append(mkAndTransformation(result));
-						// Opt Transformation
-					//	results.append(mkOptTransformation(result));
-						// Star Transformation
-					//	results.append(mkStarTransformation(result));
+						results.append(mkAndTransformation(result));
+                        // Star Transformation
+						results.append(mkStarTransformation(result));
 						// Neg Transformation
-					//	results.append(mkNegTransformation(result));
+						results.append(mkNegTransformation(result));
 				});
 
 				return results;
@@ -123,7 +121,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "O1", function(replaceable, pool, origin) {
-						return new RegGen.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
+						return new RegGen.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInAtom());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						if(rep.inAnd) result=false;
@@ -150,7 +148,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "A1", function(replaceable, pool, origin) {
-						return new RegGen.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
+						return new RegGen.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInAtom());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = false;
 						if(rep.inAnd) result=true;
@@ -158,35 +156,6 @@
 				}, /* Mod <= Orig */ function (rep) {
 						var result = true;
 						if(rep.inAnd) result=true;
-						return result;
-				}, /* use +/- */ function(rep) {
-						var result = true;
-						return result;
-				}));
-
-				return results;
-		}
-
-		/** Replace: ..r.. -> ..r?..
-		 * @param result	Generator Result
-		 */
-		function mkOptTransformation(result) {
-				var results = new Array();
-
-				var set = new Array();				
-				set.append(result.getReplaceables().getCache());
-
-				results.append(iterate(result, set, "Q1", function(replaceable, pool, origin) {
-						return new RegGen.Dummy.OptionalDummy(replaceable.getOrigin());
-				}, /* Orig <= Mod */ function(rep) {
-						var result = true;
-						if(rep.inOpt) result=true;
-						if(rep.inStar) result=true;
-						return result;
-				}, /* Mod <= Orig */ function (rep) {
-						var result = false;
-						if(rep.isOpt) result=true;
-						if(rep.inStar) result=true;
 						return result;
 				}, /* use +/- */ function(rep) {
 						var result = true;
@@ -236,7 +205,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "N1", function(replaceable, pool, origin) {
-						return new RegGen.Dummy.NegationDummy(replaceable.getOrigin());
+						return new RegGen.Dummy.NegDummy(replaceable.getOrigin());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = false;
 						if(rep.inAnd) result=true;
@@ -251,7 +220,7 @@
 				}));
 
 				results.append(iterate(result, set, "N2", function(replaceable, pool, origin) {
-						return new RegGen.Dummy.NegationDummy(pool.getNotInLiteral());
+						return new RegGen.Dummy.NegDummy(pool.getNotInAtom());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						if(rep.inAnd) result=true;
@@ -267,8 +236,6 @@
 
 				return results;
 		}
-
-
 
 		/** Iterate
 		 * @param result		Generator Result

@@ -80,25 +80,25 @@
                 /* @return new In-set
                 */
                 this.getInSet = function() {
-                        return new RegGen.Dummy.AtomDummy(this.getInAtom());                        
+                        return new RegGen.Dummy.SetDummy(this.getInAtom().dump());                        
                 };
 
                 /* @return new NotIn-set
                 */
                 this.getNotInSet = function() {	
-                        return new RegGen.Dummy.AtomDummy(this.getNotInAtom());	
+                        return new RegGen.Dummy.SetDummy(this.getNotInAtom().dump());	
                 };
 
                 /* @return new In-set
                 */
                 this.getInInv = function() {
-                        return new RegGen.Dummy.AtomDummy(this.getNotInAtom());                        
+                        return new RegGen.Dummy.InvDummy(this.getNotInAtom().dump());                        
                 };
 
                 /* @return new NotIn-set
                 */
                 this.getNotInInv = function() {	
-                        return new RegGen.Dummy.AtomDummy(this.getInAtom());	
+                        return new RegGen.Dummy.InvDummy(this.getInAtom().dump());	
                 };
 
                 /** Invert */

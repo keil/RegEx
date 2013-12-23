@@ -1,6 +1,7 @@
 * Chache für die first Literale
 ** if(fst==undefined) fst = // calculate first ser; return fst;
 
+* Add /* CALLSTAT */ if(RegEx.Statistics.currentCallStatistics) RegEx.Statistics.currentCallStatistics.incDeriveStat();
 
 
 
