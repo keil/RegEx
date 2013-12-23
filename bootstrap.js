@@ -93,38 +93,15 @@ load("src/RegGen/reggen.evaluation.js");
 // Main Application
 load("src/RegGen/reggen.run.js");
 
-
-//////////////////////////////////////////////////
-// TEST
-//////////////////////////////////////////////////
-
-
-
-
 //////////////////////////////////////////////////
 // Run
 //////////////////////////////////////////////////
 
 // run regex genearator
 RegGen.run.run();
-//quit();
-//
-
-//load("areg.js");
-
-//load("Regex/literal.js");
 
 
-
-/** TESTCASES **/
-
-
-
-
-
-
-
-
+// tests
 (function() {
 		r = $("(a+(!b))*");
 		s = $("!(b)");

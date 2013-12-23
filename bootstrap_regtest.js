@@ -90,11 +90,6 @@ __sysout("%% TIME: " + (__end - __start));
 
 });
 
-
-
-
-
-
 (function() {
 		r = $("([digit])*");
 		s = $("([digit])*");
@@ -132,9 +127,5 @@ function test(r, s, verbose) {
 
 		__sysout("\n");
 }
-
-
-
-
 
 quit();
