@@ -13,77 +13,45 @@
  * $Rev: 23616 $
  */
 
-// load hash set
-load("__lib/__lib_apache_hashtable.js");
-load("__lib/__lib_apache_hashset.js");
-// load string padding
-load("__lib/__lib_padding.js");
-// Load new waek map
-load("__lib/__lib_harmony_weakmap.js");
-// Load reflect API
-load("__lib/__lib_reflect.js");
-// Load StringMap
-load("__lib/__lib_StringMap.js");
-
 //////////////////////////////////////////////////
-// Access Permission Contracts
+// System
 //////////////////////////////////////////////////
 
 // load system
 load("system.js");
 
-// load apc
-load("apc.js");
-
-// load contract
-load("contract.js");
-
 //////////////////////////////////////////////////
-// RegEx
+// Libraries
 //////////////////////////////////////////////////
 
+// load hash set
+load("lib/__lib_apache_hashtable.js");
+load("lib/__lib_apache_hashset.js");
+// load string padding
+load("lib/__lib_padding.js");
+// Load new waek map
+load("lib/__lib_harmony_weakmap.js");
+// Load reflect API
+load("lib/__lib_reflect.js");
+// Load StringMap
+load("lib/__lib_StringMap.js");
 
-/**
-//  interface
-load("regex.js");
-// configuration
-load("config.js");
-
-// Dummy Objects
-load("dummy.js");
-// Lioteral Pool
-load("pool.js");
-// Replaceable Objects
-load("replaceable.js");
-
-// RegEx Generator
-load("generator.js");
-// RegEx Transformer
-load("transformation.js");
-
-// Statistics
-load("statistics.js");
-// Evaluator
-load("evaluation.js");
-
-// Main Application
-load("run.js");
-*/
-
-
+//////////////////////////////////////////////////
+// Regular Expressions
+//////////////////////////////////////////////////
 
 // The Global Object
-load("RegEx/global.js");
-load("RegEx/config.js");
-
-load("RegEx/cache.js");
-load("RegEx/literal.js");
-load("RegEx/expression.js");
-
-load("RegEx/first.js");
-load("RegEx/containment.js");
-
-load("Regex/parser.js");
+load("src/RegEx/regex.global.js");
+load("src/RegEx/regex.config.js");
+// expressions
+load("src/RegEx/regex.cache.js");
+load("src/RegEx/regex.literal.js");
+load("src/RegEx/regex.expression.js");
+// containment calculus
+load("src/RegEx/regex.first.js");
+load("src/RegEx/regex.containment.js");
+// parser
+load("src/Regex/regex.parser.js");
 
 //////////////////////////////////////////////////
 // TEST
@@ -112,12 +80,6 @@ load("Test/Regex/nderiv.js");
 /* Test: Containment Calculus */
 load("Test/Regex/containment.js");
 load("Test/Regex/containment_axioms.js");
-
-
-
-
-
-
 
 var __end = new Date().getTime();
 

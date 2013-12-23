@@ -13,62 +13,91 @@
  * $Rev$
  */
 
-// load hash set
-load("__lib/__lib_apache_hashtable.js");
-load("__lib/__lib_apache_hashset.js");
-// load string padding
-load("__lib/__lib_padding.js");
-// Load new waek map
-load("__lib/__lib_harmony_weakmap.js");
-// Load reflect API
-load("__lib/__lib_reflect.js");
-// Load StringMap
-load("__lib/__lib_StringMap.js");
-
 //////////////////////////////////////////////////
-// Access Permission Contracts
+// System
 //////////////////////////////////////////////////
 
 // load system
 load("system.js");
 
+//////////////////////////////////////////////////
+// Libraries
+//////////////////////////////////////////////////
+
+// load hash set
+load("lib/__lib_apache_hashtable.js");
+load("lib/__lib_apache_hashset.js");
+// load string padding
+load("lib/__lib_padding.js");
+// Load new waek map
+load("lib/__lib_harmony_weakmap.js");
+// Load reflect API
+load("lib/__lib_reflect.js");
+// Load StringMap
+load("lib/__lib_StringMap.js");
+
+//////////////////////////////////////////////////
+// Access Permission Contracts
+//////////////////////////////////////////////////
+
 // load apc
-load("apc.js");
-
+load("src/Apc/apc.global.js");
+// load parser
+load("src/Apc/apc.parser.js");
 // load contract
-load("contract.js");
+load("src/Apc/apc.contract.js");
 
 //////////////////////////////////////////////////
-// RegEx
+// Regular Expressions
+//////////////////////////////////////////////////
+
+// The Global Object
+load("src/RegEx/regex.global.js");
+load("src/RegEx/regex.config.js");
+// expressions
+load("src/RegEx/regex.cache.js");
+load("src/RegEx/regex.literal.js");
+load("src/RegEx/regex.expression.js");
+// containment calculus
+load("src/RegEx/regex.first.js");
+load("src/RegEx/regex.containment.js");
+// parser
+load("src/Regex/regex.parser.js");
+
+//////////////////////////////////////////////////
+// Generator
 //////////////////////////////////////////////////
 
 
-/**
 //  interface
-load("regex.js");
+load("src/RegGen/reggen.contracts.js");
 // configuration
-load("config.js");
-
+load("src/RegGen/reggen.config.js");
 // Dummy Objects
-load("dummy.js");
+load("src/RegGen/reggen.dummy.js");
 // Lioteral Pool
-load("pool.js");
+load("src/RegGen/reggen.pool.js");
 // Replaceable Objects
-load("replaceable.js");
-
+load("src/RegGen/reggen.replaceable.js");
 // RegEx Generator
-load("generator.js");
+load("src/RegGen/reggen.generator.js");
 // RegEx Transformer
-load("transformation.js");
-
+load("src/RegGen/reggen.transformation.js");
 // Statistics
-load("statistics.js");
+load("src/RegGen/reggen.statistics.js");
 // Evaluator
-load("evaluation.js");
-
+load("src/RegGen/reggen.evaluation.js");
 // Main Application
-load("run.js");
-*/
+load("src/RegGen/reggen.run.js");
+
+
+//////////////////////////////////////////////////
+// TEST
+//////////////////////////////////////////////////
+
+
+
+
 //////////////////////////////////////////////////
 // Run
 //////////////////////////////////////////////////
@@ -83,20 +112,6 @@ load("run.js");
 //load("Regex/literal.js");
 
 
-
-
-// The Global Object
-load("RegEx/global.js");
-load("RegEx/config.js");
-
-load("RegEx/cache.js");
-load("RegEx/literal.js");
-load("RegEx/expression.js");
-
-load("RegEx/first.js");
-load("RegEx/containment.js");
-
-load("Regex/parser.js");
 
 /** TESTCASES **/
 
