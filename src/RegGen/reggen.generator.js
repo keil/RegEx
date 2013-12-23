@@ -67,29 +67,6 @@
 				// Termination Condition
 				if(depth==0) return results;
 
-				// r?
-				generate((depth-1), pool).foreach(function(i, rRes) {
-
-						// Depth
-						var depth = rRes.getDepth()+1;
-
-						// Pool
-						var pool = rRes.getPool();
-
-						// Replaceable
-						var dummy = new RegGen.Dummy.OptionalDummy(rRes.getDummy());
-						var rep = new RegGen.Replaceable.Replaceable(dummy);
-						/* FLAG */ rep.isOpt = true;
-
-						// Replaceables
-						var store = new RegGen.Replaceable.Store();
-						store.merge(rRes.getReplaceables());
-						/* FLAG */ store.setInOpt();
-						//store.push(rep);
-
-						results.push(new Result(rep, depth, pool, store));
-				});
-
 				// r*
 				generate((depth-1), pool).foreach(function(i, rRes) {
 
@@ -175,7 +152,7 @@
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var dummy = new RegGen.Dummy.NegationDummy(rRes.getDummy());
+						var dummy = new RegGen.Dummy.NegDummy(rRes.getDummy());
 						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						/* FLAG */ rep.isNeg = true;
 
@@ -186,7 +163,8 @@
 						/* INVERT */ store.invert();
 						//store.push(rep);
 
-						results.push(new Result(rep, depth, pool, store));
+                        // TODO, change 
+						//results.push(new Result(rep, depth, pool, store));
 				});
 
 				// r.s
@@ -200,7 +178,7 @@
 								var pool = sRes.getPool();
 
 								// Replaceable
-								var dummy = new RegGen.Dummy.ConcatDummy(rRes.getDummy(), sRes.getDummy());
+								var dummy = new RegGen.Dummy.DotDummy(rRes.getDummy(), sRes.getDummy());
 								var rep = new RegGen.Replaceable.Replaceable(dummy);
 								/* FLAG */ rep.isConcat = true;
 
@@ -215,6 +193,8 @@
 						});
 				});
 
+
+                /*
 				// OPTINAL: represents real/used regex
 				if(RegGen.config.full) {
 
@@ -246,11 +226,11 @@
 						store.push(rep);
 						//results.push(new Result(dummy, 1, pool, store));
 						// Generated ?-RegGen will not work with the transformed results.
-				}
+				}*/
 
 				// x 
 				var pool =  new RegGen.Pool.Pool(pool);
-				var dummy = pool.getInLiteral();
+				var dummy = pool.getInAtom();
 				var rep = new RegGen.Replaceable.Replaceable(dummy);
 				var store = new RegGen.Replaceable.Store();
 				store.push(rep);

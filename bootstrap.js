@@ -70,8 +70,10 @@ load("src/Regex/regex.parser.js");
 //////////////////////////////////////////////////
 
 
-//  interface
-load("src/RegGen/reggen.contracts.js");
+// interface to Access Permission Contracts
+// load("src/RegGen/reggen.contracts.js");
+// interface to Extended Regular Expressions
+load("src/RegGen/reggen.regex.js");
 // configuration
 load("src/RegGen/reggen.config.js");
 // Dummy Objects
@@ -104,7 +106,7 @@ load("src/RegGen/reggen.run.js");
 //////////////////////////////////////////////////
 
 // run regex genearator
-//RegEx.run.run();
+RegGen.run.run();
 //quit();
 //
 

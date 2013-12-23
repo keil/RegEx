@@ -73,7 +73,7 @@
 				this.solveInequality = function() {
 						RegGen.Statistics.currentCallStatistics = callStatistics;
 						//isSubset = left.isSubSetOf(right, new RegGen.APC.Contract.Containment.Context()); // TODO other direction
-						isSubset = right.isSuperSetOf(left, new RegGen.APC.Contract.Containment.Context());
+						isSubset = right.isSuperSetOf(left); //, new RegGen.APC.Contract.Containment.Context());
 						RegGen.Statistics.currentCallStatistics = undefined;
 				}
 

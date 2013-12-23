@@ -57,6 +57,7 @@ load("src/Regex/regex.parser.js");
 // TEST
 //////////////////////////////////////////////////
 
+(function() {
 var __start = new Date().getTime();
 
 /* Test: Regular Expression */
@@ -86,5 +87,54 @@ var __end = new Date().getTime();
 __sysout("%% START: " + __start);
 __sysout("%% END: " + __end);
 __sysout("%% TIME: " + (__end - __start));
+
+});
+
+
+
+
+
+
+(function() {
+		r = $("(?)*");
+		s = $("(a)*");
+
+		first(r, s);
+
+		test(r, s, true);
+})();
+
+// TEST SUBSET RELATION
+function first(r, s) {
+		__sysout(r.first());
+		__sysout(s.first());
+		__sysout(__RegEx.First.inversion(s.first()));
+		__sysout(__RegEx.First.intersection(r.first(), __RegEx.First.inversion(s.first())));
+} 
+
+function test(r, s, verbose) {
+
+		CONFIG.Verbose = (verbose!=undefined) ? verbose : false;
+
+		__sysout("* isSubSetOf: " + r + " <= " + s);
+		var subRS = r.isSubSetOf(s);
+		__sysout("** " + subRS);
+		__sysout("* isSubSetOf: " + s + " <= " + r);
+		var subSR = s.isSubSetOf(r);
+		__sysout("** " + subSR);
+
+		__sysout("* isSupSetOf: " + r + " => " + s);
+		var supRS = r.isSuperSetOf(s);
+		__sysout("** " + supRS);
+		__sysout("* isSupSetOf: " + s + " => " + r);
+		var supSR = s.isSuperSetOf(r);
+		__sysout("** " + supSR);
+
+		__sysout("\n");
+}
+
+
+
+
 
 quit();

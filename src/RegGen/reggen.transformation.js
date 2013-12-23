@@ -82,7 +82,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "L1", function(replaceable, pool, origin) {
-						return pool.getNotInLiteral();
+						return pool.getNotInAtom();
 				}, /* Orig <= Mod */ function(rep) {
 						var result = false;
 						if(rep.inAnd) result=true;
@@ -98,7 +98,7 @@
 				}));
 
 				results.append(iterate(result, set, "L2", function(replaceable, pool, origin) {
-						return new RegGen.Dummy.QMarkDummy();
+						return new RegGen.Dummy.WildcardDummy();
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						return result;
@@ -286,7 +286,7 @@
 				var dummy = result.getDummy();
 				var pool = result.getPool();
 				// Origin
-				var origin = dummy.dump().reduce();
+				var origin = dummy.dump();
 				// Modification
 				set.foreach(function(i, replaceable) {
 
@@ -298,7 +298,7 @@
 						if(newLiteral==undefined) return;
 
 						replaceable.replaceWith(newLiteral);
-						var modification = dummy.dump().reduce();
+						var modification = dummy.dump();
 
 						// Transformation Result
 						if(origin==modification) {

@@ -46,38 +46,49 @@
 				var inCounter = (pool==undefined) ? 0 : pool.getInCounter();
 				var notInCounter = (pool==undefined) ? 0 :  pool.getNotInCounter();
 
-				var inLast = null;
-				var notInLast = null;
+// TODO required ?
+//				var inLast = null;
+//				var notInLast = null;
 
-				/* @return new In-literal
+				/* @return new In-atom
 				*/
-				this.getInLiteral = function() {
+				this.getInAtom = function() {
 						inCounter++;
 						var key = inString+inCounter;
 
-						if(inCache.has(new RegGen.Dummy.NameDummy(key).dump().toString())) {
+						if(inCache.has(new RegGen.Dummy.AtomDummy(key).dump().toString())) {
 								return this.getInLiteral();
 						} else {
-								var literal = new RegGen.Dummy.NameDummy(key);
+								var literal = new RegGen.Dummy.AtomDummy(key);
 								inCache.set(literal.dump().toString(), literal);
 								return literal;
 						}
 				};
 
-				/* @return new NotIn-literal
+				/* @return new NotIn-atom
 				*/
-				this.getNotInLiteral = function() {	
+				this.getNotInAtom = function() {	
 						notInCounter++;
 						var key = notInString+notInCounter;
 
-						if(notInCache.has(new RegGen.Dummy.NameDummy(key).dump().toString())) {
+						if(notInCache.has(new RegGen.Dummy.AtomDummy(key).dump().toString())) {
 								return this.getInLiteral();
 						} else {
-								var literal = new RegGen.Dummy.NameDummy(key);
+								var literal = new RegGen.Dummy.AtomDummy(key);
 								notInCache.set(literal.dump().toString(), literal);
 								return literal;
 						}
 				};
+
+
+
+// extend for character sets
+
+
+
+
+
+
 
 				/** To String
 				 * @return String

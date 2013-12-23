@@ -27,7 +27,7 @@ __RegEx.Config = (function() {
 		 * enables: true, disabled: false
 		 * default: false
 		 */
-		CONFIG.Verbose = false;
+		CONFIG.Verbose = true;
 
 		/* Use Containment Calculus PROVE AXIOMS
 		 * enables: true, disabled: false
