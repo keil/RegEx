@@ -96,8 +96,8 @@ __sysout("%% TIME: " + (__end - __start));
 
 
 (function() {
-		r = $("(?)*");
-		s = $("(a)*");
+		r = $("([digit])*");
+		s = $("([digit])*");
 
 		first(r, s);
 

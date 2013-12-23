@@ -194,39 +194,74 @@
 				});
 
 
-                /*
+                
 				// OPTINAL: represents real/used regex
 				if(RegGen.config.full) {
 
-						// {} 
-						var dummy = new RegGen.Dummy.EmptySetDummy();
+                        // A 
+						var pool =  new RegGen.Pool.Pool(pool);
+                        var dummy = pool.getInSet();
 						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
 
-						// ^
-						var dummy = new RegGen.Dummy.EmptyDummy();
+                        // ^A 
+						var pool =  new RegGen.Pool.Pool(pool);
+                        var dummy = pool.getInInv();
 						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
 
-						// @
-						var dummy = new RegGen.Dummy.AtDummy();
+						// ? 
+						var pool =  new RegGen.Pool.Pool(pool);
+                        var dummy = new RegGen.Dummy.WildcardDummy();
 						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
 
-						// ?
-						var dummy = new RegGen.Dummy.QMarkDummy();
+						// [difit]
+						var pool =  new RegGen.Pool.Pool(pool);
+                        var dummy = new RegGen.Dummy.DigitDummy();
 						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
-						//results.push(new Result(dummy, 1, pool, store));
-						// Generated ?-RegGen will not work with the transformed results.
-				}*/
+						results.push(new Result(dummy, 1, pool, store));
+
+						// [char]
+						var pool =  new RegGen.Pool.Pool(pool);
+                        var dummy = new RegGen.Dummy.CharDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
+						store.push(rep);
+						results.push(new Result(dummy, 1, pool, store));
+
+                        // [lchar]
+						var pool =  new RegGen.Pool.Pool(pool);
+                        var dummy = new RegGen.Dummy.LowerCharDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
+						store.push(rep);
+						results.push(new Result(dummy, 1, pool, store));
+
+                        // [uchar]
+						var pool =  new RegGen.Pool.Pool(pool);
+                        var dummy = new RegGen.Dummy.UpperCharDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
+						store.push(rep);
+						results.push(new Result(dummy, 1, pool, store));
+
+						// [alpha]
+                        var pool =  new RegGen.Pool.Pool(pool);
+						var dummy = new RegGen.Dummy.AlphaDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
+						store.push(rep);
+						results.push(new Result(dummy, 1, pool, store));
+				}
 
 				// x 
 				var pool =  new RegGen.Pool.Pool(pool);

@@ -17,7 +17,9 @@ var __RegGen = (function(RegEx) {
 		// Global Scope
 		SELF = {};
 		RegGen = {};
-		RegGen.Expressions = SELF;
+		
+        RegGen.Expressions = SELF;
+        // TODO USE THSI AS SWITCH
 
         //////////////////////////////////////////////////
 		// Renaming of Access Permission Contracts

@@ -82,6 +82,9 @@ __RegEx.Containment = (function() {
 				var ls = first(r, s);
 				var result = true;
 				ls.foreach(function(i, l) {
+
+                        if(l == __RegEx.Literal.Set()) return result; // break
+
 						var derivR = r.nderiv(l);
 						var derivS = s.pderiv(l);
 
