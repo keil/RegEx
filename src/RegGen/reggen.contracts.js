@@ -12,31 +12,31 @@
  * $Date$
  * $Rev$
  */
-var __RegEx = (function(APC) {
+var __RegGen = (function(APC) {
 
 		// Global Scope
 		SELF = {};
-		RegEx = {};
-		RegEx.Expressions = SELF;
+		RegGen = {};
+		RegGen.Expressions = SELF;
 
 		//////////////////////////////////////////////////
 		// Interface to APC
 		//////////////////////////////////////////////////
 
-		RegEx.APC = APC;
-		APC.RegEx = RegEx;
+		RegGen.APC = APC;
+		APC.RegGen = RegGen;
 
 		//////////////////////////////////////////////////
 		// Interface to Access Permission Contracts
 		//////////////////////////////////////////////////
 
-		/** RegEx Wrapper
+		/** RegGen Wrapper
 		 * Wrapper Object for Regular Expression Objects
 		 * @param target AccessPermissionContract
 		 */
 
 		var counter = 0;
-		function RegExWrapper(target) {
+		function RegGenWrapper(target) {
 return target;
 
 				var uid = counter++;
@@ -49,36 +49,36 @@ return target;
 				//////////////////////////////////////////////////
 				this.first = function() {return target.first()};
 				this.derive = function(name) {
-//						/* Increase counter */ if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incDeriveStat();
+//						/* Increase counter */ if(RegGen.Statistics.currentCallStatistics!=undefined) RegGen.Statistics.currentCallStatistics.incDeriveStat();
 						return target.derive(name);
 				};
 				this.lderive = function(larg) {
-//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incLDeriveStat();
+//						/* Increase counter */if(RegGen.Statistics.currentCallStatistics!=undefined) RegGen.Statistics.currentCallStatistics.incLDeriveStat();
 						return target.lderive(larg);
 				};
 				this.uderive = function(larg) {
-//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incUDeriveStat();
+//						/* Increase counter */if(RegGen.Statistics.currentCallStatistics!=undefined) RegGen.Statistics.currentCallStatistics.incUDeriveStat();
 						return target.uderive(larg);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function(arg, ctx) {
-//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSuperSetOfStat();
+//						/* Increase counter */if(RegGen.Statistics.currentCallStatistics!=undefined) RegGen.Statistics.currentCallStatistics.incSuperSetOfStat();
 						return target.isSuperSetOf(arg, ctx)
 				};
 				this.isSubSetOf = function(arg, ctx) {
-//						/* Increase counter */if(RegEx.Statistics.currentCallStatistics!=undefined) RegEx.Statistics.currentCallStatistics.incSubSetOfStat();
+//						/* Increase counter */if(RegGen.Statistics.currentCallStatistics!=undefined) RegGen.Statistics.currentCallStatistics.incSubSetOfStat();
 						return target.isSubSetOf(arg, ctx);
 				};
 				this.reduce = function() {
 		//				var tmp;
 						/* Deactivate Statistics */
-		//				tmp = RegEx.Statistics.currentCallStatistics;
-		//				RegEx.Statistics.currentCallStatistics=undefined;
+		//				tmp = RegGen.Statistics.currentCallStatistics;
+		//				RegGen.Statistics.currentCallStatistics=undefined;
 
 		//				target = target.reduce();
 
 		//				/* Deactivate Statistics */
-		//				RegEx.Statistics.currentCallStatistics = tmp;
+		//				RegGen.Statistics.currentCallStatistics = tmp;
 
 						return this;
 				};
@@ -92,7 +92,7 @@ return target;
 				//////////////////////////////////////////////////
 				this.getTarget = function() {return target;};
 		}
-		SELF.RegExWrapper = RegExWrapper;
+		SELF.RegGenWrapper = RegGenWrapper;
 
 		//////////////////////////////////////////////////
 		// Renaming of Access Permission Contracts
@@ -104,15 +104,15 @@ return target;
 		SELF.AtLiteral			= APC.Contract.AtLiteral;
 		SELF.QMarkLiteral		= APC.Contract.QMarkLiteral;
 		SELF.NameLiteral		= APC.Contract.NameLiteral;
-		SELF.RegExLiteral		= APC.Contract.RegExLiteral;
+		SELF.RegGenLiteral		= APC.Contract.RegGenLiteral;
 
-		SELF.OptionalRegEx		= APC.Contract.QMarkContract;
-		SELF.StarRegEx			= APC.Contract.StarContract;
-		SELF.OrRegEx			= APC.Contract.OrContract;
-		SELF.AndRegEx			= APC.Contract.AndContract;
-		SELF.NegRegEx			= APC.Contract.NegContract;
-		SELF.ConcatRegEx		= APC.Contract.ConcatContract;
+		SELF.OptionalRegGen		= APC.Contract.QMarkContract;
+		SELF.StarRegGen			= APC.Contract.StarContract;
+		SELF.OrRegGen			= APC.Contract.OrContract;
+		SELF.AndRegGen			= APC.Contract.AndContract;
+		SELF.NegRegGen			= APC.Contract.NegContract;
+		SELF.ConcatRegGen		= APC.Contract.ConcatContract;
 
-		return RegEx;
+		return RegGen;
 
 })(__APC);
