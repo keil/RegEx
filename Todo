@@ -1,0 +1,24 @@
+* Chache für die first Literale
+** if(fst==undefined) fst = // calculate first ser; return fst;
+
+
+
+
+// REGESX GENERATOR
+
+* RegEx Struktur
+** Assoziation zu Contracts (Alias) 
+
+* Literal Pool Generatior
+** Pool Object
+
+* RegEx generator
+** gegeben Tiefe/ Baue eine Lisyte mit RegEx
+** RegEx-Container-Object welches den RegEx und den Pool beinhaltet
+
+* Tupel Generator
+** Constraints um RegEx zu veruandern
+** RegEx Paare welche Subset oder nicht-Subset sind
+
+* Statistics Object
+
