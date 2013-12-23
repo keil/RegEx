@@ -12,10 +12,10 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.Pool = SELF;
+		RegGen.Pool = SELF;
 
 		//////////////////////////////////////////////////
 		//  Literal Pool
@@ -55,10 +55,10 @@
 						inCounter++;
 						var key = inString+inCounter;
 
-						if(inCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())) {
+						if(inCache.has(new RegGen.Dummy.NameDummy(key).dump().toString())) {
 								return this.getInLiteral();
 						} else {
-								var literal = new RegEx.Dummy.NameDummy(key);
+								var literal = new RegGen.Dummy.NameDummy(key);
 								inCache.set(literal.dump().toString(), literal);
 								return literal;
 						}
@@ -70,10 +70,10 @@
 						notInCounter++;
 						var key = notInString+notInCounter;
 
-						if(notInCache.has(new RegEx.Dummy.NameDummy(key).dump().toString())) {
+						if(notInCache.has(new RegGen.Dummy.NameDummy(key).dump().toString())) {
 								return this.getInLiteral();
 						} else {
-								var literal = new RegEx.Dummy.NameDummy(key);
+								var literal = new RegGen.Dummy.NameDummy(key);
 								notInCache.set(literal.dump().toString(), literal);
 								return literal;
 						}
@@ -105,4 +105,4 @@
 		}
 		SELF.Pool = Pool;
 
-})(__RegEx);
+})(__RegGen);

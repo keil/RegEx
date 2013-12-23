@@ -12,10 +12,10 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.Statistics = SELF;
+		RegGen.Statistics = SELF;
 
 		//////////////////////////////////////////////////
 		// Container
@@ -57,8 +57,8 @@
 		//////////////////////////////////////////////////
 
 		/** Container
-		 * @param left left RegEx Wrapper
-		 * @param right right RegEx Wrapper
+		 * @param left left RegGen Wrapper
+		 * @param right right RegGen Wrapper
 		 * @param depth nesting index
 		 * @param isValid true, if left <= right, false otherwise
 		 * @param type Transformation Type
@@ -71,10 +71,10 @@
 				/** Solve Inequality
 				*/	
 				this.solveInequality = function() {
-						RegEx.Statistics.currentCallStatistics = callStatistics;
-						//isSubset = left.isSubSetOf(right, new RegEx.APC.Contract.Containment.Context()); // TODO other direction
-						isSubset = right.isSuperSetOf(left, new RegEx.APC.Contract.Containment.Context());
-						RegEx.Statistics.currentCallStatistics = undefined;
+						RegGen.Statistics.currentCallStatistics = callStatistics;
+						//isSubset = left.isSubSetOf(right, new RegGen.APC.Contract.Containment.Context()); // TODO other direction
+						isSubset = right.isSuperSetOf(left, new RegGen.APC.Contract.Containment.Context());
+						RegGen.Statistics.currentCallStatistics = undefined;
 				}
 
 				/** Return Statistics
@@ -90,14 +90,14 @@
 				}
 
 				/** Left
-				 * @return left RegEx
+				 * @return left RegGen
 				 */
 				this.getLeft = function() {
 						return left;
 				}
 
 				/** Right
-				 * @return right RegEx
+				 * @return right RegGen
 				 */
 				this.getRight = function() {
 						return right;
@@ -234,4 +234,4 @@
 		}
 		SELF.make = make;
 
-})(__RegEx);
+})(__RegGen);

@@ -12,10 +12,10 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.Transformation = SELF;
+		RegGen.Transformation = SELF;
 
 		//////////////////////////////////////////////////
 		// Result
@@ -98,7 +98,7 @@
 				}));
 
 				results.append(iterate(result, set, "L2", function(replaceable, pool, origin) {
-						return new RegEx.Dummy.QMarkDummy();
+						return new RegGen.Dummy.QMarkDummy();
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						return result;
@@ -123,7 +123,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "O1", function(replaceable, pool, origin) {
-						return new RegEx.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
+						return new RegGen.Dummy.OrDummy(replaceable.getOrigin(), pool.getNotInLiteral());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						if(rep.inAnd) result=false;
@@ -150,7 +150,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "A1", function(replaceable, pool, origin) {
-						return new RegEx.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
+						return new RegGen.Dummy.AndDummy(replaceable.getOrigin(), pool.getNotInLiteral());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = false;
 						if(rep.inAnd) result=true;
@@ -177,7 +177,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "Q1", function(replaceable, pool, origin) {
-						return new RegEx.Dummy.OptionalDummy(replaceable.getOrigin());
+						return new RegGen.Dummy.OptionalDummy(replaceable.getOrigin());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						if(rep.inOpt) result=true;
@@ -206,7 +206,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "S1", function(replaceable, pool, origin) {
-						return new RegEx.Dummy.StarDummy(replaceable.getOrigin());
+						return new RegGen.Dummy.StarDummy(replaceable.getOrigin());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						if(rep.inStar) result=true;
@@ -236,7 +236,7 @@
 				set.append(result.getReplaceables().getCache());
 
 				results.append(iterate(result, set, "N1", function(replaceable, pool, origin) {
-						return new RegEx.Dummy.NegationDummy(replaceable.getOrigin());
+						return new RegGen.Dummy.NegationDummy(replaceable.getOrigin());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = false;
 						if(rep.inAnd) result=true;
@@ -251,7 +251,7 @@
 				}));
 
 				results.append(iterate(result, set, "N2", function(replaceable, pool, origin) {
-						return new RegEx.Dummy.NegationDummy(pool.getNotInLiteral());
+						return new RegGen.Dummy.NegationDummy(pool.getNotInLiteral());
 				}, /* Orig <= Mod */ function(rep) {
 						var result = true;
 						if(rep.inAnd) result=true;
@@ -316,4 +316,4 @@
 
 				return results;
 		}
-})(__RegEx);
+})(__RegGen);

@@ -12,18 +12,18 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.Generator = SELF;
+		RegGen.Generator = SELF;
 
 		//////////////////////////////////////////////////
 		// Result
 		//////////////////////////////////////////////////
 
 		/** Generator Result 
-		 * @param dummy	RegEx Dummy 
-		 * @param depth RegEx depth
+		 * @param dummy	RegGen Dummy 
+		 * @param depth RegGen depth
 		 * @param pool	Literal pool
 		 * @param cache	Replaceable Cache
 		 */
@@ -47,10 +47,10 @@
 
 		/** Make Function
 		 * @param depth	Depth of Regular Expressions (nesting index)
-		 * @return Array of RegEx.Generator.Result
+		 * @return Array of RegGen.Generator.Result
 		 */
 		function make(depth) {
-				var pool = new RegEx.Pool.Pool(undefined, undefined);	
+				var pool = new RegGen.Pool.Pool(undefined, undefined);	
 				return generate(depth, pool);
 		}
 		SELF.make = make;
@@ -58,7 +58,7 @@
 		/** Generate Function
 		 * @param depth	Nesting Index
 		 * @param pool	Literal Pool
-		 * @return Array of RegEx.Generator.Result
+		 * @return Array of RegGen.Generator.Result
 		 */
 		function generate(depth, pool) {
 
@@ -77,12 +77,12 @@
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var dummy = new RegEx.Dummy.OptionalDummy(rRes.getDummy());
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var dummy = new RegGen.Dummy.OptionalDummy(rRes.getDummy());
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						/* FLAG */ rep.isOpt = true;
 
 						// Replaceables
-						var store = new RegEx.Replaceable.Store();
+						var store = new RegGen.Replaceable.Store();
 						store.merge(rRes.getReplaceables());
 						/* FLAG */ store.setInOpt();
 						//store.push(rep);
@@ -100,12 +100,12 @@
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var dummy = new RegEx.Dummy.StarDummy(rRes.getDummy());
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var dummy = new RegGen.Dummy.StarDummy(rRes.getDummy());
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						/* FLAG */ rep.isStar = true;
 
 						// Replaceables
-						var store = new RegEx.Replaceable.Store();
+						var store = new RegGen.Replaceable.Store();
 						store.merge(rRes.getReplaceables());
 						/* FLAG */ store.setInStar();
 						//store.push(rep);
@@ -124,12 +124,12 @@
 								var pool = sRes.getPool();
 
 								// Replaceable
-								var dummy = new RegEx.Dummy.OrDummy(rRes.getDummy(), sRes.getDummy());
-								var rep = new RegEx.Replaceable.Replaceable(dummy);
+								var dummy = new RegGen.Dummy.OrDummy(rRes.getDummy(), sRes.getDummy());
+								var rep = new RegGen.Replaceable.Replaceable(dummy);
 								/* FLAG */ rep.isOr = true;
 
 								// Replaceables
-								var store = new RegEx.Replaceable.Store();
+								var store = new RegGen.Replaceable.Store();
 								store.merge(rRes.getReplaceables());
 								store.merge(sRes.getReplaceables());
 								/* FLAG */ store.setInOr();
@@ -150,12 +150,12 @@
 								var pool = sRes.getPool();
 
 								// Replaceable
-								var dummy = new RegEx.Dummy.AndDummy(rRes.getDummy(), sRes.getDummy());
-								var rep = new RegEx.Replaceable.Replaceable(dummy);
+								var dummy = new RegGen.Dummy.AndDummy(rRes.getDummy(), sRes.getDummy());
+								var rep = new RegGen.Replaceable.Replaceable(dummy);
 								/* FLAG */ rep.isAnd = true;
 
 								// Replaceables
-								var store = new RegEx.Replaceable.Store();
+								var store = new RegGen.Replaceable.Store();
 								store.merge(rRes.getReplaceables());
 								store.merge(sRes.getReplaceables());
 								/* FLAG */ store.setInAnd();
@@ -175,12 +175,12 @@
 						var pool = rRes.getPool();
 
 						// Replaceable
-						var dummy = new RegEx.Dummy.NegationDummy(rRes.getDummy());
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
+						var dummy = new RegGen.Dummy.NegationDummy(rRes.getDummy());
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
 						/* FLAG */ rep.isNeg = true;
 
 						// Replaceables
-						var store = new RegEx.Replaceable.Store();
+						var store = new RegGen.Replaceable.Store();
 						store.merge(rRes.getReplaceables());
 						/* FLAG */ store.setInNeg();
 						/* INVERT */ store.invert();
@@ -200,12 +200,12 @@
 								var pool = sRes.getPool();
 
 								// Replaceable
-								var dummy = new RegEx.Dummy.ConcatDummy(rRes.getDummy(), sRes.getDummy());
-								var rep = new RegEx.Replaceable.Replaceable(dummy);
+								var dummy = new RegGen.Dummy.ConcatDummy(rRes.getDummy(), sRes.getDummy());
+								var rep = new RegGen.Replaceable.Replaceable(dummy);
 								/* FLAG */ rep.isConcat = true;
 
 								// Store 
-								var store = new RegEx.Replaceable.Store();
+								var store = new RegGen.Replaceable.Store();
 								store.merge(rRes.getReplaceables());
 								store.merge(sRes.getReplaceables());
 								/* FLAG */ store.setInConcat();
@@ -216,47 +216,47 @@
 				});
 
 				// OPTINAL: represents real/used regex
-				if(RegEx.config.full) {
+				if(RegGen.config.full) {
 
 						// {} 
-						var dummy = new RegEx.Dummy.EmptySetDummy();
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var store = new RegEx.Replaceable.Store();
+						var dummy = new RegGen.Dummy.EmptySetDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
 
 						// ^
-						var dummy = new RegEx.Dummy.EmptyDummy();
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var store = new RegEx.Replaceable.Store();
+						var dummy = new RegGen.Dummy.EmptyDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
 
 						// @
-						var dummy = new RegEx.Dummy.AtDummy();
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var store = new RegEx.Replaceable.Store();
+						var dummy = new RegGen.Dummy.AtDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
 						results.push(new Result(dummy, 1, pool, store));
 
 						// ?
-						var dummy = new RegEx.Dummy.QMarkDummy();
-						var rep = new RegEx.Replaceable.Replaceable(dummy);
-						var store = new RegEx.Replaceable.Store();
+						var dummy = new RegGen.Dummy.QMarkDummy();
+						var rep = new RegGen.Replaceable.Replaceable(dummy);
+						var store = new RegGen.Replaceable.Store();
 						store.push(rep);
 						//results.push(new Result(dummy, 1, pool, store));
-						// Generated ?-RegEx will not work with the transformed results.
+						// Generated ?-RegGen will not work with the transformed results.
 				}
 
 				// x 
-				var pool =  new RegEx.Pool.Pool(pool);
+				var pool =  new RegGen.Pool.Pool(pool);
 				var dummy = pool.getInLiteral();
-				var rep = new RegEx.Replaceable.Replaceable(dummy);
-				var store = new RegEx.Replaceable.Store();
+				var rep = new RegGen.Replaceable.Replaceable(dummy);
+				var store = new RegGen.Replaceable.Store();
 				store.push(rep);
 				results.push(new Result(rep, 1, pool, store));
 
 				return results;
 		}
 
-})(__RegEx);
+})(__RegGen);

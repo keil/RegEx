@@ -12,73 +12,73 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.Dummy = SELF;
+		RegGen.Dummy = SELF;
 
 		/** Dummy of {} */
 		function EmptySetDummy() {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.EmptySetLiteral()); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.EmptySetLiteral()) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.EmptySetLiteral()); };
+				this.toString = function() { return "dummyof " + (new RegGen.Expressions.EmptySetLiteral()) };
 		}
 		SELF.EmptySetDummy = EmptySetDummy;
 
 		/** Dummy of ^ */
 		function EmptyDummy() {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.EmptyLiteral()); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.EmptyLiteral()) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.EmptyLiteral()); };
+				this.toString = function() { return "dummyof " + (new RegGen.Expressions.EmptyLiteral()) };
 		}
 		SELF.EmptyDummy = EmptyDummy;
 
 		/** Dummy of @ */
 		function AtDummy() {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.AtLiteral()); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.AtLiteral()) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.AtLiteral()); };
+				this.toString = function() { return "dummyof " + (new RegGen.Expressions.AtLiteral()) };
 		}
 		SELF.AtDummy = AtDummy;
 
 		/** Dummy of ? */
 		function QMarkDummy() {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.QMarkLiteral()); };
-				this.toString = function() { return "dummyof " + (RegEx.Expressions.QMarkLiteral()) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.QMarkLiteral()); };
+				this.toString = function() { return "dummyof " + (RegGen.Expressions.QMarkLiteral()) };
 		}
 		SELF.QMarkDummy = QMarkDummy;
 
 		/** Dummy of a */
 		function NameDummy(varname) {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.NameLiteral(varname)); };	
-				this.toString = function() { return "dummyof " + (RegEx.Expressions.NameLiteral(varname)) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.NameLiteral(varname)); };	
+				this.toString = function() { return "dummyof " + (RegGen.Expressions.NameLiteral(varname)) };
 		}
 		SELF.NameDummy = NameDummy;
 
 		/** Dummy of A */
-		function RegExDummy(regex) {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.RegExLiteral(regex)); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.RegExLiteral(regex)) };
+		function RegGenDummy(regex) {
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.RegGenLiteral(regex)); };
+				this.toString = function() { return "dummyof " + (new RegGen.Expressions.RegGenLiteral(regex)) };
 		}
-		SELF.RegExDummy = RegExDummy;
+		SELF.RegGenDummy = RegGenDummy;
 
 		/** Dummy of r? */
 		function OptionalDummy(dumpable) {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.OptionalRegEx(dumpable.dump())); };
-				this.toString = function() { return "dummyof " +  (new RegEx.Expressions.OptionalRegEx(dumpable.dump())) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.OptionalRegGen(dumpable.dump())); };
+				this.toString = function() { return "dummyof " +  (new RegGen.Expressions.OptionalRegGen(dumpable.dump())) };
 				this.getSubDummy = function() { return dumpable; };
 		}
 		SELF.OptionalDummy = OptionalDummy;
 
 		/** Dummy of r* */
 		function StarDummy(dumpable) {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.StarRegEx(dumpable.dump())); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.StarRegEx(dumpable.dump())) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.StarRegGen(dumpable.dump())); };
+				this.toString = function() { return "dummyof " + (new RegGen.Expressions.StarRegGen(dumpable.dump())) };
 				this.getSubDummy = function() { return dumpable; };
 		}
 		SELF.StarDummy = StarDummy;
 
 		/** Dummy of r+s */
 		function OrDummy(dumpable0, dumpable1) {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.OrRegEx(dumpable0.dump(), dumpable1.dump())); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.OrRegEx(dumpable0.dump(), dumpable1.dump())) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.OrRegGen(dumpable0.dump(), dumpable1.dump())); };
+				this.toString = function() { return "dummyof " + (new RegGen.Expressions.OrRegGen(dumpable0.dump(), dumpable1.dump())) };
 				this.getLeftSubDummy = function() { return dumpable0; };
 				this.getRightSubDummy = function() { return dumpable1; };
 		}
@@ -86,8 +86,8 @@
 
 		/** Dummy of r&s */
 		function AndDummy(dumpable0, dumpable1) {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.AndRegEx(dumpable0.dump(), dumpable1.dump())); };
-				this.toString = function() { return "dummyof " + (new RegEx.Expressions.AndRegEx(dumpable0.dump(), dumpable1.dump())) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.AndRegGen(dumpable0.dump(), dumpable1.dump())); };
+				this.toString = function() { return "dummyof " + (new RegGen.Expressions.AndRegGen(dumpable0.dump(), dumpable1.dump())) };
 				this.getLeftSubDummy = function() { return dumpable0; };
 				this.getRightSubDummy = function() { return dumpable1; };
 		}
@@ -95,19 +95,19 @@
 
 		/** Dummy of !r */
 		function NegationDummy(dumpable) {
-				this.dump = function() { return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.NegRegEx(dumpable.dump())); };
-				this.toString = function () { return "dummyof " + (new RegEx.Expressions.NegRegEx(dumpable.dump())) };
+				this.dump = function() { return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.NegRegGen(dumpable.dump())); };
+				this.toString = function () { return "dummyof " + (new RegGen.Expressions.NegRegGen(dumpable.dump())) };
 				this.getSubDummy = function() { return dumpable; };
 		}
 		SELF.NegationDummy = NegationDummy;
 
 		/** Dummy of r,s */
 		function ConcatDummy(dumpable0, dumpable1) {
-				this.dump = function() {return new RegEx.Expressions.RegExWrapper(new RegEx.Expressions.ConcatRegEx(dumpable0.dump(), dumpable1.dump())); }
-				this.toString = function () { return "dummyof " + (new RegEx.Expressions.ConcatRegEx(dumpable0.dump(), dumpable1.dump())) };
+				this.dump = function() {return new RegGen.Expressions.RegGenWrapper(new RegGen.Expressions.ConcatRegGen(dumpable0.dump(), dumpable1.dump())); }
+				this.toString = function () { return "dummyof " + (new RegGen.Expressions.ConcatRegGen(dumpable0.dump(), dumpable1.dump())) };
 				this.getLeftSubDummy = function() { return dumpable0; };
 				this.getRightSubDummy = function() { return dumpable1; };
 		}
 		SELF.ConcatDummy = ConcatDummy;
 
-})(__RegEx);
+})(__RegGen);

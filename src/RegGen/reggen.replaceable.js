@@ -12,10 +12,10 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.Replaceable = SELF;
+		RegGen.Replaceable = SELF;
 
 		/** Replaceable 
 		 * @param dummy	Dummy Object
@@ -237,4 +237,4 @@
 		}
 		SELF.Cache = Cache;
 
-})(__RegEx);
+})(__RegGen);

@@ -12,23 +12,23 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.Evaluation = SELF;
+		RegGen.Evaluation = SELF;
 
 		//////////////////////////////////////////////////
 		// Result
 		//////////////////////////////////////////////////
 
 		/** Evaluation Result
-		 * @param failed sum of failed RegEx
-		 * @param ok sum of ok RegEx
-		 * @param correct sum correct failed RegEx (indeterminable)
+		 * @param failed sum of failed RegGen
+		 * @param ok sum of ok RegGen
+		 * @param correct sum correct failed RegGen (indeterminable)
 		 * @param max Array: depth -> max of derivations
 		 * @param avg Array: depth -> averaged sum of derivations
-		 * @param failedSet Array with failed RegEx
-		 * @param indeterminableSet Array with indeterminable RegEx
+		 * @param failedSet Array with failed RegGen
+		 * @param indeterminableSet Array with indeterminable RegGen
 		 *
 		 */
 		function Result(failed, ok, correct, max, avg, failedSet, indeterminableSet) {
@@ -107,4 +107,4 @@
 		}
 		SELF.make = make;
 
-})(__RegEx);
+})(__RegGen);

@@ -12,10 +12,10 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		CONFIG = {};
-		RegEx.config = CONFIG;
+		RegGen.config = CONFIG;
 
 		//////////////////////////////////////////////////
 		// Depth / Nesting Index
@@ -50,4 +50,4 @@
 		//////////////////////////////////////////////////
 		CONFIG.fulloutput = true;
 
-})(__RegEx);;
+})(__RegGen);;

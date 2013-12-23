@@ -12,10 +12,10 @@
  * $Date$
  * $Rev$
  */
-(function(RegEx) {
+(function(RegGen) {
 
 		SELF = {};
-		RegEx.run = SELF;
+		RegGen.run = SELF;
 
 		var fstWidth = 100;
 		var sndWidth = 20;
@@ -44,16 +44,16 @@
 				// Generate Results 
 				//////////////////////////////////////////////////
 
-				/** Out */ out("Generate Regular Expressionsss (" + RegEx.config.depth + ")");
+				/** Out */ out("Generate Regular Expressionsss (" + RegGen.config.depth + ")");
 				/** Time */ var time = new Date().getTime();
-				var genRes = RegEx.Generator.make(RegEx.config.depth);
+				var genRes = RegGen.Generator.make(RegGen.config.depth);
 				/** Out */ if(genRes!=undefined) ok(); else fail();
 				/** Notice */ if(genRes!=undefined) notice("Results: " + genRes.length );
 				/** Notice */ if(genRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(genRes!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 
 				/** Debug */
-				if(RegEx.config.debug) {
+				if(RegGen.config.debug) {
 						genRes.foreach(function(i, result) {
 								__sysout("RESULT (" + i + "): \n " + result.toString() + "\n");
 						});
@@ -65,14 +65,14 @@
 
 				/** Out */ out("Call Transformation");
 				/** Time */ var time = new Date().getTime();
-				var transRes = RegEx.Transformation.make(genRes);
+				var transRes = RegGen.Transformation.make(genRes);
 				/** Out */ if(transRes!=undefined) ok(); else fail();
 				/** Notice */ if(transRes!=undefined) notice("Results: " + transRes.length);
 				/** Notice */ if(transRes!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(genRes!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 
 				/** Debug */
-				if(RegEx.config.debug) {
+				if(RegGen.config.debug) {
 						transRes.foreach(function(i, result) {
 								__sysout("TRANSFORMATION (" + i + "): \n " + result.toString() + "\n");
 						});
@@ -84,7 +84,7 @@
 
 				/** Out */ out("Make Container");
 				/** Time */ var time = new Date().getTime();
-				var container = RegEx.Statistics.convert(transRes);
+				var container = RegGen.Statistics.convert(transRes);
 				/** Out */ if(container!=undefined) ok(); else fail();
 				/** Notice */ if(container!=undefined) notice("Results: " + container.length);
 				/** Notice */ if(container!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
@@ -92,14 +92,14 @@
 
 				/** Out */ out("Solve Regular Expression Inequalities");
 				/** Time */ var time = new Date().getTime();
-				var statistics = RegEx.Statistics.make(container);
+				var statistics = RegGen.Statistics.make(container);
 				/** Out */ if(statistics!=undefined) ok(); else fail();
 				/** Notice */ if(statistics!=undefined) notice("Results: " + statistics.length);
 				/** Notice */ if(statistics!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(statistics!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
 
 				/** Debug */
-				if(RegEx.config.debug) {
+				if(RegGen.config.debug) {
 						statistics.foreach(function(i, result) {
 								__sysout("STATISTICS (" + i + "): \n " + result.toString() + "\n");
 						});
@@ -116,7 +116,7 @@
 
 				/** Out */ out("Evaluate Statistics");
 				/** Time */ var time = new Date().getTime();
-				var result = RegEx.Evaluation.make(statistics);;
+				var result = RegGen.Evaluation.make(statistics);;
 				/** Out */ if(result!=undefined) ok(); else fail();
 				/** Notice */ if(result!=undefined) notice("Time: " + (new Date().getTime()-time) + "ms");
 				/** Notice */ if(result!=undefined) notice("Total: " + (new Date().getTime()-total) + "ms");
@@ -131,14 +131,14 @@
 				});
 
 				/** Full Output */
-				if(RegEx.config.fulloutput) {
+				if(RegGen.config.fulloutput) {
 						result.getFailedSet().foreach(function(i, statistics) {
 								__sysout("FAILED (" + i + "): \n " + statistics.toString() + "\n");
 						});
 				}
 
 				/** Full Output */
-				if(RegEx.config.fulloutput) {
+				if(RegGen.config.fulloutput) {
 						result.getIndeterminableSet().foreach(function(i, statistics) {
 								__sysout("INDETERMINABLE (" + i + "): \n " + statistics.toString() + "\n");
 						});
@@ -195,4 +195,4 @@
 		}
 		SELF.subout = subout;
 
-})(__RegEx);;
+})(__RegGen);;
