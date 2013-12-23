@@ -40,12 +40,13 @@ load("lib/__lib_StringMap.js");
 // Access Permission Contracts
 //////////////////////////////////////////////////
 
+// NOTE: build first for regex structure
 // load apc
-load("src/Apc/apc.global.js");
+//load("src/Apc/apc.global.js");
 // load parser
-load("src/Apc/apc.parser.js");
+//load("src/Apc/apc.parser.js");
 // load contract
-load("src/Apc/apc.contract.js");
+//load("src/Apc/apc.contract.js");
 
 //////////////////////////////////////////////////
 // Regular Expressions
