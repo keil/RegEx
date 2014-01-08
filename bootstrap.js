@@ -1,5 +1,4 @@
-/*
- * Efficient Solving of Regular Expression Inequalities 
+/* Efficient Solving of Regular Expression Inequalities 
  *  Regular Expression Generator
  *
  * Copyright (c) 2013, Proglang, University of Freiburg.
