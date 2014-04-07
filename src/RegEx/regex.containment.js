@@ -85,8 +85,12 @@ __RegEx.Containment = (function() {
 
                         if(l == __RegEx.Literal.Set()) return result; // break
 
+                        // lt. Theorem
 						var derivR = r.nderiv(l);
 						var derivS = s.pderiv(l);
+
+                        //var derivR = r.pderiv(l);
+						//var derivS = s.nderiv(l);
 
 						if(verbose) __sysout("## first: " + ls);
 						if(verbose) __sysout("## literal: " + l);
