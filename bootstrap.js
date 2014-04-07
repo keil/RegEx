@@ -1,4 +1,4 @@
-/* Efficient Solving of Regular Expression Inequalities 
+/*
  *  Regular Expression Generator
  *
  * Copyright (c) 2013, Proglang, University of Freiburg.
@@ -102,13 +102,13 @@ RegGen.run.run();
 
 // tests
 (function() {
-		r = $("(a+(!b))*");
-		s = $("!(b)");
+		r = $("a+b");
+		s = $("a+b");
 
 		first(r, s);
 
 		test(r, s, true);
-});
+})();
 
 // TEST SUBSET RELATION
 function first(r, s) {
