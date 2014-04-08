@@ -84,10 +84,12 @@ __RegEx.Expression = (function() {
 						return this;
 				};
 				this.nderiv = function(l) {
-						return this;
+						if(l.empty()) return __RegEx.Expression.Star(__RegEx.Literal.Wildcard);
+                        else return this;
 				};
 				this.pderiv = function(l) {
-						return this;
+						if(l.empty()) return __RegEx.Expression.Null();
+                        else return this;
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -142,10 +144,12 @@ __RegEx.Expression = (function() {
 						return Null();
 				};
 				this.nderiv = function(l) {
-						return Null();
+						if(l.empty()) return __RegEx.Expression.Star(__RegEx.Literal.Wildcard);
+                        else return Null();
 				};
 				this.pderiv = function(l) {
-						return Null();
+						if(l.empty()) return __RegEx.Expression.Null();
+                        else return Null();
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -210,10 +214,12 @@ __RegEx.Expression = (function() {
 						return Dot(r.deriv(b), this);
 				};
 				this.nderiv = function(l) {
-						return Dot(r.nderiv(l),this);
+						if(l.empty()) return __RegEx.Expression.Star(__RegEx.Literal.Wildcard);
+                        else return Dot(r.nderiv(l),this);
 				};
 				this.pderiv = function(l) {
-						return Dot(r.pderiv(l),this);
+						if(l.empty()) return __RegEx.Expression.Null();
+                        else return Dot(r.pderiv(l),this);
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -267,7 +273,7 @@ __RegEx.Expression = (function() {
 						return (r.nullable() || s.nullable());
 				};
 				this.first = function() {
-						return r.first().addAll(s.first());
+                        return __RegEx.First.union(r.first(), s.first());
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
@@ -284,11 +290,12 @@ __RegEx.Expression = (function() {
 						return Or(r.deriv(b), s.deriv(b));
 				};
 				this.nderiv = function(l) {
-						return Or(r.nderiv(l), s.nderiv(l))
+						if(l.empty()) return __RegEx.Expression.Star(__RegEx.Literal.Wildcard);
+                        else return Or(r.nderiv(l), s.nderiv(l))
 				};
 				this.pderiv = function(l) {
-						return Or(r.pderiv(l), s.pderiv(l))
-
+						if(l.empty()) return __RegEx.Expression.Null();
+                        else return Or(r.pderiv(l), s.pderiv(l))
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -359,10 +366,12 @@ __RegEx.Expression = (function() {
 						return And(r.deriv(b), s.deriv(b));
 				};
 				this.nderiv = function(l) {
-						return And(r.nderiv(l), s.nderiv(l));
+						if(l.empty()) return __RegEx.Expression.Star(__RegEx.Literal.Wildcard);
+                        else return And(r.nderiv(l), s.nderiv(l));
 				};
 				this.pderiv = function(l) {
-						return And(r.pderiv(l), s.pderiv(l))
+						if(l.empty()) return __RegEx.Expression.Null();
+                        else return And(r.pderiv(l), s.pderiv(l))
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -426,10 +435,12 @@ __RegEx.Expression = (function() {
 						return Neg(r.deriv(b));
 				};
 				this.nderiv = function(l) {
-						return Neg(r.pderiv(l));
+						if(l.empty()) return __RegEx.Expression.Star(__RegEx.Literal.Wildcard);
+                        else return Neg(r.pderiv(l));
 				};
 				this.pderiv = function(l) {
-						return Neg(r.nderiv(l));
+						if(l.empty()) return __RegEx.Expression.Null();
+                        else return Neg(r.nderiv(l));
 				};
 				//////////////////////////////////////////////////
 				this.isSuperSetOf = function (sub) {
@@ -477,7 +488,7 @@ __RegEx.Expression = (function() {
 						return (r.nullable() && s.nullable());	
 				};
 				this.first = function() {
-						return (r.nullable() ? r.first().addAll(s.first()) : r.first());
+                        return (r.nullable) ? __RegEx.First.union(r.first(), s.first()) : r.first();
 				};
 				//////////////////////////////////////////////////
 				this.empty = function() {
@@ -495,11 +506,13 @@ __RegEx.Expression = (function() {
 						else return Dot(r.deriv(b), s);
 				};
 				this.nderiv = function(l) {
-						if(r.nullable()) return Or(Dot(r.nderiv(l), s), s.nderiv(l));
+						if(l.empty()) return __RegEx.Expression.Star(__RegEx.Literal.Wildcard);
+                        else if(r.nullable()) return Or(Dot(r.nderiv(l), s), s.nderiv(l));
 						else return Dot(r.nderiv(l), s);
 				};
 				this.pderiv = function(l) {
-						if(r.nullable()) return Or(Dot(r.pderiv(l), s), s.pderiv(l));
+                        if(l.empty()) return __RegEx.Expression.Null();
+                        else if(r.nullable()) return Or(Dot(r.pderiv(l), s), s.pderiv(l));
 						else return Dot(r.pderiv(l), s);
 
 				};

@@ -96,6 +96,10 @@ load("src/RegGen/reggen.run.js");
 // Run
 //////////////////////////////////////////////////
 
+for(p in $) print("> " + p);
+
+$.Config.Verbose = false;
+
 // run regex genearator
 RegGen.run.run();
 
@@ -108,7 +112,7 @@ RegGen.run.run();
 		first(r, s);
 
 		test(r, s, true);
-})();
+});
 
 // TEST SUBSET RELATION
 function first(r, s) {

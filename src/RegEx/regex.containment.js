@@ -74,16 +74,23 @@ __RegEx.Containment = (function() {
 				var e = new Expression(r, s);
 				var context = context.bind(e);
 
-				// verbose - true, print output: false, do not print the output
+                // verbose - true, print output: false, do not print the output
 				var verbose  = false || __RegEx.Config.Verbose;
 				if(verbose) __sysout("##################################################");
 				if(verbose) __sysout("## " + r + "<=" + s);
 
 				var ls = first(r, s);
+
+                if(verbose) __sysout("## first: " + ls);
+                if(verbose) __sysout("\n");
+
 				var result = true;
 				ls.foreach(function(i, l) {
+                        
+                        // TODO, the derivative w.r.t. the empty set
+                        //if(l == __RegEx.Literal.Set()) return result; // break
 
-                        if(l == __RegEx.Literal.Set()) return result; // break
+                        //if(l.empty()) return result; // TODO 
 
                         // lt. Theorem
 						var derivR = r.nderiv(l);
@@ -91,15 +98,17 @@ __RegEx.Containment = (function() {
 
                         //var derivR = r.pderiv(l);
 						//var derivS = s.nderiv(l);
-
-						if(verbose) __sysout("## first: " + ls);
-						if(verbose) __sysout("## literal: " + l);
-						if(verbose) __sysout("## N _{" + l + "} r: " + derivR);
-						if(verbose) __sysout("## P _{" + l + "} s: " + derivS);
+						
+						if(verbose) __sysout("### literal: " + l);
+                        if(verbose) __sysout("### r: " + r);
+						if(verbose) __sysout("### s: " + s);
+						if(verbose) __sysout("### N _{" + l + "} r: " + derivR);
+						if(verbose) __sysout("### P _{" + l + "} s: " + derivS);
 
 						result = result && solve(derivR, derivS, context);
 
-						if(verbose) __sysout("## result: " + result);
+						if(verbose) __sysout("### result: " + result);
+                        if(verbose) __sysout("\n");
 
 						if(!result) return result; // break
 				});
