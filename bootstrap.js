@@ -62,7 +62,7 @@ load("src/RegEx/regex.expression.js");
 load("src/RegEx/regex.first.js");
 load("src/RegEx/regex.containment.js");
 // parser
-load("src/Regex/regex.parser.js");
+load("src/RegEx/regex.parser.js");
 
 //////////////////////////////////////////////////
 // Generator
